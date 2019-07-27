@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <link rel="shortcut icon" type="image/x-icon" href="https://github.com/favicon.ico">
+
+  <title>¿Como mantener actualizado el entorno de múltiples desarrolladores?</title>
+
+  <meta name="author" content="Josemy Duarte" />
+
+  
+  <meta name="description" content="git hooks">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="https://josemyduarte.github.io/feed.xml" />
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67420525-2"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-67420525-2');
+</script>
+
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="¿Como mantener actualizado el entorno de múltiples desarrolladores?" />
+  
+
+   
+  <meta property="og:description" content="git hooks">
+  
+
+
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Josemy says..." />
+
+  
+  <meta property="og:url" content="https://josemyduarte.github.io/2018-09-02-mantener-actializado-el-entorno/" />
+  <link rel="canonical" href="https://josemyduarte.github.io/2018-09-02-mantener-actializado-el-entorno/" />
+  
+
+  
+  <meta property="og:image" content="/img/git-hooks.jpg" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="¿Como mantener actualizado el entorno de múltiples desarrolladores?" />
+  
+
+  
+  <meta name="twitter:description" content="git hooks">
+  
+
+  
+  <meta name="twitter:image" content="https://josemyduarte.github.io/img/git-hooks.jpg" />
+  
+  
+  
+
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="https://josemyduarte.github.io/">Josemy says...</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/articles">Read later</a></li>
+          <li><a href="/books">Books</a></li>
+          <li><a href="/aboutme">About Me</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://josemyduarte.github.io/">
+	      <img class="avatar-img" src="/img/git-logo.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>¿Como mantener actualizado el entorno de múltiples desarrolladores?</h1>
+		  
+		    
+			<h2 class="post-subheading">git hooks</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on September 2, 2018</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>Vuelven de vacaciones a la oficina y se encuentran con decenas de correos, y entre ellos alguno sobre actualizar “<em>X</em>” variable de entorno, o sobre la creación de un nuevo microservicio por lo que debes actualizar tu <code class="highlighter-rouge">/etc/hosts</code> con el nuevo dominio. Naturalmente, seguir esta “metodología” mantiene altas las probabilidades de dejar pasar accidentalmente algunos de estos correos y luego pasar horas averiguando porque “sin ninguna razón aparente” cierto proyecto ha dejado de funcionar.</p>
+
+<p><em>Disclaimer: Sabemos que hay otras posibles soluciones (vía DNS, por ejemplo), no digo que ésta sea la única o la mejor, solo que es una posibilidad más. Que no solo se limita al caso acá expuesto, sino a la necesidad que pueda surgir en cualquier equipo y que pueda ser solventado con git hooks.</em></p>
+
+<h2 id="git-al-rescate">Git al rescate</h2>
+
+<p><strong>git</strong> es una herramienta muy versátil, incluso con funcionalidades que muchos programadores aun teniendo años usándolo no han descubierto. Una de estas funcionalidades son los <a href="https://git-scm.com/book/pl/v2/Customizing-Git-Git-Hooks">git-hooks</a>.</p>
+
+<p>Los hooks son como “triggers” que se disparan cuando cierto evento sucede. Por ejemplo, <strong>post-merge</strong> es el evento que se <em>dispara</em> luego de ejecutar un <code class="highlighter-rouge">git pull</code> (siempre que hayan cambios en la rama remota). Estos scripts se encuentran en la carpeta <code class="highlighter-rouge">{PROJECT_NAME}/.git/hooks</code>. Ficheros de ejemplo crean automáticamente con la inicialización de cualquier repositorio git.</p>
+
+<p>La versatilidad que nos provee esta funcionalidad (git-hooks) nos permite, por ejemplo, que luego de un <em>push</em> automáticamente se ejecuten tareas de verificación de estilos. O que antes de un merge a master se ejecuten las pruebas de integración. Junto a un largo etcétera que se ve limitado solo por lo que puedas lograr a través de un script.</p>
+
+<p>Para conocer en profundidad los eventos disponibles echa un vistazo <a href="https://git-scm.com/docs/githooks#_hooks">acá</a>.</p>
+
+<h2 id="propuesta">Propuesta</h2>
+
+<p>Recordemos que queremos evitar lo propenso a errores que puede ser actualizar el entorno de desarrollo de múltiples desarrolladores en una misma empresa, asumiendo incluso que algunos pueden trabajar desde casa y por lo tanto no trabajar sobre la misma red.</p>
+
+<p>La propuesta para este problema es hacer un <strong>git-hook</strong> que cada vez que hayan cambios verifique que el archivo de hosts <code class="highlighter-rouge">/etc/hosts</code> se encuentre actualizado, y regenere un archivo en <code class="highlighter-rouge">/etc/profile.d/</code> en el cual se pueden definir las variables de entorno, independientemente de si usas bash, zsh, dash…</p>
+
+<h3 id="post-merge">post-merge</h3>
+
+<p>Por ejemplo, este sería el contenido del <strong>post-merge</strong>, script que se ejecutará automáticamente luego de cada <code class="highlighter-rouge">git pull</code> que detecte cambios en la rama remota:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># Post update hook script.</span>
+<span class="c"># Color definition.</span>
+<span class="nv">GREEN</span><span class="o">=</span><span class="s1">'\033[01;32m'</span>
+
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="k">${</span><span class="nv">GREEN</span><span class="k">}</span><span class="s2">Starting post update hook</span><span class="k">${</span><span class="nv">NONE</span><span class="k">}</span><span class="s2">"</span>
+
+<span class="k">if</span> <span class="o">[</span> <span class="nv">$EUID</span> <span class="o">!=</span> 0 <span class="o">]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"Updating /etc/hosts file, sudo privileges required..."</span>
+    <span class="nb">sudo</span> <span class="s2">"</span><span class="nv">$0</span><span class="s2">"</span> <span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+    <span class="nb">exit</span> <span class="nv">$?</span>
+<span class="k">fi
+
+</span><span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"Ensuring /etc/hosts is up to date"</span>
+git-hooks/1-change-hosts.sh hosts-list
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"Ensuring environment variables are up to date"</span>
+git-hooks/2-add-env-var.sh
+
+<span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="k">${</span><span class="nv">GREEN</span><span class="k">}</span><span class="s2">Finished post update hook</span><span class="k">${</span><span class="nv">NONE</span><span class="k">}</span><span class="s2">"</span>
+<span class="nb">exit </span>0
+</code></pre></div></div>
+
+<p>Como pueden notar, además de pedir permisos de superusuario (debido a la modificación de archivos del sistema), simplemente ejecuta 2 scripts: <strong>1-change-hosts.sh</strong> y <strong>2-add-env-var.sh</strong>. Yo los he separado de esta forma para mantener una especie de separación de responsabilidades entre los scripts. Pero fácilmente toda la lógica pudo haber estado en el mismo script.</p>
+
+<p>Para este ejemplo, se asume que estos 2 scripts forman parte del repositorio en una carpeta llamada <em>git-hooks</em>.</p>
+
+<h3 id="1-change-hostssh">1-change-hosts.sh</h3>
+
+<p>Este es el contenido del script <strong>1-change-hosts.sh</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+<span class="c"># Should be automatically triggered by a post-merge git hook.</span>
+<span class="nv">ENV_HOSTS</span><span class="o">=</span><span class="nv">$1</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="nv">$ENV_HOSTS</span> <span class="o">!=</span> <span class="s1">'host-list'</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"No correct host file was given"</span>
+    <span class="nb">exit </span>1
+<span class="k">fi
+
+</span><span class="nv">DIR</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span> <span class="nb">cd</span> <span class="s2">"</span><span class="k">$(</span> dirname <span class="s2">"</span><span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="s2">"</span> <span class="k">)</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> <span class="nb">pwd</span> <span class="k">)</span><span class="s2">"</span>
+<span class="nv">HOSTS_FILE</span><span class="o">=</span><span class="s1">'/etc/hosts'</span>
+<span class="nv">START_DELIMITER</span><span class="o">=</span><span class="s1">'### START OF MyCompany HOSTS ###'</span>
+<span class="nv">END_DELIMITER</span><span class="o">=</span><span class="s1">'### END OF MyCompany HOSTS ###'</span>
+
+<span class="nb">echo</span> <span class="s2">"Updating </span><span class="nv">$HOSTS_FILE</span><span class="s2">"</span>
+
+<span class="c"># If the placeholders are not yet in the /etc/hosts file, this must be the</span>
+<span class="c"># first run of this script. Add them.</span>
+<span class="nv">PLACEHOLDER</span><span class="o">=</span><span class="sb">`</span><span class="nb">grep</span> <span class="s2">"</span><span class="nv">$START_DELIMITER</span><span class="s2">"</span> <span class="nv">$HOSTS_FILE</span><span class="sb">`</span>
+
+<span class="k">if</span> <span class="o">[[</span> <span class="o">!</span> <span class="nv">$PLACEHOLDER</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then
+    </span><span class="nb">echo</span> <span class="s2">"No placeholders detected, this must be first run. Adding placeholders..."</span>
+    <span class="nb">echo</span> <span class="nt">-e</span> <span class="s2">"</span><span class="se">\n</span><span class="nv">$START_DELIMITER</span><span class="se">\n</span><span class="nv">$END_DELIMITER</span><span class="se">\n</span><span class="s2">"</span> <span class="o">&gt;&gt;</span> <span class="nv">$HOSTS_FILE</span>
+<span class="k">fi
+
+</span>sed <span class="nt">-i</span>.bak <span class="nt">-e</span> <span class="s2">"/^</span><span class="nv">$START_DELIMITER</span><span class="se">\$</span><span class="s2">/,/^</span><span class="nv">$END_DELIMITER</span><span class="se">\$</span><span class="s2">/{ /^</span><span class="nv">$START_DELIMITER</span><span class="se">\$</span><span class="s2">/{p; r </span><span class="nv">$DIR</span><span class="s2">/</span><span class="nv">$ENV_HOSTS</span><span class="s2">
+}; /^</span><span class="nv">$END_DELIMITER</span><span class="se">\$</span><span class="s2">/p; d; }"</span> <span class="nv">$HOSTS_FILE</span>
+
+rm <span class="s2">"</span><span class="nv">$HOSTS_FILE</span><span class="s2">.bak"</span> &amp;&gt;/dev/null <span class="o">||</span> <span class="nb">true</span>
+</code></pre></div></div>
+
+<p>Este script simplemente busca dentro de tu <code class="highlighter-rouge">/etc/hosts</code> por los delimitadores <code class="highlighter-rouge">### START OF MyCompany HOSTS ###</code> y <code class="highlighter-rouge">### END OF MyCompany HOSTS ###</code>, si no existen, los escribe y luego pone entre estos delimitadores los hosts que hayas definido en el archivo que pasaste por parametro, en nuestro ejemplo es el contenido del fichero <code class="highlighter-rouge">hosts-list</code>. De esta forma no modificamos cualquier otro host que alguien haya definido en su fichero.</p>
+
+<h3 id="hosts-list">hosts-list</h3>
+
+<p>Un ejemplo del contenido del fichero <code class="highlighter-rouge">hosts-list</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1     dev-services.domain.com
+10.0.3.1      dev-stats.other-domain.com
+</code></pre></div></div>
+
+<p>Con este contenido, estaríamos agregando ambos hosts al <code class="highlighter-rouge">/etc/hosts</code> de todos los desarrolladores con simplemente hacer un <code class="highlighter-rouge">git pull</code> del repositorio.</p>
+
+<h3 id="2-add-env-varsh">2-add-env-var.sh</h3>
+
+<p>Finalmente, este es el contenido del script <strong>2-add-env-var.sh</strong>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">echo</span> <span class="s2">"Adding env variables"</span>
+
+<span class="nv">DIR</span><span class="o">=</span><span class="s2">"</span><span class="k">$(</span> <span class="nb">cd</span> <span class="s2">"</span><span class="k">$(</span> dirname <span class="s2">"</span><span class="k">${</span><span class="nv">BASH_SOURCE</span><span class="p">[0]</span><span class="k">}</span><span class="s2">"</span> <span class="k">)</span><span class="s2">"</span> <span class="o">&amp;&amp;</span> <span class="nb">pwd</span> <span class="k">)</span><span class="s2">"</span>
+<span class="nv">ENV_FILE</span><span class="o">=</span><span class="s1">'environment_var.sh'</span>
+<span class="nv">ENV_DIR</span><span class="o">=</span><span class="s1">'/etc/profile.d'</span>
+
+cp <span class="nv">$DIR</span>/<span class="nv">$ENV_FILE</span> <span class="nv">$ENV_DIR</span>/<span class="nv">$ENV_FILE</span>
+<span class="nb">source</span> <span class="nv">$ENV_DIR</span>/<span class="nv">$ENV_FILE</span>
+</code></pre></div></div>
+
+<p>El resultado de este script sería la creación de un archivo <code class="highlighter-rouge">environment_var.sh</code> en <code class="highlighter-rouge">/etc/profile.d</code> con el contenido del fichero definido en <code class="highlighter-rouge">git-hooks/environment_var.sh</code>. De esta forma, independientemente del shell que utilices, tendrás definidas las variables de entorno allí definidas.</p>
+
+<h3 id="environment_varsh">environment_var.sh</h3>
+
+<p>Un ejemplo de este fichero pudiera ser:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">export </span><span class="nv">USER_ID</span><span class="o">=</span><span class="sb">`</span>id <span class="nt">-u</span><span class="sb">`</span>
+<span class="nb">export </span><span class="nv">GROUP_ID</span><span class="o">=</span><span class="sb">`</span>id <span class="nt">-g</span><span class="sb">`</span>
+</code></pre></div></div>
+
+<p>Con esto definiríamos una variable <strong>$USER_ID</strong> con el id del usuario unix y otra <strong>$GROUP_ID</strong> con el respectivo id del grupo. Es decir, el equivalente a las variables <strong>$UID</strong> y <strong>$GID</strong>.</p>
+
+<p>Probablemente requiera un reinicio para que puedas hacer uso de las variables definidas luego del git hook.</p>
+
+<h2 id="finalizando">Finalizando</h2>
+
+<p>Es importante destacar que el contenido del script <code class="highlighter-rouge">post-merge</code> debe ser puesto manualmente dentro del directorio <code class="highlighter-rouge">{PROJECT_NAME}/.git/hooks</code>, ya que los hooks no se guardan dentro del repositorio remoto. Por lo tanto es aconsejable crear otro script que simplemente haga un enlace al directorio correspondiente.</p>
+
+<p>Por ejemplo, un fichero <code class="highlighter-rouge">link-hook.sh</code>:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
+
+<span class="c"># assuming the script is in a "git-hooks" directory, one level into the repo</span>
+<span class="nv">HOOK_DIR</span><span class="o">=</span><span class="k">$(</span>git rev-parse <span class="nt">--show-toplevel</span><span class="k">)</span>/.git/hooks
+
+ln <span class="nt">-sf</span> ../../git-hooks/post-merge <span class="nv">$HOOK_DIR</span>/
+</code></pre></div></div>
+
+<p>Como ya comenté anteriormente, asumimos que el archivo <code class="highlighter-rouge">post-merge</code> se encuentra en un directorio llamado <code class="highlighter-rouge">git-hooks</code> dentro de tu repositorio. Es decir, este sería un supuesto árbol de directorios luego de ejecutar el script anterior:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/my-project/
+            .git/
+                ...
+                hooks/
+                        <span class="o">[</span>hooks.sample]
+                        post-merge -&gt; ../../git-hooks/post-merge
+                ...
+            git-hooks/
+                    1-change-hosts.sh
+                    2-add-env-var.sh
+                    environment_var.sh
+                    hosts-list
+                    post-merge
+            src/
+                main/
+                ...
+            link-hook.sh
+            ...
+</code></pre></div></div>
+
+<p>El script habría creado un enlace dentro de <code class="highlighter-rouge">.git/hooks/post-merge</code> al script definido en <code class="highlighter-rouge">git-hooks/post-merge</code>. De esta forma, si en algún momento se modifica el archivo del repositorio, automáticamente el hook podrá ejecutar el cambio sin ninguna otra acción requerida. Esto solo sería necesario ejecutarlo la primera vez que se clona el repositorio, para crear el enlace. Posteriormente, la magia la hará git automaticamente con cada <code class="highlighter-rouge">git pull</code> que detecte cambios en el repo.</p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#devops">devops</a>
+          
+            <a href="/tags#git">git</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=%C2%BFComo+mantener+actualizado+el+entorno+de+m%C3%BAltiples+desarrolladores%3F - &url=https%3A%2F%2Fjosemyduarte.github.io%2F2018-09-02-mantener-actializado-el-entorno%2F&via=&related="
+      class="btn btn-social-icon btn-twitter" target="_blank" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjosemyduarte.github.io%2F2018-09-02-mantener-actializado-el-entorno%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjosemyduarte.github.io%2F2018-09-02-mantener-actializado-el-entorno%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2018-08-04-superando-la-entrevista/" data-toggle="tooltip" data-placement="top" title="Superando la entrevista">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2018-12-09-tdd-outside-in/" data-toggle="tooltip" data-placement="top" title="TDD Estilo Londres">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:duartejosemy@gmail.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/josemyduarte" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/JosemyD" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://www.instagram.com/josemy.duarte" title="Instagram"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Instagram</span>
+              </a>
+            </li><li><a href="https://linkedin.com/in/josemyduarte" title="LinkedIn"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Josemy Duarte
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+  
+  </body>
+</html>

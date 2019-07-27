@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <link rel="shortcut icon" type="image/x-icon" href="https://github.com/favicon.ico">
+
+  <title>Tag Index</title>
+
+  <meta name="author" content="Josemy Duarte" />
+
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="https://josemyduarte.github.io/feed.xml" />
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67420525-2"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-67420525-2');
+</script>
+
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Tag Index" />
+  
+
+   
+  <meta property="og:description" content="{%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:',' | sort -%} {%- for tag in tags_list -%} &amp;nbsp;{{- tag -}}&amp;nbsp;({{site.tags[tag].size}}) {%- endfor -%} {%- for...">
+  
+
+
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Josemy says..." />
+
+  
+  <meta property="og:url" content="https://josemyduarte.github.io/tags/" />
+  <link rel="canonical" href="https://josemyduarte.github.io/tags/" />
+  
+
+  
+  <meta property="og:image" content="https://josemyduarte.github.io/img/selfieself.jpg" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Tag Index" />
+  
+
+  
+  <meta name="twitter:description" content="{%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:',' | sort -%} {%- for tag in tags_list -%} &amp;nbsp;{{- tag -}}&amp;nbsp;({{site.tags[tag].size}}) {%- endfor -%} {%- for...">
+  
+
+  
+  <meta name="twitter:image" content="https://josemyduarte.github.io/img/selfieself.jpg" />
+  
+  
+  
+
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="https://josemyduarte.github.io/">Josemy says...</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/articles">Read later</a></li>
+          <li><a href="/books">Books</a></li>
+          <li><a href="/aboutme">About Me</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://josemyduarte.github.io/">
+	      <img class="avatar-img" src="/img/selfieself.jpg" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="page-heading">
+          <h1>Tag Index</h1>
+		  
+		  
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container" role="main">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+      <a href="#books" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;books&nbsp;(1)</a><a href="#conference" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;conference&nbsp;(2)</a><a href="#devops" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;devops&nbsp;(1)</a><a href="#git" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;git&nbsp;(1)</a><a href="#interview" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;interview&nbsp;(1)</a><a href="#java" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;java&nbsp;(3)</a><a href="#notes" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;notes&nbsp;(2)</a><a href="#programming" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;programming&nbsp;(2)</a><a href="#random" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;random&nbsp;(1)</a><a href="#tdd" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;tdd&nbsp;(1)</a><a href="#tests" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;tests&nbsp;(1)</a><a href="#tips" class="btn btn-primary tag-btn"><i class="fa fa-tag" aria-hidden="true"></i>&nbsp;tips&nbsp;(5)</a><div id="full-tags-list"><h2 id="books" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;books&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-07-05-responsabilities-of-a-software-architect/">Responsabilities of a Software Architect</a>
+                <div class="entry-date">
+                    <time datetime="2019-07-05T00:00:00+02:00">July 05, 2019</time>
+                </div>
+            </div></div><h2 id="conference" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;conference&nbsp;(2)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2017-06-27-software-que-cuesta-mantener/">Software que cuesta mantener</a>
+                <div class="entry-date">
+                    <time datetime="2017-06-27T00:00:00+02:00">June 27, 2017</time>
+                </div>
+            </div><div class="tag-entry">
+                <a href="/2017-06-26-the-art-of-simplicity/">El arte de la simplicidad</a>
+                <div class="entry-date">
+                    <time datetime="2017-06-26T00:00:00+02:00">June 26, 2017</time>
+                </div>
+            </div></div><h2 id="devops" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;devops&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2018-09-02-mantener-actializado-el-entorno/">¿Como mantener actualizado el entorno de múltiples desarrolladores?</a>
+                <div class="entry-date">
+                    <time datetime="2018-09-02T00:00:00+02:00">September 02, 2018</time>
+                </div>
+            </div></div><h2 id="git" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;git&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2018-09-02-mantener-actializado-el-entorno/">¿Como mantener actualizado el entorno de múltiples desarrolladores?</a>
+                <div class="entry-date">
+                    <time datetime="2018-09-02T00:00:00+02:00">September 02, 2018</time>
+                </div>
+            </div></div><h2 id="interview" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;interview&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2018-08-04-superando-la-entrevista/">Superando la entrevista</a>
+                <div class="entry-date">
+                    <time datetime="2018-08-04T00:00:00+02:00">August 04, 2018</time>
+                </div>
+            </div></div><h2 id="java" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;java&nbsp;(3)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2018-12-09-tdd-outside-in/">TDD Estilo Londres</a>
+                <div class="entry-date">
+                    <time datetime="2018-12-09T00:00:00+01:00">December 09, 2018</time>
+                </div>
+            </div><div class="tag-entry">
+                <a href="/2018-02-15-evitando-nulls/">Errores de novato</a>
+                <div class="entry-date">
+                    <time datetime="2018-02-15T00:00:00+01:00">February 15, 2018</time>
+                </div>
+            </div><div class="tag-entry">
+                <a href="/2017-06-26-the-art-of-simplicity/">El arte de la simplicidad</a>
+                <div class="entry-date">
+                    <time datetime="2017-06-26T00:00:00+02:00">June 26, 2017</time>
+                </div>
+            </div></div><h2 id="notes" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;notes&nbsp;(2)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-07-20-do-i-need-to-test-my-code/">Do I Need to test my code?</a>
+                <div class="entry-date">
+                    <time datetime="2019-07-20T00:00:00+02:00">July 20, 2019</time>
+                </div>
+            </div><div class="tag-entry">
+                <a href="/2019-07-05-responsabilities-of-a-software-architect/">Responsabilities of a Software Architect</a>
+                <div class="entry-date">
+                    <time datetime="2019-07-05T00:00:00+02:00">July 05, 2019</time>
+                </div>
+            </div></div><h2 id="programming" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;programming&nbsp;(2)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2018-12-09-tdd-outside-in/">TDD Estilo Londres</a>
+                <div class="entry-date">
+                    <time datetime="2018-12-09T00:00:00+01:00">December 09, 2018</time>
+                </div>
+            </div><div class="tag-entry">
+                <a href="/2018-02-15-evitando-nulls/">Errores de novato</a>
+                <div class="entry-date">
+                    <time datetime="2018-02-15T00:00:00+01:00">February 15, 2018</time>
+                </div>
+            </div></div><h2 id="random" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;random&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2017-06-25-first-post/">First post!</a>
+                <div class="entry-date">
+                    <time datetime="2017-06-25T00:00:00+02:00">June 25, 2017</time>
+                </div>
+            </div></div><h2 id="tdd" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;tdd&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2018-12-09-tdd-outside-in/">TDD Estilo Londres</a>
+                <div class="entry-date">
+                    <time datetime="2018-12-09T00:00:00+01:00">December 09, 2018</time>
+                </div>
+            </div></div><h2 id="tests" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;tests&nbsp;(1)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2019-07-20-do-i-need-to-test-my-code/">Do I Need to test my code?</a>
+                <div class="entry-date">
+                    <time datetime="2019-07-20T00:00:00+02:00">July 20, 2019</time>
+                </div>
+            </div></div><h2 id="tips" class="linked-section">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+        &nbsp;tips&nbsp;(5)
+    </h2>
+    <div class="post-list"><div class="tag-entry">
+                <a href="/2018-08-04-superando-la-entrevista/">Superando la entrevista</a>
+                <div class="entry-date">
+                    <time datetime="2018-08-04T00:00:00+02:00">August 04, 2018</time>
+                </div>
+            </div><div class="tag-entry">
+                <a href="/2018-02-15-evitando-nulls/">Errores de novato</a>
+                <div class="entry-date">
+                    <time datetime="2018-02-15T00:00:00+01:00">February 15, 2018</time>
+                </div>
+            </div><div class="tag-entry">
+                <a href="/2017-10-15-programadores-crear-o-mantener/">Programadores: ¿Crear o Mantener?</a>
+                <div class="entry-date">
+                    <time datetime="2017-10-15T00:00:00+02:00">October 15, 2017</time>
+                </div>
+            </div><div class="tag-entry">
+                <a href="/2017-06-27-software-que-cuesta-mantener/">Software que cuesta mantener</a>
+                <div class="entry-date">
+                    <time datetime="2017-06-27T00:00:00+02:00">June 27, 2017</time>
+                </div>
+            </div><div class="tag-entry">
+                <a href="/2017-06-26-the-art-of-simplicity/">El arte de la simplicidad</a>
+                <div class="entry-date">
+                    <time datetime="2017-06-26T00:00:00+02:00">June 26, 2017</time>
+                </div>
+            </div></div></div>
+
+	    
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:duartejosemy@gmail.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/josemyduarte" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/JosemyD" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://www.instagram.com/josemy.duarte" title="Instagram"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Instagram</span>
+              </a>
+            </li><li><a href="https://linkedin.com/in/josemyduarte" title="LinkedIn"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Josemy Duarte
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+  
+  </body>
+</html>

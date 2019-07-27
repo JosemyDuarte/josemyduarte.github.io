@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <link rel="shortcut icon" type="image/x-icon" href="https://github.com/favicon.ico">
+
+  <title>Errores de novato</title>
+
+  <meta name="author" content="Josemy Duarte" />
+
+  
+  <meta name="description" content="Evitando NullPointerExceptions">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="https://josemyduarte.github.io/feed.xml" />
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67420525-2"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-67420525-2');
+</script>
+
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Errores de novato" />
+  
+
+   
+  <meta property="og:description" content="Evitando NullPointerExceptions">
+  
+
+
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Josemy says..." />
+
+  
+  <meta property="og:url" content="https://josemyduarte.github.io/2018-02-15-evitando-nulls/" />
+  <link rel="canonical" href="https://josemyduarte.github.io/2018-02-15-evitando-nulls/" />
+  
+
+  
+  <meta property="og:image" content="/img/null-pointer-exception.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Errores de novato" />
+  
+
+  
+  <meta name="twitter:description" content="Evitando NullPointerExceptions">
+  
+
+  
+  <meta name="twitter:image" content="https://josemyduarte.github.io/img/null-pointer-exception.png" />
+  
+  
+  
+
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="https://josemyduarte.github.io/">Josemy says...</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/articles">Read later</a></li>
+          <li><a href="/books">Books</a></li>
+          <li><a href="/aboutme">About Me</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://josemyduarte.github.io/">
+	      <img class="avatar-img" src="/img/java_coffee.jpg" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Errores de novato</h1>
+		  
+		    
+			<h2 class="post-subheading">Evitando NullPointerExceptions</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on February 15, 2018</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p><code class="highlighter-rouge">NullPointerException</code>, no creo equivocarme  al afirmar que difícilmente encontraremos un programador de Java que no haya visto esa excepción en su vida. Esta excepción nos indica que hemos intentado utilizar un <code class="highlighter-rouge">null</code> donde un objeto era requerido, esto incluye intentar:</p>
+
+<ul>
+  <li>Ejecutar un método en un <code class="highlighter-rouge">null</code></li>
+  <li>Acceder o modificar un campo de un <code class="highlighter-rouge">null</code></li>
+  <li>Obtener la longitud de un <code class="highlighter-rouge">null</code> como si fuera un <code class="highlighter-rouge">array</code></li>
+  <li>Acceder o modificar las casillas de un <code class="highlighter-rouge">null</code> como si fuera un <code class="highlighter-rouge">array</code></li>
+  <li><code class="highlighter-rouge">Throw</code> un null como si fuera un valor <code class="highlighter-rouge">Throwable</code></li>
+</ul>
+
+<p>Algunas practicas hacen que su frecuencia sea mayor en algunos proyectos más que en otros, pero me atrevería a decir que el solo hecho de <strong>no</strong> retornar <code class="highlighter-rouge">null</code> mejorará la robustez del código y disminuirá la presencia de los <code class="highlighter-rouge">NullPointerException</code> en los logs.</p>
+
+<p>Principalmente, los <code class="highlighter-rouge">null</code> se suelen retornar en 2 casos: (1) denotar que no se encontraron valores para llenar una colección, (2) señalar que un valor no se encontró o no estaba presente, incluso aunque no haya habido ningún error.</p>
+
+<p>Estos 2 casos se pueden afrontar de mejor forma evitando retornar <code class="highlighter-rouge">null</code> y por lo tanto causando que los clientes de nuestro código no tengan que adivinar si deben verificar que el valor retornado sea <code class="highlighter-rouge">null</code> o no antes de hacer algo con él.</p>
+
+<h2 id="colección-vacía">Colección vacía</h2>
+
+<p>Cuando un método retorna una lista (o cualquier otra colección) de elementos, puede ser común retornar <code class="highlighter-rouge">null</code> para señalar que ningún elemento se pudo encontrar para la lista solicitada. Por ejemplo, pudiéramos implementar un <em>servicio</em> encargado de gestionar los usuarios de una plataforma de la siguiente forma (algunos métodos y clases han sido omitidos para simplificar):</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getUsers</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">User</span><span class="o">[]</span> <span class="n">usersFromDb</span> <span class="o">=</span> <span class="n">getUsersFromDatabase</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">usersFromDb</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// No users found in database</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">usersFromDb</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">UserServer</span> <span class="n">service</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserService</span><span class="o">();</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Users</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">getUsers</span><span class="o">();</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">users</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">for</span> <span class="o">(</span><span class="n">User</span> <span class="nl">user:</span> <span class="n">users</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"User found: "</span> <span class="o">+</span> <span class="n">user</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>Como hemos elegido retornar <code class="highlighter-rouge">null</code> en caso de que no hayan usuarios, estamos forzando a nuestros clientes a tener en cuenta este caso antes de intentar iterar sobre la lista de usuarios. Si en lugar de ello, retornaramos una lista vacia para denotar que ningún usuario fue encontrado, el cliente pudiera remover la verificación del <code class="highlighter-rouge">null</code> y simplemente iterar sobre la lista de usuarios. Si no hay ningún usuario, la iteración se saltará implícitamente sin tener que verificar manualmente dicho caso; en esencia, iterar sobre la lista de usuarios funciona como queremos en ambos casos (con usuarios o vacía) sin tener que revisar manualmente ambos casos.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserService</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="nf">getUsers</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">User</span><span class="o">[]</span> <span class="n">usersFromDb</span> <span class="o">=</span> <span class="n">getUsersFromDatabase</span><span class="o">();</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">usersFromDb</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="c1">// No users found in database</span>
+            <span class="k">return</span> <span class="n">Collections</span><span class="o">.</span><span class="na">emptyList</span><span class="o">();</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">(</span><span class="n">usersFromDb</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">UserServer</span> <span class="n">service</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserService</span><span class="o">();</span>
+<span class="n">List</span><span class="o">&lt;</span><span class="n">Users</span><span class="o">&gt;</span> <span class="n">users</span> <span class="o">=</span> <span class="n">service</span><span class="o">.</span><span class="na">getUsers</span><span class="o">();</span>
+<span class="k">for</span> <span class="o">(</span><span class="n">User</span> <span class="nl">user:</span> <span class="n">users</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"User found: "</span> <span class="o">+</span> <span class="n">user</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>Todo se resume al consejo de <a href="https://books.google.co.kr/books/about/Effective_Java.html">Effective Java</a> que sugiere que debemos de retornar una colección vacía para denotar que no hay elementos, no <code class="highlighter-rouge">null</code>.</p>
+
+<h2 id="optional">Optional</h2>
+
+<p>En ocaciones, retornamos <code class="highlighter-rouge">null</code> para informar al cliente que un valor opcional no se encuentra presente, no porque sea un error, sino porque su presencia o ausencia son estados validos. Por ejemplo, obtener un parametro de un URL. En algunos casos, el parametro puede estar presente, pero en otros no. La ausencia del parametro no necesariamente representa un error, sino que el usuario no deseaba la funcionalidad que provee dicho parametro. Esto se puede lograr retornando <code class="highlighter-rouge">null</code> si el parámetro no está presente o el valor del parámetro si llega a estar presente (algunos métodos han sido omitidos):</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserListUrl</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">url</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">UserListUrl</span><span class="o">(</span><span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getSortingValue</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">urlContainsSortParameter</span><span class="o">(</span><span class="n">url</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="nf">extractSortParameter</span><span class="o">(</span><span class="n">url</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">UserService</span> <span class="n">userService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserService</span><span class="o">();</span>
+<span class="n">UserListUrl</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserListUrl</span><span class="o">(</span><span class="s">"http://localhost/api/v2/users"</span><span class="o">);</span>
+<span class="n">String</span> <span class="n">sortingParam</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="na">getSortingValue</span><span class="o">();</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">sortingParam</span> <span class="o">!=</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">UserSorter</span> <span class="n">sorter</span> <span class="o">=</span> <span class="n">UserSorter</span><span class="o">.</span><span class="na">fromParameter</span><span class="o">(</span><span class="n">sortingParam</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">getUsers</span><span class="o">(</span><span class="n">sorter</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">else</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">getUsers</span><span class="o">();</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>En este ejemplo, cuando no se provee un parámetro para ordenar se retorna <code class="highlighter-rouge">null</code> y el cliente debe de manejar este caso, sin dejar claro en la firma del método <code class="highlighter-rouge">getSortingValue</code> que el valor del parámetro para ordenar es opcional. Para saber que el valor de este parametro es opcional y que nos retornará <code class="highlighter-rouge">null</code> si no está presente, debemos ir a la fuente del código o a la documentación (de ser posible).</p>
+
+<p>Sin embargo, podemos hacer explicita la naturaleza opcional de este parámetro, cambiando la firma de nuestro método <code class="highlighter-rouge">getSortingValue</code> para que retorne un objecto del tipo <code class="highlighter-rouge">Optional</code>. Como se puede observar, el cliente sigue teniendo que manejar el caso en el que el parámetro no está presente, pero ahora la necesidad del mismo está explicita. Incluso, la clase <code class="highlighter-rouge">Optional</code> provee de mecanismos para manejar la ausencia de un parámetro mas allá de simplemente revisar si es <code class="highlighter-rouge">null</code>. Por ejemplo, podemos simplemente verificar la presencia del parametro con el metodo <code class="highlighter-rouge">isPresent</code> que provee <code class="highlighter-rouge">Optional</code>:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserListUrl</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">url</span><span class="o">;</span>
+    <span class="kd">public</span> <span class="nf">UserListUrl</span><span class="o">(</span><span class="n">String</span> <span class="n">url</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">url</span> <span class="o">=</span> <span class="n">url</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="kd">public</span> <span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="nf">getSortingValue</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">urlContainsSortParameter</span><span class="o">(</span><span class="n">url</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">of</span><span class="o">(</span><span class="n">extractSortParameter</span><span class="o">(</span><span class="n">url</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">Optional</span><span class="o">.</span><span class="na">empty</span><span class="o">();</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+<span class="n">UserService</span> <span class="n">userService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserService</span><span class="o">();</span>
+<span class="n">UserListUrl</span> <span class="n">url</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserListUrl</span><span class="o">(</span><span class="s">"http://localhost/api/v2/users"</span><span class="o">);</span>
+<span class="n">Optional</span><span class="o">&lt;</span><span class="n">String</span><span class="o">&gt;</span> <span class="n">sortingParam</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="na">getSortingValue</span><span class="o">();</span>
+<span class="k">if</span> <span class="o">(</span><span class="n">sortingParam</span><span class="o">.</span><span class="na">isPresent</span><span class="o">())</span> <span class="o">{</span>
+    <span class="n">UserSorter</span> <span class="n">sorter</span> <span class="o">=</span> <span class="n">UserSorter</span><span class="o">.</span><span class="na">fromParameter</span><span class="o">(</span><span class="n">sortingParam</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+    <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">getUsers</span><span class="o">(</span><span class="n">sorter</span><span class="o">);</span>
+<span class="o">}</span>
+<span class="k">else</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">userService</span><span class="o">.</span><span class="na">getUsers</span><span class="o">();</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+
+<p>Si, es casi idéntico al código donde revisamos la nulidad del objeto, pero en este caso hemos hecho explicita la naturaleza opcional del parámetro y quien use este método sabrá que puede esperar inmediatamente al ver la firma del método. Si no estuviésemos interesados en retornar la lista de usuarios en base al parámetro opcional de la URL, sino en consumir el parámetro de alguna forma, pudiéramos utilizar el método <code class="highlighter-rouge">ifPresentOrElse</code> de la siguiente forma:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">sortingParam</span><span class="o">.</span><span class="na">ifPresentOrElse</span><span class="o">(</span>
+    <span class="n">param</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Parameter is :"</span> <span class="o">+</span> <span class="n">param</span><span class="o">),</span>
+    <span class="o">()</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"No parameter supplied."</span><span class="o">)</span>
+<span class="o">);</span>
+
+</code></pre></div></div>
+
+<p>Esto reduce toda la ceremonia requerida para verificar la nulidad de una variable. Incluso, si no nos importa el caso en el que no está presente el valor, podemos hacerlo con <code class="highlighter-rouge">ifPresent</code> de la siguiente forma:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="n">sortingParam</span><span class="o">.</span><span class="na">ifPresent</span><span class="o">(</span><span class="n">param</span> <span class="o">-&gt;</span> <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"Parameter is :"</span> <span class="o">+</span> <span class="n">param</span><span class="o">));</span>
+
+</code></pre></div></div>
+
+<p>En cualquier caso, utilizando un objeto <code class="highlighter-rouge">Optional</code>, en lugar de retornar un <code class="highlighter-rouge">null</code>, le informamos explicitamente a nuestro cliente que el valor de retorno puede o no estar presente e incluso le ofrecemos múltiples formas de manejar ese valor. Por lo que como norma general, si el valor de retorno de una función es <em>opcional</em>, asegura que tus clientes manejen la presencia o ausencia del valor retornando un objeto del tipo <code class="highlighter-rouge">Optional</code>.</p>
+
+<blockquote>
+  <p>Ejemplos extraídos de <a href="https://dzone.com/articles/3-things-every-java-developer-should-stop-doing">3 Things Every Java Developer Should Stop Doing</a></p>
+</blockquote>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#programming">programming</a>
+          
+            <a href="/tags#java">java</a>
+          
+            <a href="/tags#tips">tips</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Errores+de+novato - &url=https%3A%2F%2Fjosemyduarte.github.io%2F2018-02-15-evitando-nulls%2F&via=&related="
+      class="btn btn-social-icon btn-twitter" target="_blank" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjosemyduarte.github.io%2F2018-02-15-evitando-nulls%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjosemyduarte.github.io%2F2018-02-15-evitando-nulls%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2017-10-15-programadores-crear-o-mantener/" data-toggle="tooltip" data-placement="top" title="Programadores: ¿Crear o Mantener?">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2018-08-04-superando-la-entrevista/" data-toggle="tooltip" data-placement="top" title="Superando la entrevista">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:duartejosemy@gmail.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/josemyduarte" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/JosemyD" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://www.instagram.com/josemy.duarte" title="Instagram"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Instagram</span>
+              </a>
+            </li><li><a href="https://linkedin.com/in/josemyduarte" title="LinkedIn"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Josemy Duarte
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+  
+  </body>
+</html>

@@ -1,24 +1,121 @@
----
-layout: null
----
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>{{ site.title | xml_escape }}</title>
-    <description>{{ site.description | xml_escape }}</description>
-    <link>{{ '' | absolute_url }}</link>
-    <atom:link href="{{ 'feed.xml' | absolute_url }}" rel="self" type="application/rss+xml" />
-    {% for post in site.posts limit:20 %}
+    <title>Josemy says...</title>
+    <description>Tecnología, Programación and others...</description>
+    <link>https://josemyduarte.github.io/</link>
+    <atom:link href="https://josemyduarte.github.io/feed.xml" rel="self" type="application/rss+xml" />
+    
       <item>
-        <title>{{ post.title | xml_escape }}</title>
+        <title>Do I Need to test my code?</title>
         <description>
-          {% if post.subtitle %}{{ post.subtitle | xml_escape }} - {% endif %}
-          {{ post.content | strip_html | xml_escape | truncatewords: 50 }}
+          What should I test? - 
+          It is difficult to find any developer who does not agree with the title of this publication, even more, if asked in a job interview. Although, some developers took what Kent Beck once said “I get paid for code that works, not for tests” as a license to not test...
         </description>
-        <pubDate>{{ post.date | date: "%a, %d %b %Y %H:%M:%S %z" }}</pubDate>
-        <link>{{ post.url | absolute_url }}</link>
-        <guid isPermaLink="true">{{ post.url | absolute_url }}</guid>
+        <pubDate>Sat, 20 Jul 2019 00:00:00 +0200</pubDate>
+        <link>https://josemyduarte.github.io/2019-07-20-do-i-need-to-test-my-code/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2019-07-20-do-i-need-to-test-my-code/</guid>
       </item>
-    {% endfor %}
+    
+      <item>
+        <title>Responsabilities of a Software Architect</title>
+        <description>
+          Highlights and notes from the book Building Microservices - 
+          A Software Architect is like a Town Planner.. I recently finished Building Microservices book by Sam Newman and the first concept that I found interesting in Sam’s book was the definition of what a Software Architect should do. He makes a comparison against Town Planners. He explains the idea with...
+        </description>
+        <pubDate>Fri, 05 Jul 2019 00:00:00 +0200</pubDate>
+        <link>https://josemyduarte.github.io/2019-07-05-responsabilities-of-a-software-architect/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2019-07-05-responsabilities-of-a-software-architect/</guid>
+      </item>
+    
+      <item>
+        <title>TDD Estilo Londres</title>
+        <description>
+          Test Driven Design - 
+          Hace ya algunos años se habla mucho de TDD; principalmente sobre como puede mejorar tu confianza en el código y a la vez de cierta forma documentar lo que se espera de él, facilitando la incorporación de otros desarrolladores y de nuevos features. Algunos lo llaman Test Driven Development, pero...
+        </description>
+        <pubDate>Sun, 09 Dec 2018 00:00:00 +0100</pubDate>
+        <link>https://josemyduarte.github.io/2018-12-09-tdd-outside-in/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2018-12-09-tdd-outside-in/</guid>
+      </item>
+    
+      <item>
+        <title>¿Como mantener actualizado el entorno de múltiples desarrolladores?</title>
+        <description>
+          git hooks - 
+          Vuelven de vacaciones a la oficina y se encuentran con decenas de correos, y entre ellos alguno sobre actualizar “X” variable de entorno, o sobre la creación de un nuevo microservicio por lo que debes actualizar tu /etc/hosts con el nuevo dominio. Naturalmente, seguir esta “metodología” mantiene altas las probabilidades...
+        </description>
+        <pubDate>Sun, 02 Sep 2018 00:00:00 +0200</pubDate>
+        <link>https://josemyduarte.github.io/2018-09-02-mantener-actializado-el-entorno/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2018-09-02-mantener-actializado-el-entorno/</guid>
+      </item>
+    
+      <item>
+        <title>Superando la entrevista</title>
+        <description>
+          La primera impresión importa - 
+          Es completamente normal ponerse nervioso ante una entrevista de trabajo, el no saber qué preguntas esperar o cómo prepararse no ayudan en absoluto a sentirse calmado. Sin embargo, es importante dominar este aspecto de la vida laboral, ya que solo hay una oportunidad para dejar una buena primera impresión. Haz...
+        </description>
+        <pubDate>Sat, 04 Aug 2018 00:00:00 +0200</pubDate>
+        <link>https://josemyduarte.github.io/2018-08-04-superando-la-entrevista/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2018-08-04-superando-la-entrevista/</guid>
+      </item>
+    
+      <item>
+        <title>Errores de novato</title>
+        <description>
+          Evitando NullPointerExceptions - 
+          NullPointerException, no creo equivocarme al afirmar que difícilmente encontraremos un programador de Java que no haya visto esa excepción en su vida. Esta excepción nos indica que hemos intentado utilizar un null donde un objeto era requerido, esto incluye intentar: Ejecutar un método en un null Acceder o modificar un...
+        </description>
+        <pubDate>Thu, 15 Feb 2018 00:00:00 +0100</pubDate>
+        <link>https://josemyduarte.github.io/2018-02-15-evitando-nulls/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2018-02-15-evitando-nulls/</guid>
+      </item>
+    
+      <item>
+        <title>Programadores: ¿Crear o Mantener?</title>
+        <description>
+          Makers vs Menders - 
+          Los desarrolladores o programadores pueden ser clasificados según distintos puntos de vista: tenemos aquellos que prefieren más la programación móvil a la web, a los que les gusta más el frontend que al backend o aquellos que prefieren JAVA sobre C#, entre otros. Pero en este momento quiero distinguir con...
+        </description>
+        <pubDate>Sun, 15 Oct 2017 00:00:00 +0200</pubDate>
+        <link>https://josemyduarte.github.io/2017-10-15-programadores-crear-o-mantener/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2017-10-15-programadores-crear-o-mantener/</guid>
+      </item>
+    
+      <item>
+        <title>Software que cuesta mantener</title>
+        <description>
+          Un buen diseño evoluciona sin dolor - 
+          ¿Puede doler mantener software? Pues si, puede doler mentalmente (desgaste intelectual, estrés), físicamente (horas sin dormir o descansar apropiadamente) y económicamente (si es un producto o tienes desarrolladores contratados). Y ¿por qué puede resultar doloroso? Por múltiples razones, pero me atrevo a decir que la principal razón técnica es por...
+        </description>
+        <pubDate>Tue, 27 Jun 2017 00:00:00 +0200</pubDate>
+        <link>https://josemyduarte.github.io/2017-06-27-software-que-cuesta-mantener/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2017-06-27-software-que-cuesta-mantener/</guid>
+      </item>
+    
+      <item>
+        <title>El arte de la simplicidad</title>
+        <description>
+          Código simple == Código de calidad - 
+          En la empresa en la que trabajo actualmente (RocketROI) como premio a una especie de competencia interna, me han regalado una entrada a la Java Barcelona Conference. Esta conferencia tuvo una duración de 3 días, siendo los primeros 2 días exclusivos para las charlas y el último día dedicado a los...
+        </description>
+        <pubDate>Mon, 26 Jun 2017 00:00:00 +0200</pubDate>
+        <link>https://josemyduarte.github.io/2017-06-26-the-art-of-simplicity/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2017-06-26-the-art-of-simplicity/</guid>
+      </item>
+    
+      <item>
+        <title>First post!</title>
+        <description>
+          Yohooo! - 
+          Este post marca el inicio de algo importante, algo impresionante: mi blog!
+
+        </description>
+        <pubDate>Sun, 25 Jun 2017 00:00:00 +0200</pubDate>
+        <link>https://josemyduarte.github.io/2017-06-25-first-post/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2017-06-25-first-post/</guid>
+      </item>
+    
   </channel>
 </rss>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <link rel="shortcut icon" type="image/x-icon" href="https://github.com/favicon.ico">
+
+  <title>Responsabilities of a Software Architect</title>
+
+  <meta name="author" content="Josemy Duarte" />
+
+  
+  <meta name="description" content="Highlights and notes from the book Building Microservices">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="https://josemyduarte.github.io/feed.xml" />
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67420525-2"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-67420525-2');
+</script>
+
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="Responsabilities of a Software Architect" />
+  
+
+   
+  <meta property="og:description" content="Highlights and notes from the book Building Microservices">
+  
+
+
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Josemy says..." />
+
+  
+  <meta property="og:url" content="https://josemyduarte.github.io/2019-07-05-responsabilities-of-a-software-architect/" />
+  <link rel="canonical" href="https://josemyduarte.github.io/2019-07-05-responsabilities-of-a-software-architect/" />
+  
+
+  
+  <meta property="og:image" content="/img/building-microservices-book-cover.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="Responsabilities of a Software Architect" />
+  
+
+  
+  <meta name="twitter:description" content="Highlights and notes from the book Building Microservices">
+  
+
+  
+  <meta name="twitter:image" content="https://josemyduarte.github.io/img/building-microservices-book-cover.png" />
+  
+  
+  
+
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="https://josemyduarte.github.io/">Josemy says...</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li><a href="/articles">Read later</a></li>
+          <li><a href="/books">Books</a></li>
+          <li><a href="/aboutme">About Me</a></li></ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://josemyduarte.github.io/">
+	      <img class="avatar-img" src="/img/building-microservices-book-cover.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>Responsabilities of a Software Architect</h1>
+		  
+		    
+			<h2 class="post-subheading">Highlights and notes from the book Building Microservices</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on July 5, 2019</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <h2 id="a-software-architect-is-like-a-town-planner">A Software Architect is like a Town Planner..</h2>
+
+<p>I recently finished <em>Building Microservices</em> book by Sam Newman and the first concept that I found interesting in Sam’s book was the definition of what a Software Architect should do. He makes a comparison against Town Planners. He explains the idea with the game SimCity as an example, where you are the Town Planner and you are not involved in the specifics of any building, but instead in the design of how the city would be connected, how the city can take advantage of its resources and always taking into consideration what new requirements (city growth) the future could bring. That doesn’t mean that a Software Architect shouldn’t code or that he shouldn’t interfer in the design of a specific service. On the contrary, a Software Architect <strong>should</strong> code, and I would try to elaborate why I believe that in another post, but the main focus of a Software Architect as a “Town Planner” should be to plan and design for the bigger picture.</p>
+
+<h2 id="principles-and-practices">Principles and Practices</h2>
+
+<p>To help make the daunting work of a Software Architect “easier”, it is important to define the Principles and  Desired Practices that developers must follow. In a large organization the <em>practices</em> could differ between different teams, for example, the <em>practices</em> defined for a PHP team are not necessarily the same for a Python team. Although, their principles could be the same.</p>
+
+<p>An example of a <em>practice</em> in a REST/HTTP application could be having documented every endpoint of a service (Swagger?). Or that each service must be designed with Continuous Deployment in mind. As <em>principles</em>, we could be talking of things like making choices in favor of changes and quick feedback.</p>
+
+<p>Now, why to do this? Well, I think that defining this is really important as it provides guidance to developers on how to address some of the challenges that arise while developing software. In fact, it makes clear what we are aiming to (as a team) and facilitates teamwork for a common goal.</p>
+
+<h2 id="standards">Standards</h2>
+
+<p>We have been talking about principles and desired practices, but it is also important to define standards. What kind of standards? Well, probably having some services communicating through RPC, some using a Queue and others with REST/HTTP is a recipe for long nights and high stress. So, if it’s in your hands, why not define a unique way for your services to communicate with each other? It will make facilitate monitoring, developing, debugging, etc.</p>
+
+<p>Once have defined what it is the standard for communication, it is also important to define a non-ambiguous way of knowing when an error occurred in a request. HTTP provides some defined standards that can help you to do it correctly. But whatever protocol you choose, make sure you have a standard way of knowing when a request was OK or not, since based in that, you probably will have a lot of different paths in your logic.</p>
+
+<h2 id="monitoring">Monitoring</h2>
+
+<p>I know from first hand that monitoring in a monolith is not the same as in microservices. A key thing to keep in mind when implementing microservices is that it is essential to have a cross-service view of the system health, it is necessary to have a way of monitoring the overall picture. Without it, things can get out of hand quickly once you start having more than 3 different services with more than 2 replicas, I assure you.</p>
+
+<p>It is important to have standards for monitoring as well. If you have a service that pushes logs to the cloud, another that writes to a file in its container and another that just prints to standard output, having a cross-service view of the system health will not be fun at all.</p>
+
+<h2 id="tip">Tip</h2>
+
+<p>One thing that might help to get all this right are exemplars. With a <strong>real world</strong> exemplar you will provide to developers an easy way to follow not only your <em>Practices</em> and <em>Principles</em>, but also your standards.</p>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#books">books</a>
+          
+            <a href="/tags#notes">notes</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=Responsabilities+of+a+Software+Architect - &url=https%3A%2F%2Fjosemyduarte.github.io%2F2019-07-05-responsabilities-of-a-software-architect%2F&via=&related="
+      class="btn btn-social-icon btn-twitter" target="_blank" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjosemyduarte.github.io%2F2019-07-05-responsabilities-of-a-software-architect%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjosemyduarte.github.io%2F2019-07-05-responsabilities-of-a-software-architect%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2018-12-09-tdd-outside-in/" data-toggle="tooltip" data-placement="top" title="TDD Estilo Londres">&larr; Previous Post</a>
+        </li>
+        
+        
+        <li class="next">
+          <a href="/2019-07-20-do-i-need-to-test-my-code/" data-toggle="tooltip" data-placement="top" title="Do I Need to test my code?">Next Post &rarr;</a>
+        </li>
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:duartejosemy@gmail.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/josemyduarte" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/JosemyD" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://www.instagram.com/josemy.duarte" title="Instagram"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Instagram</span>
+              </a>
+            </li><li><a href="https://linkedin.com/in/josemyduarte" title="LinkedIn"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Josemy Duarte
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+  
+  </body>
+</html>
