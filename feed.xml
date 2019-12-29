@@ -7,6 +7,17 @@
     <atom:link href="https://josemyduarte.github.io/feed.xml" rel="self" type="application/rss+xml" />
     
       <item>
+        <title>First steps with Serverless Framework</title>
+        <description>
+          Building a simple Telegram Bot - 
+          In this post I want to show how I build a simple Telegram bot using serverless functions and using a tool that helped me to develop and test everything locally. I have never built a Telegram bot before, nor have I developed anything serverless or programmed in JS, so it...
+        </description>
+        <pubDate>Sun, 29 Dec 2019 00:00:00 +0100</pubDate>
+        <link>https://josemyduarte.github.io/2019-12-29-trying-serverless-framework/</link>
+        <guid isPermaLink="true">https://josemyduarte.github.io/2019-12-29-trying-serverless-framework/</guid>
+      </item>
+    
+      <item>
         <title>Do I Need to test my code?</title>
         <description>
           What should I test? - 

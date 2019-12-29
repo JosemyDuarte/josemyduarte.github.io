@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2016 -->
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+  <link rel="shortcut icon" type="image/x-icon" href="https://github.com/favicon.ico">
+
+  <title>First steps with Serverless Framework</title>
+
+  <meta name="author" content="Josemy Duarte" />
+
+  
+  <meta name="description" content="Building a simple Telegram Bot">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="https://josemyduarte.github.io/feed.xml" />
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67420525-2"></script>
+    <script>
+          window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-67420525-2');
+</script>
+
+
+  
+
+  
+
+
+  
+    
+      
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.6.0/css/font-awesome.min.css" />
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    
+      <link rel="stylesheet" href="/css/bootstrap-social.css" />
+    
+      <link rel="stylesheet" href="/css/main.css" />
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" />
+    
+      <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" />
+    
+  
+
+  
+
+  
+
+  
+
+    <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="First steps with Serverless Framework" />
+  
+
+   
+  <meta property="og:description" content="Building a simple Telegram Bot">
+  
+
+
+  <meta property="og:type" content="article" />
+  <meta property="og:locale" content="es_ES" />
+  <meta property="og:site_name" content="Josemy says..." />
+
+  
+  <meta property="og:url" content="https://josemyduarte.github.io/2019-12-29-trying-serverless-framework/" />
+  <link rel="canonical" href="https://josemyduarte.github.io/2019-12-29-trying-serverless-framework/" />
+  
+
+  
+  <meta property="og:image" content="/img/botfather.png" />
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:site" content="@" />
+  <meta name="twitter:creator" content="@" />
+
+  
+  <meta name="twitter:title" content="First steps with Serverless Framework" />
+  
+
+  
+  <meta name="twitter:description" content="Building a simple Telegram Bot">
+  
+
+  
+  <meta name="twitter:image" content="https://josemyduarte.github.io/img/botfather.png" />
+  
+  
+  
+
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+  
+    <nav class="navbar navbar-default navbar-fixed-top navbar-custom">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button><a class="navbar-brand" href="https://josemyduarte.github.io/">Josemy says...</a></div>
+
+    <div class="collapse navbar-collapse" id="main-navbar">
+      <ul class="nav navbar-nav navbar-right">
+          <li class="navlinks-container">
+            <a class="navlinks-parent" href="javascript:void(0)">About Me</a>
+            <div class="navlinks-children">
+              <a href="/meetups">MeetUps</a>
+              <a href="/articles">Read later</a>
+              <a href="/books">Books</a>
+              <a href="/aboutme">Who I am?</a>
+            </div>
+          </li>
+        </ul>
+    </div>
+
+	
+	<div class="avatar-container">
+	  <div class="avatar-img-border">
+	    <a href="https://josemyduarte.github.io/">
+	      <img class="avatar-img" src="/img/botfather.png" />
+		</a>
+	  </div>
+	</div>
+	
+
+  </div>
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <div class="post-heading">
+          <h1>First steps with Serverless Framework</h1>
+		  
+		    
+			<h2 class="post-subheading">Building a simple Telegram Bot</h2>
+			
+		  
+		  
+		  
+		  <span class="post-meta">Posted on December 29, 2019</span>
+		  
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>In this post I want to show how I build a simple Telegram bot using serverless functions and using a tool that helped me to develop and test everything locally. I have never built a Telegram bot before, nor have I developed anything serverless or programmed in JS, so it is done by and for beginners. But first, some concepts.</p>
+
+<h2 id="what-is-serverless">What is Serverless?</h2>
+
+<p>Serverless computing (or serverless for short), is an execution model where the cloud provider (AWS, Azure, GCP, …) is responsible for executing a piece of code by dynamically allocating the resources. And only charging for the amount of resources used to run the code. The code is typically run inside stateless containers that can be triggered by a variety of events including http requests, database events, queuing services, monitoring alerts, file uploads, scheduled events (cron jobs), etc. The code that is sent to the cloud provider for execution is usually in the form of a function.</p>
+
+<h2 id="what-is-serverless-framework">What is Serverless Framework?</h2>
+
+<p>The Serverless Framework consists of an open source CLI that makes it easy to develop, deploy and test serverless apps across different cloud providers, as well as a hosted Dashboard that includes features designed to further simplify serverless development, deployment, and testing, and enable you to easily secure and monitor your serverless apps.</p>
+
+<h2 id="project-requirements">Project Requirements</h2>
+
+<p>Lets begin building our Telegram bot. For that we’ll need:</p>
+
+<h3 id="serverless-cli">Serverless CLI</h3>
+
+<p>This is the tool that will help us with the development, test and future deployment of our serverless project. If you want to have it globally installed just run:</p>
+
+<p><code class="highlighter-rouge">npm install -g serverless</code></p>
+
+<h3 id="ngrok">Ngrok</h3>
+
+<p>Ngrok allows you to expose a web server running on our local machine to the internet. We just need to tell ngrok what port our web server is listening on.</p>
+
+<p>When you start ngrok, it will display in your terminal the public URL of your tunnel and other status and metrics information about connections made over your tunnel. We will see an example later. First let’s install it, just go <a href="https://ngrok.com/download">here</a> and follow the instructions.</p>
+
+<h3 id="telegram-bot">Telegram Bot</h3>
+
+<p>Just talk to BotFather (find him in Telegram App) and follow a few simple steps to create a new bot. Once you’ve created a bot and received your authorization token (save it for later) we can go to our next step. For more info about telegram bots check the <a href="https://core.telegram.org/bots">docs</a>.</p>
+
+<h2 id="putting-it-all-together">Putting it all together</h2>
+<p>First, lets create a node project. For that just create a folder for the project and once inside run:</p>
+
+<p><code class="highlighter-rouge">npm init</code></p>
+
+<p>Follow the steps and when it ask you for an <em>entry point</em> put <code class="highlighter-rouge">handler.js</code>.</p>
+
+<p>Now, let’s install our dependencies. First, Serverless CLI:</p>
+
+<p><code class="highlighter-rouge">npm install -D serverless serverless-offline</code></p>
+
+<p>And now <a href="https://telegraf.js.org/#/">Telegraf</a>, a Telegram library that will help us interacting with our bot:</p>
+
+<p><code class="highlighter-rouge">npm install --save telegraf</code></p>
+
+<p>At this point you should have a <code class="highlighter-rouge">package.json</code> with something like this at the end:</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
+</span><span class="err">...</span><span class="w">
+  </span><span class="s2">"devDependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"serverless"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^1.60.4"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"serverless-offline"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^5.12.1"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="s2">"dependencies"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="s2">"telegraf"</span><span class="p">:</span><span class="w"> </span><span class="s2">"^3.34.1"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre></div></div>
+
+<p>Now, let’s create our serverless descriptor. For that just create a file named <code class="highlighter-rouge">serverless.yml</code> and put this:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">service</span><span class="pi">:</span> <span class="s">telegram-bot</span>
+
+<span class="na">plugins</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">serverless-offline</span>
+<span class="na">provider</span><span class="pi">:</span>
+  <span class="na">name</span><span class="pi">:</span> <span class="s">aws</span>
+  <span class="na">runtime</span><span class="pi">:</span> <span class="s">nodejs12.x</span>
+  <span class="na">stage</span><span class="pi">:</span> <span class="s">dev</span>
+  <span class="na">region</span><span class="pi">:</span> <span class="s">us-east-1</span>
+  <span class="na">environment</span><span class="pi">:</span>
+    <span class="na">TELEGRAM_TOKEN</span><span class="pi">:</span> <span class="s">${env:TELEGRAM_TOKEN}</span>
+
+<span class="na">functions</span><span class="pi">:</span>
+  <span class="na">find</span><span class="pi">:</span>
+    <span class="na">handler</span><span class="pi">:</span> <span class="s">handler.find</span>
+    <span class="na">events</span><span class="pi">:</span>
+      <span class="pi">-</span> <span class="na">http</span><span class="pi">:</span>
+          <span class="na">path</span><span class="pi">:</span> <span class="s">find</span>
+          <span class="na">method</span><span class="pi">:</span> <span class="s">post</span>
+          <span class="na">cors</span><span class="pi">:</span> <span class="no">true</span>
+</code></pre></div></div>
+<p>This file describes to Serverless CLI everything it needs to know to deploy our function. We could easily add more functions to this file and that will allow us to deploy more than one function with just one command.</p>
+
+<p>Finally, let’s add the code of our functions. Create a file called <code class="highlighter-rouge">handler.js</code> and add this code:</p>
+
+<div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="s1">'use strict'</span><span class="p">;</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">find</span> <span class="o">=</span> <span class="k">async</span> <span class="nx">event</span> <span class="o">=&gt;</span> <span class="p">{</span>
+<span class="kd">const</span> <span class="nx">Telegraf</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'telegraf'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="nx">bot</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Telegraf</span><span class="p">(</span><span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">TELEGRAM_TOKEN</span><span class="p">)</span>
+
+<span class="nx">bot</span><span class="p">.</span><span class="nx">command</span><span class="p">(</span><span class="s1">'oldschool'</span><span class="p">,</span> <span class="p">(</span><span class="nx">ctx</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="nx">ctx</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="s1">'Hello'</span><span class="p">))</span>
+<span class="nx">bot</span><span class="p">.</span><span class="nx">command</span><span class="p">(</span><span class="s1">'modern'</span><span class="p">,</span> <span class="p">({</span> <span class="nx">reply</span> <span class="p">})</span> <span class="o">=&gt;</span> <span class="nx">reply</span><span class="p">(</span><span class="s1">'Yo'</span><span class="p">))</span>
+<span class="nx">bot</span><span class="p">.</span><span class="nx">command</span><span class="p">(</span><span class="s1">'hipster'</span><span class="p">,</span> <span class="nx">Telegraf</span><span class="p">.</span><span class="nx">reply</span><span class="p">(</span><span class="s1">'λ'</span><span class="p">))</span>
+
+<span class="nx">bot</span><span class="p">.</span><span class="nx">launch</span><span class="p">();</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="make-it-work">Make it work!</h2>
+
+<p>Lets run everything! First, lets put our telegram token in our environment, for that just run:</p>
+
+<p><code class="highlighter-rouge">export TELEGRAM_TOKEN=&lt;YOUR_TOKEN&gt;</code></p>
+
+<p>To run our function locally we need to execute:</p>
+
+<p><code class="highlighter-rouge">serverless offline</code></p>
+
+<p>That command will list all the functions deployed with the corresponding path. We’ll have a server listening for our request in <strong>localhost</strong> over the port <strong>3000</strong> and with a route for the <code class="highlighter-rouge">find</code> function.</p>
+
+<p><img src="/img/serverless-command.png" alt="serverless command" /></p>
+
+<p>Now, lets expose this to the internet so our Telegram Bot can make calls to our function. For that we’ll use Ngrok. Just execute:</p>
+
+<p><code class="highlighter-rouge">ngrok http 3000</code></p>
+
+<p><img src="/img/ngrok.png" alt="ngrok" /></p>
+
+<p>We will take the HTTPS url that it gives us (it’s different for every execution) in this case <a href="https://bbdfb6d3.ngrok.io">https://bbdfb6d3.ngrok.io</a> and our Telegram Bot Token and we will make a request to the following URL to set the Webhook URL for the Telegram bot:</p>
+
+<p><code class="highlighter-rouge">https://api.telegram.org/bot[TELEGRAM_BOT_TOKEN]/setWebhook?url=[NGROK_URL]/find</code></p>
+
+<p>It’s important to use the HTTPS version of the URL, without encryption Telegram won’t accept it. And if we get a screen like this, we know everything went well:</p>
+
+<p><img src="/img/telegram-webhook.png" alt="webhook" /></p>
+
+<p>And now we can speak to our bot with everything running in our machine.</p>
+
+<p><img src="/img/telegram-bot.png" alt="telegram bot" /></p>
+
+<h2 id="deploying-to-aws">Deploying to AWS</h2>
+
+<p>One of the perks of Serverless CLI is that now with just one command we can go from having everything in our machine to deploying everything to our cloud provider. Our <code class="highlighter-rouge">serverless.yml</code> has as provider AWS, so for this example we will deploy it there, but it would be painless to change it to GCP or Azure.</p>
+
+<p><code class="highlighter-rouge">serverless deploy</code></p>
+
+<p><img src="/img/serverless-deploy.png" alt="serverless deploy" /></p>
+
+<p>That is everything that we need to execute to have our code in AWS. Now we could change the Ngrok URL for this one and everything should work without problems.</p>
+
+<p>And to clean everything in our AWS account just run <code class="highlighter-rouge">serverless remove</code>.</p>
+
+<h3 id="sources">Sources</h3>
+
+<p><a href="https://github.com/JosemyDuarte/serverless_telegram_bot">Telegram Bot Repo</a></p>
+
+<p><a href="https://serverless-stack.com/chapters/what-is-serverless.html">Serverless Stack</a></p>
+
+<p><a href="https://serverless.com/framework/docs/">Serverless Framework</a></p>
+
+<p><a href="https://core.telegram.org/bots">Telegram Bots Docs</a></p>
+
+<p><a href="https://telegraf.js.org/#/">Telegraf</a></p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#serverless">serverless</a>
+          
+            <a href="/tags#code">code</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <!--- Share on Twitter -->
+    <a href="https://twitter.com/intent/tweet?text=First+steps+with+Serverless+Framework - &url=https%3A%2F%2Fjosemyduarte.github.io%2F2019-12-29-trying-serverless-framework%2F&via=&related="
+      class="btn btn-social-icon btn-twitter" target="_blank" title="Share on Twitter">
+      <span class="fa fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+  <!--- Share on Facebook -->
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fjosemyduarte.github.io%2F2019-12-29-trying-serverless-framework%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fa fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+  <!--- Share on LinkedIn -->
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fjosemyduarte.github.io%2F2019-12-29-trying-serverless-framework%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fa fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pager blog-pager">
+        
+        <li class="previous">
+          <a href="/2019-07-20-do-i-need-to-test-my-code/" data-toggle="tooltip" data-placement="top" title="Do I Need to test my code?">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+
+      
+        <div class="disqus-comments">
+          
+        </div>
+          
+        <div class="staticman-comments">
+          
+
+        </div>
+        <div class="justcomments-comments">
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+        <ul class="list-inline text-center footer-links"><li><a href="/feed.xml" title="RSS"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">RSS</span>
+              </a>
+            </li><li><a href="mailto:duartejosemy@gmail.com" title="Email me"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Email me</span>
+              </a>
+            </li><li><a href="https://github.com/josemyduarte" title="GitHub"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">GitHub</span>
+              </a>
+            </li><li><a href="https://twitter.com/JosemyD" title="Twitter"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Twitter</span>
+              </a>
+            </li><li><a href="https://www.instagram.com/josemy.duarte" title="Instagram"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">Instagram</span>
+              </a>
+            </li><li><a href="https://linkedin.com/in/josemyduarte" title="LinkedIn"><span class="fa-stack fa-lg" aria-hidden="true">
+                  <i class="fa fa-circle fa-stack-2x"></i>
+                  <i class="fa fa-linkedin fa-stack-1x fa-inverse"></i>
+                </span>
+                <span class="sr-only">LinkedIn</span>
+              </a>
+            </li></ul>
+      <p class="copyright text-muted">
+      Josemy Duarte
+      &nbsp;&bull;&nbsp;
+      2019
+
+      
+
+      
+      </p>
+          <!-- Please don't remove this, keep my open source work credited :) -->
+    <p class="theme-by text-muted">
+      Theme by
+      <a href="https://deanattali.com/beautiful-jekyll/">beautiful-jekyll</a>
+    </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+
+
+
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script>
+      	if (typeof jQuery == 'undefined') {
+          document.write('<script src="/js/jquery-1.11.2.min.js"></scr' + 'ipt>');
+      	}
+      </script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/bootstrap.min.js"></script>
+    
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/js/main.js"></script>
+    
+  
+
+
+  
+  </body>
+</html>
