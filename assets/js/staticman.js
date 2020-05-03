@@ -8,7 +8,7 @@
 
     var endpoint = 'https://staticman3.herokuapp.com/v3/entry/github/';
     var repository = '';
-    var branch = 'master';
+    var branch = '';
 
     $.ajax({
       type: $(this).attr('method'),
