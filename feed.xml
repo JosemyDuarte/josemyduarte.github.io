@@ -14,7 +14,7 @@
         <title>AWS Lambda: Quarkus vs Plain Java</title>
         <description>
           Benchmark expirement - 
-          In my current job I’ve been using AWS Lambda with plain Java 8, and to be honest, the first time this didn’t sound too good for me. I mean, don’t get me wrong, I’m mainly a Java Developer, but from previous experiences, I know how slow a Spring Boot app...
+          TL;DR In my current job I’ve been using AWS Lambda with plain Java 8, and to be honest, the first time this didn’t sound too good for me. I mean, don’t get me wrong, I’m mainly a Java Developer, but from previous experiences, I know how slow a Spring Boot...
         </description>
         <pubDate>Sun, 28 Jun 2020 00:00:00 +0200</pubDate>
         <link>/2020-06-28-quarkus-vs-plain-java/</link>
