@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2020 -->
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <title>AWS Lambda: Quarkus vs Plain Java</title>
+  
+  
+  <meta name="author" content="Josemy Duarte">
+  
+  
+  
+  <meta name="description" content="Benchmark expirement">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="/feed.xml">
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67420525-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-67420525-2');
+</script>
+
+
+  
+
+  
+
+
+  
+    
+      
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+    
+      
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
+
+    
+      
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+
+
+    
+      
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+
+
+    
+  
+
+  
+    
+      <link rel="stylesheet" href="/assets/css/bootstrap-social.css">
+    
+      <link rel="stylesheet" href="/assets/css/main.css">
+    
+  
+
+  
+
+  
+
+  <!-- Facebook OpenGraph tags -->
+  
+
+  
+  <meta property="og:title" content="AWS Lambda: Quarkus vs Plain Java">
+  
+
+   
+  <meta property="og:description" content="Benchmark expirement">
+  
+
+
+  <meta property="og:type" content="website">
+
+  
+  <meta property="og:url" content="/2020-06-28-quarkus-vs-plain-java/">
+  <link rel="canonical" href="/2020-06-28-quarkus-vs-plain-java/">
+  
+
+  
+  <meta property="og:image" content="/assets/img/quarkus_logo.png">
+  
+
+
+  <!-- Twitter summary cards -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:site" content="@JosemyD">
+  <meta name="twitter:creator" content="@JosemyD">
+
+  
+  <meta name="twitter:title" content="AWS Lambda: Quarkus vs Plain Java">
+  
+
+  
+  <meta name="twitter:description" content="Benchmark expirement">
+  
+
+  
+  <meta name="twitter:image" content="/assets/img/quarkus_logo.png">
+  
+
+  
+
+  
+
+</head>
+
+
+  <body>
+
+    
+
+  
+    <nav class="navbar navbar-expand-md navbar-light fixed-top navbar-custom "><a class="navbar-brand" href="">Josemy says...</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="main-navbar">
+    <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://josemyduarte.github.io">Home</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stuff</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="/meetups">MeetUps</a>
+                  <a class="dropdown-item" href="/articles">Read later</a>
+                  <a class="dropdown-item" href="/books">Books</a>
+            </div>
+          </li>
+        
+          <li class="nav-item">
+            <a class="nav-link" href="/aboutme">About Me</a>
+          </li></ul>
+  </div>
+
+  
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        <a href="">
+          <img alt="Navbar avatar" class="avatar-img" src="/assets/img/quarkus_logo.png" />
+        </a>
+      </div>
+    </div>
+  
+
+</nav>
+
+
+    <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container-md">
+    <div class="row">
+      <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+        <div class="post-heading">
+          <h1>AWS Lambda: Quarkus vs Plain Java</h1>
+      
+        
+      <h2 class="post-subheading">Benchmark expirement</h2>
+      
+      
+      
+      
+          <span class="post-meta">Posted on June 28, 2020</span>
+          
+      
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class="container-md">
+  <div class="row">
+    <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+
+      
+
+      <article role="main" class="blog-post">
+        <p>In my current job I’ve been using <a href="https://aws.amazon.com/es/lambda/">AWS Lambda</a> with plain Java 8, and to be honest, the first time this didn’t sound too good for me. I mean, don’t get me wrong, I’m mainly a Java Developer, but from previous experiences, I know how slow a Spring Boot app can be to start and the fact that serverless functions have what it’s known as <a href="https://en.wikipedia.org/wiki/Cold_start_(computing)">“Cold Start”</a> didn’t make too much sense for me.</p>
+
+<p>However, they didn’t have too many problems with cold starts because first, they don’t use SpringBoot and second for those services that it is unaffordable a cold start there is something called “Warm Up” which previously it was just a CRON that would make a call to your Lambda to keep it alive and avoid cold starts, but now AWS has released a new feature called <a href="https://aws.amazon.com/blogs/compute/new-for-aws-lambda-predictable-start-up-times-with-provisioned-concurrency/">“Provisioned Capacity”</a> which will initialize the requested number of execution environments so they can be ready to respond to invocations.</p>
+
+<p>On the other hand, not so long ago I saw a demonstration given by a RedHat employee of their new project [Quarkus] (https://quarkus.io/). It showed how incredibly fast it was to start a Java app and how well it works with Kubernetes, as Quarkus was meant to make Java more cloud-friendly.</p>
+
+<p>Just a few days ago, my brain decided to relate AWS Lambda with plain Java (as in my current job) and Quarkus, and I was wondering what the results would be in terms of cold start, memory, and speed for the following requests. So this is my experiment, probably not the most scientifically accurate, but I hope it gives you an idea of ​​the performance of these technologies with AWS Lambda.</p>
+
+<p>I developed two simple projects: one with Java 8 with the default DynamoDB client and the other with Quarkus and the Quarkus DynamoDB client. Both projects will simply print the received request, query an existing DynamoDB item, and return it. At the end of the post, you will find the repositories if you want to play around with them (note that the code is not beautiful, it was developed just for the sake of this experiment). And these are my findings:</p>
+
+<h3 id="plain-java-8">Plain Java 8</h3>
+
+<p><img src="/assets/img/java-lambda-cloudwatch.png" alt="Java8LambdaCloudwatch" /></p>
+
+<h3 id="quarkus-java-11">Quarkus Java 11</h3>
+
+<p><img src="/assets/img/quarkus-lambda-cloudwatch.png" alt="Java8LambdaCloudwatch" /></p>
+
+<p>So, in terms of cold start, we can appreciate that for the first request Plain Java 8 took almost <strong>24800ms</strong> to finish while Quarkus did it in less than half with <strong>9000ms</strong>.</p>
+
+<p>The following requests with the function “hot” took Plain Java 8 an average of 484.78ms. While for Quarkus it took an average of 503.55 ms. Since these numbers are only for 3 requests and the numbers are very close to each other, I would dare to say that they would probably converge to the same number with a larger sample. Anyway, we can accept that after the cold start, the following requests seem to last more or less the same in Plain Java 8 or Quarkus.</p>
+
+<p>In terms of memory, it’s fair to note that Quarkus (172mb) required more memory than Plain Java 8 (137mb). But keep in mind that Quarkus provides us with a dependency injection feature (among other things) that our other option doesn’t provide.</p>
+
+<p>Yeah, I know, probably I should try making 1K requests and take the average or probably my code is not fair with one of the subjects under test, I’m completely open to suggestions, but what I can guarantee is that I did this 3 times (destroying all the infrastructure and creating it again) and the results were similar.</p>
+
+<p>Other point to take in consideration is the size of the package uploaded to AWS. We can appreciate that in this case Quarkus is heavier than Plain Java 8.</p>
+
+<p><img src="/assets/img/aws-lambdas-details.png" alt="PackageSizeOfLambdaFunctions" /></p>
+
+<p>I know there is a feature in Quarkus that allows us to produce a native app, which could have a faster cold start, but so far I have not been able to get it to work with AWS Lambda. When I make it work I will publish my findings.</p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          Tags:
+          
+          
+            <a href="/tags#serverless">serverless</a>
+          
+            <a href="/tags#code">code</a>
+          
+            <a href="/tags#aws">aws</a>
+          
+            <a href="/tags#benchmark">benchmark</a>
+          
+          
+        </div>
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+    <a href="https://twitter.com/intent/tweet?text=AWS+Lambda%3A+Quarkus+vs+Plain+Java&url=%2F2020-06-28-quarkus-vs-plain-java%2F"
+      class="btn btn-social-icon btn-twitter" target="_blank" title="Share on Twitter">
+      <span class="fab fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
+    </a>
+  
+
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2020-06-28-quarkus-vs-plain-java%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fab fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
+    </a>
+  
+
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2020-06-28-quarkus-vs-plain-java%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fab fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
+
+</section>
+
+
+
+      
+
+      <ul class="pagination blog-pager">
+        
+        <li class="page-item previous">
+          <a class="page-link" href="/2019-12-29-trying-serverless-framework/" data-toggle="tooltip" data-placement="top" title="First steps with Serverless Framework">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+              
+  
+  
+  
+
+  
+
+
+
+    </div>
+  </div>
+</div>
+
+
+    <footer>
+  <div class="container-md beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+      <ul class="list-inline text-center footer-links"><li class="list-inline-item">
+    <a href="mailto:duartejosemy@gmail.com" title="Email me">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Email me</span>
+   </a>
+  </li><li class="list-inline-item">
+    <a href="https://github.com/josemyduarte" title="GitHub">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">GitHub</span>
+   </a>
+  </li><li class="list-inline-item">
+    <a href="https://twitter.com/JosemyD" title="Twitter">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Twitter</span>
+   </a>
+  </li><li class="list-inline-item">
+    <a href="https://linkedin.com/in/josemyduarte" title="LinkedIn">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">LinkedIn</span>
+   </a>
+  </li><li class="list-inline-item">
+    <a href="https://www.instagram.com/josemy.duarte" title="Instagram">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Instagram</span>
+   </a>
+  </li></ul>
+
+      
+      <p class="copyright text-muted">
+      
+        Josemy Duarte
+        &nbsp;&bull;&nbsp;
+      
+      2020
+
+      
+
+      
+      </p>
+      <!-- Please don't remove this, keep my open source work credited :) -->
+      <p class="theme-by text-muted">
+        Theme by
+        <a href="https://beautifuljekyll.com">beautiful-jekyll</a>
+      </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  
+    
+  
+    
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
+
+  
+    
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+
+  
+    
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+  
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/assets/js/main.js"></script>
+    
+  
+
+
+
+
+
+
+  
+  </body>
+</html>
