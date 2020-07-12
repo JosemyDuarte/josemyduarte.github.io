@@ -16,9 +16,9 @@
           Simplifying building automation - 
           There is a new building automation tool in the neighborhood named Earthly. Its intention is to simplify CI pipelines. Nothing like an image to explain it better: I would describe it as a docker multistage build with batteries. It actually has a Docker-like syntax. These are some features right from...
         </description>
-        <pubDate>Sun, 05 Jul 2020 00:00:00 +0200</pubDate>
-        <link>/2020-07-05-deploying-a-quarkus-rest-api-to-heroku/</link>
-        <guid isPermaLink="true">/2020-07-05-deploying-a-quarkus-rest-api-to-heroku/</guid>
+        <pubDate>Sun, 12 Jul 2020 00:00:00 +0200</pubDate>
+        <link>/2020-07-12-building-with-earthly/</link>
+        <guid isPermaLink="true">/2020-07-12-building-with-earthly/</guid>
       </item>
     
       <item>
