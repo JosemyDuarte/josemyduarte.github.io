@@ -5,14 +5,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-  <title>AWS Lambda: Quarkus vs Plain Java</title>
+  <title>Earthly + Quarkus Funqy</title>
   
   
   <meta name="author" content="Josemy Duarte">
   
   
   
-  <meta name="description" content="Benchmark expirement">
+  <meta name="description" content="Simplifying building automation">
   
 
   <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="/feed.xml">
@@ -73,23 +73,23 @@
   
 
   
-  <meta property="og:title" content="AWS Lambda: Quarkus vs Plain Java">
+  <meta property="og:title" content="Earthly + Quarkus Funqy">
   
 
    
-  <meta property="og:description" content="Benchmark expirement">
+  <meta property="og:description" content="Simplifying building automation">
   
 
 
   
   <meta property="og:type" content="article">
   <meta property="og:article:author" content="Josemy Duarte">
-  <meta property="og:article:published_time" content="2020-06-28T00:00:00+02:00">
+  <meta property="og:article:published_time" content="2020-07-05T00:00:00+02:00">
   
 
   
-  <meta property="og:url" content="/2020-06-28-quarkus-vs-plain-java/">
-  <link rel="canonical" href="/2020-06-28-quarkus-vs-plain-java/">
+  <meta property="og:url" content="/2020-07-05-deploying-a-quarkus-rest-api-to-heroku/">
+  <link rel="canonical" href="/2020-07-05-deploying-a-quarkus-rest-api-to-heroku/">
   
   
 
@@ -106,11 +106,11 @@
   <meta name="twitter:creator" content="@JosemyD">
 
   
-  <meta name="twitter:title" content="AWS Lambda: Quarkus vs Plain Java">
+  <meta name="twitter:title" content="Earthly + Quarkus Funqy">
   
 
   
-  <meta name="twitter:description" content="Benchmark expirement">
+  <meta name="twitter:description" content="Simplifying building automation">
   
 
   
@@ -179,15 +179,15 @@
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
         <div class="post-heading">
-          <h1>AWS Lambda: Quarkus vs Plain Java</h1>
+          <h1>Earthly + Quarkus Funqy</h1>
       
         
-      <h2 class="post-subheading">Benchmark expirement</h2>
+      <h2 class="post-subheading">Simplifying building automation</h2>
       
       
       
       
-          <span class="post-meta">Posted on June 28, 2020</span>
+          <span class="post-meta">Posted on July 5, 2020</span>
           
       
         </div>
@@ -208,46 +208,106 @@
       
 
       <article role="main" class="blog-post">
-        <h2 id="tldr">TL;DR</h2>
+        <p>There is a new building automation tool in the neighborhood named <a href="https://www.earthly.dev/">Earthly</a>. Its intention is to simplify CI pipelines. Nothing like an image to explain it better:</p>
 
-<p>In my current job I’ve been using <a href="https://aws.amazon.com/es/lambda/">AWS Lambda</a> with plain Java 8, and to be honest, the first time this didn’t sound too good for me. I mean, don’t get me wrong, I’m mainly a Java Developer, but from previous experiences, I know how slow a Spring Boot app can be to start and the fact that serverless functions have what it’s known as <a href="https://en.wikipedia.org/wiki/Cold_start_(computing)">“Cold Start”</a> didn’t make too much sense for me.</p>
+<p><img src="/assets/img/earthly-integration-diagram.png" alt="EarthlyIntegrationDiagram" /></p>
 
-<p>However, they didn’t have too many problems with cold starts because first, they don’t use SpringBoot and second for those services that it is unaffordable a cold start there is something called “Warm Up” which previously it was just a CRON that would make a call to your Lambda to keep it alive and avoid cold starts, but now AWS has released a new feature called <a href="https://aws.amazon.com/blogs/compute/new-for-aws-lambda-predictable-start-up-times-with-provisioned-concurrency/">“Provisioned Capacity”</a> which will initialize the requested number of execution environments so they can be ready to respond to invocations.</p>
+<p>I would describe it as a <a href="https://docs.docker.com/develop/develop-images/multistage-build/">docker multistage build</a> with batteries. It actually has a Docker-like syntax.</p>
 
-<p>On the other hand, not so long ago I saw a demonstration given by a RedHat employee of their new project [Quarkus] (https://quarkus.io/). It showed how incredibly fast it was to start a Java app and how well it works with Kubernetes, as Quarkus was meant to make Java more cloud-friendly.</p>
+<p>These are some features right from their <a href="https://github.com/earthly/earthly">repo</a>:</p>
 
-<p>Just a few days ago, my brain decided to relate AWS Lambda with plain Java (as in my current job) and Quarkus, and I was wondering what the results would be in terms of cold start, memory, and speed for the following requests. So this is my experiment, probably not the most scientifically accurate, but I hope it gives you an idea of ​​the performance of these technologies with AWS Lambda.</p>
+<p>🐳 <strong>Build anything via containers</strong> - build container images or standalone artifacts (eg binaries, packages, arbitrary files)</p>
 
-<h2 id="experiment">Experiment</h2>
+<p>🛠 <strong>Programming language agnostic</strong> - allows use of language-specific build tooling</p>
 
-<p>I developed two simple projects: one with Java 8 with the default DynamoDB client and the other with Quarkus and the Quarkus DynamoDB client. Both projects will simply print the received request, query an existing DynamoDB item, and return it. At the end of the post, you will find the repositories if you want to play around with them (note that the code is not beautiful, it was developed just for the sake of this experiment). And these are my findings:</p>
+<p>♻️ <strong>Reproducible builds</strong> - does not depend on user’s local installation. Runs the same locally, as in CI</p>
 
-<h3 id="plain-java-8">Plain Java 8</h3>
+<p>⛓ <strong>Parallelism that just works</strong> - builds in parallel without special considerations the user has to make</p>
 
-<p><img src="/assets/img/java-lambda-cloudwatch.png" alt="Java8LambdaCloudwatch" /></p>
+<p>🏠 <strong>Mono-repo friendly</strong> - ability to split the build definitions across a vast directory hierarchy</p>
 
-<h3 id="quarkus-java-11">Quarkus Java 11</h3>
+<p>🏘 <strong>Multi-repo friendly</strong> - ability to import builds or artifacts from other repositories</p>
 
-<p><img src="/assets/img/quarkus-lambda-cloudwatch.png" alt="Java8LambdaCloudwatch" /></p>
+<h3 id="building-something-with-earthly">Building something with Earthly</h3>
 
-<p>So, in terms of cold start, we can appreciate that for the first request Plain Java 8 took almost <strong>24800ms</strong> to finish while Quarkus did it in less than half with <strong>9000ms</strong>.</p>
+<p>Some days ago while taking a look at <a href="https://quarkus.io/">Quarkus</a> I found <a href="https://quarkus.io/guides/funqy-amazon-lambda">Funqy</a>, part of Quarkus’s serverless strategy that aims to provide a portable Java API to write functions deployable to various FaaS environments like AWS Lambda, Azure Functions, Knative, and Knative Events (Cloud Events). So I decided to see how easy would it be to build a simple “Hello World” with <strong>Funqy</strong> and <strong>Earthly</strong>.</p>
 
-<p>The following requests with the function “hot” took Plain Java 8 an average of 484.78ms. While for Quarkus it took an average of 503.55 ms. Since these numbers are only for 3 requests and the numbers are very close to each other, I would dare to say that they would probably converge to the same number with a larger sample. Anyway, we can accept that after the cold start, the following requests seem to last more or less the same in Plain Java 8 or Quarkus.</p>
+<p>I’m not going to focus on the Funqy part since I simply followed their <a href="https://quarkus.io/guides/funqy">guide</a>. I wanted to know how complicated it would be to define a <code class="highlighter-rouge">build.earth</code> file that allowed me to test and build a native quarkus application. This was the result:</p>
 
-<p>In terms of memory, it’s fair to note that Quarkus (172mb) required more memory than Plain Java 8 (137mb). But keep in mind that Quarkus provides us with a dependency injection feature (among other things) that our other option doesn’t provide.</p>
+<div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> quay.io/quarkus/centos-quarkus-maven:20.1.0-java11</span>
 
-<p>Yeah, I know, probably I should try making 1K requests and take the average or probably my code is not fair with one of the subjects under test, I’m completely open to suggestions, but what I can guarantee is that I did this 3 times (destroying all the infrastructure and creating it again) and the results were similar.</p>
+<span class="k">WORKDIR</span><span class="s"> /java-example</span>
 
-<p>Another point to take into consideration is the size of the package uploaded to AWS. We can appreciate that in this case, Quarkus is heavier than Plain Java 8.</p>
+deps:
+    COPY pom.xml ./
+    RUN mvn -B de.qaware.maven:go-offline-maven-plugin:1.2.5:resolve-dependencies
+    SAVE IMAGE
 
-<p><img src="/assets/img/aws-lambdas-details.png" alt="PackageSizeOfLambdaFunctions" /></p>
+build:
+    FROM +deps
+    COPY src src
+    RUN mvn -Pnative clean package
+    SAVE ARTIFACT target/ /target AS LOCAL target
+</code></pre></div></div>
 
-<p>I know there is a feature in Quarkus that allows us to produce a native app, which could have a faster cold start, but so far I have not been able to get it to work with AWS Lambda. When I make it work I will publish my findings.</p>
+<p>With that file, I am creating a reproducible build that will create a <code class="highlighter-rouge">target</code> folder with my artifacts.</p>
 
-<h3 id="repositories">Repositories</h3>
+<p>As said before, it is very similar to Dockerfile syntax. Apart from just a few new intuitive commands, if you know Docker you will get comfortable with Earthly really fast.</p>
 
-<p><a href="https://github.com/JosemyDuarte/quarkus-terraform-lambda-demo/tree/dynamo-terraform">Quarkus</a>
-<a href="https://github.com/JosemyDuarte/poc-plain-java-lambda-terraform/tree/dynamo-terraform">Plain Java 8</a></p>
+<h4 id="describing-buildearth">Describing build.earth</h4>
+
+<p><strong>base</strong></p>
+
+<p>This section initializes the build environment, it is like a base for all other steps, it applies to all “targets”.</p>
+
+<p>(1) Base Docker image</p>
+
+<p>(2) Setting working directory</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(1) FROM quay.io/quarkus/centos-quarkus-maven:20.1.0-java11
+(2) WORKDIR /java-example
+</code></pre></div></div>
+
+<p><strong>deps</strong></p>
+
+<p>This section gathers all my project’s dependencies.</p>
+
+<p>(3) Target’s name</p>
+
+<p>(4) Copy the <code class="highlighter-rouge">pom.xml</code> to allow earthly to create a layer/cache of the dependencies of my application.</p>
+
+<p>(5) Runs <code class="highlighter-rouge">maven</code> and download all my application dependencies.</p>
+
+<p>(6) Saves this container as an image. This allows the following steps/targets to use all the hard work done by these commands.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(3) deps:
+    (4) COPY pom.xml ./
+    (5) RUN mvn -B de.qaware.maven:go-offline-maven-plugin:1.2.5:resolve-dependencies
+    (6) SAVE IMAGE
+</code></pre></div></div>
+
+<p><strong>build</strong></p>
+
+<p>This section actually builds my artifact.</p>
+
+<p>(7) Target’s name</p>
+
+<p>(8) Defines that this target is built from <code class="highlighter-rouge">deps</code> target. There is a dependency.</p>
+
+<p>(9) Copy all my source code into the container.</p>
+
+<p>(10) Maven command to execute all my tests and build my artifact.</p>
+
+<p>(11) Saves output into my machine on a <code class="highlighter-rouge">target</code> folder.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(7) build:
+    (8) FROM +deps
+    (9) COPY src src
+    (10) RUN mvn -Pnative clean package
+    (11) SAVE ARTIFACT target/ /target AS LOCAL target
+</code></pre></div></div>
+
+<p>Of course, this is a toy example. You can have earthly files way more complicated (even multi-repo projects). It was also really easy to integrate it into Github Actions. This is the repo for anyone who might want to take a deeper look <a href="https://github.com/JosemyDuarte/earthly-quarkus-poc">Earthly Repository</a>.</p>
 
       </article>
 
@@ -256,13 +316,13 @@
           Tags:
           
           
+            <a href="/tags#cloud">cloud</a>
+          
             <a href="/tags#serverless">serverless</a>
           
-            <a href="/tags#code">code</a>
+            <a href="/tags#quarkus">quarkus</a>
           
-            <a href="/tags#aws">aws</a>
-          
-            <a href="/tags#benchmark">benchmark</a>
+            <a href="/tags#earthly">earthly</a>
           
           
         </div>
@@ -278,7 +338,7 @@
   <span class="sr-only">Share: </span>
 
   
-    <a href="https://twitter.com/intent/tweet?text=AWS+Lambda%3A+Quarkus+vs+Plain+Java&url=%2F2020-06-28-quarkus-vs-plain-java%2F"
+    <a href="https://twitter.com/intent/tweet?text=Earthly+%2B+Quarkus+Funqy&url=%2F2020-07-05-deploying-a-quarkus-rest-api-to-heroku%2F"
       class="btn btn-social-icon btn-twitter" target="_blank" title="Share on Twitter">
       <span class="fab fa-fw fa-twitter" aria-hidden="true"></span>
       <span class="sr-only">Twitter</span>
@@ -286,7 +346,7 @@
   
 
   
-    <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2020-06-28-quarkus-vs-plain-java%2F"
+    <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2020-07-05-deploying-a-quarkus-rest-api-to-heroku%2F"
       class="btn btn-social-icon btn-facebook" title="Share on Facebook">
       <span class="fab fa-fw fa-facebook" aria-hidden="true"></span>
       <span class="sr-only">Facebook</span>
@@ -294,7 +354,7 @@
   
 
   
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2020-06-28-quarkus-vs-plain-java%2F"
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2020-07-05-deploying-a-quarkus-rest-api-to-heroku%2F"
       class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
       <span class="fab fa-fw fa-linkedin" aria-hidden="true"></span>
       <span class="sr-only">LinkedIn</span>
@@ -312,13 +372,9 @@
       <ul class="pagination blog-pager">
         
         <li class="page-item previous">
-          <a class="page-link" href="/2019-12-29-trying-serverless-framework/" data-toggle="tooltip" data-placement="top" title="First steps with Serverless Framework">&larr; Previous Post</a>
+          <a class="page-link" href="/2020-06-28-quarkus-vs-plain-java/" data-toggle="tooltip" data-placement="top" title="AWS Lambda: Quarkus vs Plain Java">&larr; Previous Post</a>
         </li>
         
-        
-        <li class="page-item next">
-          <a class="page-link" href="/2020-07-05-deploying-a-quarkus-rest-api-to-heroku/" data-toggle="tooltip" data-placement="top" title="Earthly + Quarkus Funqy">Next Post &rarr;</a>
-        </li>
         
       </ul>
               
