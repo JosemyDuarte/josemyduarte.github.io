@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Beautiful Jekyll | MIT license | Copyright Dean Attali 2020 -->
-  <head>
+<!-- Beautiful Jekyll | Copyright Dean Attali 2020 -->
+<head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="monetization" content="$ilp.uphold.com/REUB7QPjnr6z">
+  <meta name="monetization" content="$ilp.uphold.com/REUB7QPjnr6z"><title>Tag Index</title>
 
-  <title>Tag Index</title>
-  
   
   <meta name="author" content="Josemy Duarte">
   
-  
+
+  <meta name="description" content="
+      {% assign date_format = site.date_format | default: &quot;%B %-d, %Y&quot; %} {%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:',' | sort -%} {%- for tag...">
+
   
 
-  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tech, Programming and others..." href="/feed.xml">
+  
+
+  <link rel="alternate" type="application/rss+xml" title="Josemy says..." href="/feed.xml">
 
   
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -60,55 +63,43 @@
     
       <link rel="stylesheet" href="/assets/css/bootstrap-social.css">
     
-      <link rel="stylesheet" href="/assets/css/main.css">
+      <link rel="stylesheet" href="/assets/css/beautifuljekyll.css">
     
   
 
   
 
   
-
-  <!-- Facebook OpenGraph tags -->
+  
   
 
   
+
+  
+  <meta property="og:site_name" content="Josemy says...">
   <meta property="og:title" content="Tag Index">
-  
-
-   
-  <meta property="og:description" content="{% assign date_format = site.date_format | default: &quot;%B %-d, %Y&quot; %} {%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:',' | sort -%} {%- for tag...">
-  
-
-
-  
-  <meta property="og:type" content="website">
-  
-
-  
-  <meta property="og:url" content="/tags/">
-  <link rel="canonical" href="/tags/">
-  
-  
+  <meta property="og:description" content="
+      {% assign date_format = site.date_format | default: &quot;%B %-d, %Y&quot; %} {%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:',' | sort -%} {%- for tag...">
 
   
   <meta property="og:image" content="/assets/img/selfieself.jpg">
   
 
-
-  <!-- Twitter summary cards -->
   
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/tags/">
+  <link rel="canonical" href="/tags/">
+  
+
+  
+  <meta name="twitter:card" content="summary">
   
   <meta name="twitter:site" content="@JosemyD">
   <meta name="twitter:creator" content="@JosemyD">
 
-  
-  <meta name="twitter:title" content="Tag Index">
-  
-
-  
-  <meta name="twitter:description" content="{% assign date_format = site.date_format | default: &quot;%B %-d, %Y&quot; %} {%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:',' | sort -%} {%- for tag...">
-  
+  <meta property="twitter:title" content="Tag Index">
+  <meta property="twitter:description" content="
+      {% assign date_format = site.date_format | default: &quot;%B %-d, %Y&quot; %} {%- capture site_tags -%} {%- for tag in site.tags -%} {{- tag | first -}}{%- unless forloop.last -%},{%- endunless -%} {%- endfor -%} {%- endcapture -%} {%- assign tags_list = site_tags | split:',' | sort -%} {%- for tag...">
 
   
   <meta name="twitter:image" content="/assets/img/selfieself.jpg">
@@ -118,15 +109,17 @@
 
   
 
+  
+
 </head>
 
 
-  <body>
-
-    
+<body>
 
   
-    <nav class="navbar navbar-expand-md navbar-light fixed-top navbar-custom "><a class="navbar-brand" href="">Josemy says...</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+
+
+  <nav class="navbar navbar-expand-md navbar-light fixed-top navbar-custom "><a class="navbar-brand" href="">Josemy says...</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
@@ -161,7 +154,7 @@
 </nav>
 
 
-    <!-- TODO this file has become a mess, refactor it -->
+  <!-- TODO this file has become a mess, refactor it -->
 
 
 
@@ -178,7 +171,7 @@
         <div class="page-heading">
           <h1>Tag Index</h1>
       
-      
+
       
         </div>
       </div>
@@ -428,12 +421,13 @@
             </div></div></div>
 
       
+
     </div>
   </div>
 </div>
 
 
-    <footer>
+  <footer>
   <div class="container-md beautiful-jekyll-footer">
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
@@ -517,8 +511,8 @@
   </div>
 </footer>
 
+
   
-    
   
     
   <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
@@ -541,7 +535,7 @@
   
     <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
     
-      <script src="/assets/js/main.js"></script>
+      <script src="/assets/js/beautifuljekyll.js"></script>
     
   
 
@@ -550,6 +544,6 @@
 
 
 
-  
-  </body>
+
+</body>
 </html>
