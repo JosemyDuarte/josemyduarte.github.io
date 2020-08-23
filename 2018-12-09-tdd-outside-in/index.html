@@ -16,7 +16,7 @@
   <meta name="description" content="Test Driven Design">
   
 
-  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tech, Programming and others..." href="/feed.xml">
 
   
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -137,7 +137,7 @@
   <div class="collapse navbar-collapse" id="main-navbar">
     <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="https://josemyduarte.github.io">Home</a>
+            <a class="nav-link" href="https://josemyduarte.github.io/blog">Home</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stuff</a>
@@ -229,7 +229,7 @@
 
 <p>Algunos comentan que <strong>el estilo Chicago se enfoca en resultados, mientras que el estilo Londres se enfoca en comportamientos</strong>. Esto debido a las consecuencias de iniciar desarrollando las bases o las capas más externas del sistema, respectivamente. En el primer caso, el desarrollo se inicia con pruebas que validen que los pequeños módulos retornen efectivamente los resultados esperados, avanzando luego con los módulos compuestos y repitiendo nuevamente el procedimiento. En el segundo caso, el desarrollo inicia descubriendo aquellas clases que deben colaborar para lograr el camino al resultado deseado. Esto genera clases generalmente con alta cohesión.</p>
 
-<p>Para probar este approach decidí practicar el típico <a href="https://github.com/JosemyDuarte/bank-kata/blob/master/README.md">kata del banco</a>. Les dejo el enlace al <a href="https://github.com/JosemyDuarte/bank-kata">repo</a> y podrán ver el historial de commits para observar como fue el avance. Personalmente, me sentí más comodo que con el estilo clásico (Chicago), aunque he de decir que sin el debido cuidado hubiera dejado sin probar la clase <code class="highlighter-rouge">Clock</code> o <code class="highlighter-rouge">Console</code>, ya que sin haberlas implementado (y debido al mock) ya todos mis test estaban en verde, incluido el <strong>acceptance test</strong>. Por lo que no está demás mantener TODOs con todo aquello que queda pendiente por implementar, y evitar llevarse una sorpresa en producción.</p>
+<p>Para probar este approach decidí practicar el típico <a href="https://github.com/JosemyDuarte/bank-kata/blob/master/README.md">kata del banco</a>. Les dejo el enlace al <a href="https://github.com/JosemyDuarte/bank-kata">repo</a> y podrán ver el historial de commits para observar como fue el avance. Personalmente, me sentí más comodo que con el estilo clásico (Chicago), aunque he de decir que sin el debido cuidado hubiera dejado sin probar la clase <code class="language-plaintext highlighter-rouge">Clock</code> o <code class="language-plaintext highlighter-rouge">Console</code>, ya que sin haberlas implementado (y debido al mock) ya todos mis test estaban en verde, incluido el <strong>acceptance test</strong>. Por lo que no está demás mantener TODOs con todo aquello que queda pendiente por implementar, y evitar llevarse una sorpresa en producción.</p>
 
       </article>
 
@@ -320,6 +320,14 @@
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
       <ul class="list-inline text-center footer-links"><li class="list-inline-item">
+    <a href="/feed.xml" title="RSS">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">RSS</span>
+    </a>
+  </li><li class="list-inline-item">
     <a href="mailto:duartejosemy@gmail.com" title="Email me">
       <span class="fa-stack fa-lg" aria-hidden="true">
         <i class="fas fa-circle fa-stack-2x"></i>
@@ -327,6 +335,14 @@
       </span>
       <span class="sr-only">Email me</span>
    </a>
+  </li><li class="list-inline-item">
+    <a href="https://t.me/josemyd" title="Telegram">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-telegram-plane fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Telegram</span>
+    </a>
   </li><li class="list-inline-item">
     <a href="https://github.com/josemyduarte" title="GitHub">
       <span class="fa-stack fa-lg" aria-hidden="true">

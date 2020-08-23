@@ -16,7 +16,7 @@
   <meta name="description" content="Building a simple Telegram Bot">
   
 
-  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tech, Programming and others..." href="/feed.xml">
 
   
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -137,7 +137,7 @@
   <div class="collapse navbar-collapse" id="main-navbar">
     <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="https://josemyduarte.github.io">Home</a>
+            <a class="nav-link" href="https://josemyduarte.github.io/blog">Home</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stuff</a>
@@ -227,7 +227,7 @@
 
 <p>This is the tool that will help us with the development, test and future deployment of our serverless project. If you want to have it globally installed just run:</p>
 
-<p><code class="highlighter-rouge">npm install -g serverless</code></p>
+<p><code class="language-plaintext highlighter-rouge">npm install -g serverless</code></p>
 
 <h3 id="ngrok">Ngrok</h3>
 
@@ -242,19 +242,19 @@
 <h2 id="putting-it-all-together">Putting it all together</h2>
 <p>First, lets create a node project. For that just create a folder for the project and once inside run:</p>
 
-<p><code class="highlighter-rouge">npm init</code></p>
+<p><code class="language-plaintext highlighter-rouge">npm init</code></p>
 
-<p>Follow the steps and when it ask you for an <em>entry point</em> put <code class="highlighter-rouge">handler.js</code>.</p>
+<p>Follow the steps and when it ask you for an <em>entry point</em> put <code class="language-plaintext highlighter-rouge">handler.js</code>.</p>
 
 <p>Now, let’s install our dependencies. First, Serverless CLI:</p>
 
-<p><code class="highlighter-rouge">npm install -D serverless serverless-offline</code></p>
+<p><code class="language-plaintext highlighter-rouge">npm install -D serverless serverless-offline</code></p>
 
 <p>And now <a href="https://telegraf.js.org/#/">Telegraf</a>, a Telegram library that will help us interacting with our bot:</p>
 
-<p><code class="highlighter-rouge">npm install --save telegraf</code></p>
+<p><code class="language-plaintext highlighter-rouge">npm install --save telegraf</code></p>
 
-<p>At this point you should have a <code class="highlighter-rouge">package.json</code> with something like this at the end:</p>
+<p>At this point you should have a <code class="language-plaintext highlighter-rouge">package.json</code> with something like this at the end:</p>
 
 <div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="w">
 </span><span class="err">...</span><span class="w">
@@ -268,7 +268,7 @@
 </span><span class="p">}</span><span class="w">
 </span></code></pre></div></div>
 
-<p>Now, let’s create our serverless descriptor. For that just create a file named <code class="highlighter-rouge">serverless.yml</code> and put this:</p>
+<p>Now, let’s create our serverless descriptor. For that just create a file named <code class="language-plaintext highlighter-rouge">serverless.yml</code> and put this:</p>
 
 <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">service</span><span class="pi">:</span> <span class="s">telegram-bot</span>
 
@@ -293,7 +293,7 @@
 </code></pre></div></div>
 <p>This file describes to Serverless CLI everything it needs to know to deploy our function. We could easily add more functions to this file and that will allow us to deploy more than one function with just one command.</p>
 
-<p>Finally, let’s add the code of our functions. Create a file called <code class="highlighter-rouge">handler.js</code> and add this code:</p>
+<p>Finally, let’s add the code of our functions. Create a file called <code class="language-plaintext highlighter-rouge">handler.js</code> and add this code:</p>
 
 <div class="language-js highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="dl">'</span><span class="s1">use strict</span><span class="dl">'</span><span class="p">;</span>
 
@@ -313,25 +313,25 @@
 
 <p>Lets run everything! First, lets put our telegram token in our environment, for that just run:</p>
 
-<p><code class="highlighter-rouge">export TELEGRAM_TOKEN=&lt;YOUR_TOKEN&gt;</code></p>
+<p><code class="language-plaintext highlighter-rouge">export TELEGRAM_TOKEN=&lt;YOUR_TOKEN&gt;</code></p>
 
 <p>To run our function locally we need to execute:</p>
 
-<p><code class="highlighter-rouge">serverless offline</code></p>
+<p><code class="language-plaintext highlighter-rouge">serverless offline</code></p>
 
-<p>That command will list all the functions deployed with the corresponding path. We’ll have a server listening for our request in <strong>localhost</strong> over the port <strong>3000</strong> and with a route for the <code class="highlighter-rouge">find</code> function.</p>
+<p>That command will list all the functions deployed with the corresponding path. We’ll have a server listening for our request in <strong>localhost</strong> over the port <strong>3000</strong> and with a route for the <code class="language-plaintext highlighter-rouge">find</code> function.</p>
 
 <p><img src="/assets/img/serverless-command.png" alt="serverless command" /></p>
 
 <p>Now, lets expose this to the internet so our Telegram Bot can make calls to our function. For that we’ll use Ngrok. Just execute:</p>
 
-<p><code class="highlighter-rouge">ngrok http 3000</code></p>
+<p><code class="language-plaintext highlighter-rouge">ngrok http 3000</code></p>
 
 <p><img src="/assets/img/ngrok.png" alt="ngrok" /></p>
 
 <p>We will take the HTTPS url that it gives us (it’s different for every execution) in this case <a href="https://bbdfb6d3.ngrok.io">https://bbdfb6d3.ngrok.io</a> and our Telegram Bot Token and we will make a request to the following URL to set the Webhook URL for the Telegram bot:</p>
 
-<p><code class="highlighter-rouge">https://api.telegram.org/bot[TELEGRAM_BOT_TOKEN]/setWebhook?url=[NGROK_URL]/find</code></p>
+<p><code class="language-plaintext highlighter-rouge">https://api.telegram.org/bot[TELEGRAM_BOT_TOKEN]/setWebhook?url=[NGROK_URL]/find</code></p>
 
 <p>It’s important to use the HTTPS version of the URL, without encryption Telegram won’t accept it. And if we get a screen like this, we know everything went well:</p>
 
@@ -343,15 +343,15 @@
 
 <h2 id="deploying-to-aws">Deploying to AWS</h2>
 
-<p>One of the perks of Serverless CLI is that now with just one command we can go from having everything in our machine to deploying everything to our cloud provider. Our <code class="highlighter-rouge">serverless.yml</code> has as provider AWS, so for this example we will deploy it there, but it would be painless to change it to GCP or Azure.</p>
+<p>One of the perks of Serverless CLI is that now with just one command we can go from having everything in our machine to deploying everything to our cloud provider. Our <code class="language-plaintext highlighter-rouge">serverless.yml</code> has as provider AWS, so for this example we will deploy it there, but it would be painless to change it to GCP or Azure.</p>
 
-<p><code class="highlighter-rouge">serverless deploy</code></p>
+<p><code class="language-plaintext highlighter-rouge">serverless deploy</code></p>
 
 <p><img src="/assets/img/serverless-deploy.png" alt="serverless deploy" /></p>
 
 <p>That is everything that we need to execute to have our code in AWS. Now we could change the Ngrok URL for this one and everything should work without problems.</p>
 
-<p>And to clean everything in our AWS account just run <code class="highlighter-rouge">serverless remove</code>.</p>
+<p>And to clean everything in our AWS account just run <code class="language-plaintext highlighter-rouge">serverless remove</code>.</p>
 
 <h3 id="sources">Sources</h3>
 
@@ -452,6 +452,14 @@
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
       <ul class="list-inline text-center footer-links"><li class="list-inline-item">
+    <a href="/feed.xml" title="RSS">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">RSS</span>
+    </a>
+  </li><li class="list-inline-item">
     <a href="mailto:duartejosemy@gmail.com" title="Email me">
       <span class="fa-stack fa-lg" aria-hidden="true">
         <i class="fas fa-circle fa-stack-2x"></i>
@@ -459,6 +467,14 @@
       </span>
       <span class="sr-only">Email me</span>
    </a>
+  </li><li class="list-inline-item">
+    <a href="https://t.me/josemyd" title="Telegram">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-telegram-plane fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Telegram</span>
+    </a>
   </li><li class="list-inline-item">
     <a href="https://github.com/josemyduarte" title="GitHub">
       <span class="fa-stack fa-lg" aria-hidden="true">

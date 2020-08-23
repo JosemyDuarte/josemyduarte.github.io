@@ -16,7 +16,7 @@
   <meta name="description" content="Simplifying building automation">
   
 
-  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tech, Programming and others..." href="/feed.xml">
 
   
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -137,7 +137,7 @@
   <div class="collapse navbar-collapse" id="main-navbar">
     <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="https://josemyduarte.github.io">Home</a>
+            <a class="nav-link" href="https://josemyduarte.github.io/blog">Home</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stuff</a>
@@ -233,7 +233,7 @@
 
 <p>Some days ago while taking a look at <a href="https://quarkus.io/">Quarkus</a> I found <a href="https://quarkus.io/guides/funqy-amazon-lambda">Funqy</a>, part of Quarkus’s serverless strategy that aims to provide a portable Java API to write functions deployable to various FaaS environments like AWS Lambda, Azure Functions, Knative, and Knative Events (Cloud Events). So I decided to see how easy would it be to build a simple “Hello World” with <strong>Funqy</strong> and <strong>Earthly</strong>.</p>
 
-<p>I’m not going to focus on the Funqy part since I simply followed their <a href="https://quarkus.io/guides/funqy">guide</a>. I wanted to know how complicated it would be to define a <code class="highlighter-rouge">build.earth</code> file that allowed me to test and build a native quarkus application. This was the result:</p>
+<p>I’m not going to focus on the Funqy part since I simply followed their <a href="https://quarkus.io/guides/funqy">guide</a>. I wanted to know how complicated it would be to define a <code class="language-plaintext highlighter-rouge">build.earth</code> file that allowed me to test and build a native quarkus application. This was the result:</p>
 
 <div class="language-dockerfile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">FROM</span><span class="s"> quay.io/quarkus/centos-quarkus-maven:20.1.0-java11</span>
 
@@ -251,7 +251,7 @@ build:
     SAVE ARTIFACT target/ /target AS LOCAL target
 </code></pre></div></div>
 
-<p>With that file, I am creating a reproducible build that will create a <code class="highlighter-rouge">target</code> folder with my artifacts.</p>
+<p>With that file, I am creating a reproducible build that will create a <code class="language-plaintext highlighter-rouge">target</code> folder with my artifacts.</p>
 
 <p>As said before, it is very similar to Dockerfile syntax. Apart from just a few new intuitive commands, if you know Docker you will get comfortable with Earthly really fast.</p>
 
@@ -265,7 +265,7 @@ build:
 
 <p>(2) Setting working directory</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(1) FROM quay.io/quarkus/centos-quarkus-maven:20.1.0-java11
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(1) FROM quay.io/quarkus/centos-quarkus-maven:20.1.0-java11
 (2) WORKDIR /java-example
 </code></pre></div></div>
 
@@ -275,13 +275,13 @@ build:
 
 <p>(3) Target’s name</p>
 
-<p>(4) Copy the <code class="highlighter-rouge">pom.xml</code> to allow earthly to create a layer/cache of the dependencies of my application.</p>
+<p>(4) Copy the <code class="language-plaintext highlighter-rouge">pom.xml</code> to allow earthly to create a layer/cache of the dependencies of my application.</p>
 
-<p>(5) Runs <code class="highlighter-rouge">maven</code> and download all my application dependencies.</p>
+<p>(5) Runs <code class="language-plaintext highlighter-rouge">maven</code> and download all my application dependencies.</p>
 
 <p>(6) Saves this container as an image. This allows the following steps/targets to use all the hard work done by these commands.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(3) deps:
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(3) deps:
     (4) COPY pom.xml ./
     (5) RUN mvn -B de.qaware.maven:go-offline-maven-plugin:1.2.5:resolve-dependencies
     (6) SAVE IMAGE
@@ -293,15 +293,15 @@ build:
 
 <p>(7) Target’s name</p>
 
-<p>(8) Defines that this target is built from <code class="highlighter-rouge">deps</code> target. There is a dependency.</p>
+<p>(8) Defines that this target is built from <code class="language-plaintext highlighter-rouge">deps</code> target. There is a dependency.</p>
 
 <p>(9) Copy all my source code into the container.</p>
 
 <p>(10) Maven command to execute all my tests and build my artifact.</p>
 
-<p>(11) Saves output into my machine on a <code class="highlighter-rouge">target</code> folder.</p>
+<p>(11) Saves output into my machine on a <code class="language-plaintext highlighter-rouge">target</code> folder.</p>
 
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(7) build:
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(7) build:
     (8) FROM +deps
     (9) COPY src src
     (10) RUN mvn -Pnative clean package
@@ -397,6 +397,14 @@ build:
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
       <ul class="list-inline text-center footer-links"><li class="list-inline-item">
+    <a href="/feed.xml" title="RSS">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">RSS</span>
+    </a>
+  </li><li class="list-inline-item">
     <a href="mailto:duartejosemy@gmail.com" title="Email me">
       <span class="fa-stack fa-lg" aria-hidden="true">
         <i class="fas fa-circle fa-stack-2x"></i>
@@ -404,6 +412,14 @@ build:
       </span>
       <span class="sr-only">Email me</span>
    </a>
+  </li><li class="list-inline-item">
+    <a href="https://t.me/josemyd" title="Telegram">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-telegram-plane fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Telegram</span>
+    </a>
   </li><li class="list-inline-item">
     <a href="https://github.com/josemyduarte" title="GitHub">
       <span class="fa-stack fa-lg" aria-hidden="true">

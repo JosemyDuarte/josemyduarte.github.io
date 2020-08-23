@@ -16,7 +16,7 @@
   <meta name="description" content="git hooks">
   
 
-  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tecnología, Programación and others..." href="/feed.xml">
+  <link rel="alternate" type="application/rss+xml" title="Josemy says... - Tech, Programming and others..." href="/feed.xml">
 
   
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -137,7 +137,7 @@
   <div class="collapse navbar-collapse" id="main-navbar">
     <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="https://josemyduarte.github.io">Home</a>
+            <a class="nav-link" href="https://josemyduarte.github.io/blog">Home</a>
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Stuff</a>
@@ -209,7 +209,7 @@
       
 
       <article role="main" class="blog-post">
-        <p>Vuelven de vacaciones a la oficina y se encuentran con decenas de correos, y entre ellos alguno sobre actualizar “<em>X</em>” variable de entorno, o sobre la creación de un nuevo microservicio por lo que debes actualizar tu <code class="highlighter-rouge">/etc/hosts</code> con el nuevo dominio. Naturalmente, seguir esta “metodología” mantiene altas las probabilidades de dejar pasar accidentalmente algunos de estos correos y luego pasar horas averiguando porque “sin ninguna razón aparente” cierto proyecto ha dejado de funcionar.</p>
+        <p>Vuelven de vacaciones a la oficina y se encuentran con decenas de correos, y entre ellos alguno sobre actualizar “<em>X</em>” variable de entorno, o sobre la creación de un nuevo microservicio por lo que debes actualizar tu <code class="language-plaintext highlighter-rouge">/etc/hosts</code> con el nuevo dominio. Naturalmente, seguir esta “metodología” mantiene altas las probabilidades de dejar pasar accidentalmente algunos de estos correos y luego pasar horas averiguando porque “sin ninguna razón aparente” cierto proyecto ha dejado de funcionar.</p>
 
 <p><em>Disclaimer: Sabemos que hay otras posibles soluciones (vía DNS, por ejemplo), no digo que ésta sea la única o la mejor, solo que es una posibilidad más. Que no solo se limita al caso acá expuesto, sino a la necesidad que pueda surgir en cualquier equipo y que pueda ser solventado con git hooks.</em></p>
 
@@ -217,7 +217,7 @@
 
 <p><strong>git</strong> es una herramienta muy versátil, incluso con funcionalidades que muchos programadores aun teniendo años usándolo no han descubierto. Una de estas funcionalidades son los <a href="https://git-scm.com/book/pl/v2/Customizing-Git-Git-Hooks">git-hooks</a>.</p>
 
-<p>Los hooks son como “triggers” que se disparan cuando cierto evento sucede. Por ejemplo, <strong>post-merge</strong> es el evento que se <em>dispara</em> luego de ejecutar un <code class="highlighter-rouge">git pull</code> (siempre que hayan cambios en la rama remota). Estos scripts se encuentran en la carpeta <code class="highlighter-rouge">{PROJECT_NAME}/.git/hooks</code>. Ficheros de ejemplo crean automáticamente con la inicialización de cualquier repositorio git.</p>
+<p>Los hooks son como “triggers” que se disparan cuando cierto evento sucede. Por ejemplo, <strong>post-merge</strong> es el evento que se <em>dispara</em> luego de ejecutar un <code class="language-plaintext highlighter-rouge">git pull</code> (siempre que hayan cambios en la rama remota). Estos scripts se encuentran en la carpeta <code class="language-plaintext highlighter-rouge">{PROJECT_NAME}/.git/hooks</code>. Ficheros de ejemplo crean automáticamente con la inicialización de cualquier repositorio git.</p>
 
 <p>La versatilidad que nos provee esta funcionalidad (git-hooks) nos permite, por ejemplo, que luego de un <em>push</em> automáticamente se ejecuten tareas de verificación de estilos. O que antes de un merge a master se ejecuten las pruebas de integración. Junto a un largo etcétera que se ve limitado solo por lo que puedas lograr a través de un script.</p>
 
@@ -227,11 +227,11 @@
 
 <p>Recordemos que queremos evitar lo propenso a errores que puede ser actualizar el entorno de desarrollo de múltiples desarrolladores en una misma empresa, asumiendo incluso que algunos pueden trabajar desde casa y por lo tanto no trabajar sobre la misma red.</p>
 
-<p>La propuesta para este problema es hacer un <strong>git-hook</strong> que cada vez que hayan cambios verifique que el archivo de hosts <code class="highlighter-rouge">/etc/hosts</code> se encuentre actualizado, y regenere un archivo en <code class="highlighter-rouge">/etc/profile.d/</code> en el cual se pueden definir las variables de entorno, independientemente de si usas bash, zsh, dash…</p>
+<p>La propuesta para este problema es hacer un <strong>git-hook</strong> que cada vez que hayan cambios verifique que el archivo de hosts <code class="language-plaintext highlighter-rouge">/etc/hosts</code> se encuentre actualizado, y regenere un archivo en <code class="language-plaintext highlighter-rouge">/etc/profile.d/</code> en el cual se pueden definir las variables de entorno, independientemente de si usas bash, zsh, dash…</p>
 
 <h3 id="post-merge">post-merge</h3>
 
-<p>Por ejemplo, este sería el contenido del <strong>post-merge</strong>, script que se ejecutará automáticamente luego de cada <code class="highlighter-rouge">git pull</code> que detecte cambios en la rama remota:</p>
+<p>Por ejemplo, este sería el contenido del <strong>post-merge</strong>, script que se ejecutará automáticamente luego de cada <code class="language-plaintext highlighter-rouge">git pull</code> que detecte cambios en la rama remota:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 <span class="c"># Post update hook script.</span>
@@ -294,17 +294,17 @@ git-hooks/2-add-env-var.sh
 <span class="nb">rm</span> <span class="s2">"</span><span class="nv">$HOSTS_FILE</span><span class="s2">.bak"</span> &amp;&gt;/dev/null <span class="o">||</span> <span class="nb">true</span>
 </code></pre></div></div>
 
-<p>Este script simplemente busca dentro de tu <code class="highlighter-rouge">/etc/hosts</code> por los delimitadores <code class="highlighter-rouge">### START OF MyCompany HOSTS ###</code> y <code class="highlighter-rouge">### END OF MyCompany HOSTS ###</code>, si no existen, los escribe y luego pone entre estos delimitadores los hosts que hayas definido en el archivo que pasaste por parametro, en nuestro ejemplo es el contenido del fichero <code class="highlighter-rouge">hosts-list</code>. De esta forma no modificamos cualquier otro host que alguien haya definido en su fichero.</p>
+<p>Este script simplemente busca dentro de tu <code class="language-plaintext highlighter-rouge">/etc/hosts</code> por los delimitadores <code class="language-plaintext highlighter-rouge">### START OF MyCompany HOSTS ###</code> y <code class="language-plaintext highlighter-rouge">### END OF MyCompany HOSTS ###</code>, si no existen, los escribe y luego pone entre estos delimitadores los hosts que hayas definido en el archivo que pasaste por parametro, en nuestro ejemplo es el contenido del fichero <code class="language-plaintext highlighter-rouge">hosts-list</code>. De esta forma no modificamos cualquier otro host que alguien haya definido en su fichero.</p>
 
 <h3 id="hosts-list">hosts-list</h3>
 
-<p>Un ejemplo del contenido del fichero <code class="highlighter-rouge">hosts-list</code>:</p>
+<p>Un ejemplo del contenido del fichero <code class="language-plaintext highlighter-rouge">hosts-list</code>:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>127.0.0.1     dev-services.domain.com
 10.0.3.1      dev-stats.other-domain.com
 </code></pre></div></div>
 
-<p>Con este contenido, estaríamos agregando ambos hosts al <code class="highlighter-rouge">/etc/hosts</code> de todos los desarrolladores con simplemente hacer un <code class="highlighter-rouge">git pull</code> del repositorio.</p>
+<p>Con este contenido, estaríamos agregando ambos hosts al <code class="language-plaintext highlighter-rouge">/etc/hosts</code> de todos los desarrolladores con simplemente hacer un <code class="language-plaintext highlighter-rouge">git pull</code> del repositorio.</p>
 
 <h3 id="2-add-env-varsh">2-add-env-var.sh</h3>
 
@@ -320,7 +320,7 @@ git-hooks/2-add-env-var.sh
 <span class="nb">source</span> <span class="nv">$ENV_DIR</span>/<span class="nv">$ENV_FILE</span>
 </code></pre></div></div>
 
-<p>El resultado de este script sería la creación de un archivo <code class="highlighter-rouge">environment_var.sh</code> en <code class="highlighter-rouge">/etc/profile.d</code> con el contenido del fichero definido en <code class="highlighter-rouge">git-hooks/environment_var.sh</code>. De esta forma, independientemente del shell que utilices, tendrás definidas las variables de entorno allí definidas.</p>
+<p>El resultado de este script sería la creación de un archivo <code class="language-plaintext highlighter-rouge">environment_var.sh</code> en <code class="language-plaintext highlighter-rouge">/etc/profile.d</code> con el contenido del fichero definido en <code class="language-plaintext highlighter-rouge">git-hooks/environment_var.sh</code>. De esta forma, independientemente del shell que utilices, tendrás definidas las variables de entorno allí definidas.</p>
 
 <h3 id="environment_varsh">environment_var.sh</h3>
 
@@ -336,9 +336,9 @@ git-hooks/2-add-env-var.sh
 
 <h2 id="finalizando">Finalizando</h2>
 
-<p>Es importante destacar que el contenido del script <code class="highlighter-rouge">post-merge</code> debe ser puesto manualmente dentro del directorio <code class="highlighter-rouge">{PROJECT_NAME}/.git/hooks</code>, ya que los hooks no se guardan dentro del repositorio remoto. Por lo tanto es aconsejable crear otro script que simplemente haga un enlace al directorio correspondiente.</p>
+<p>Es importante destacar que el contenido del script <code class="language-plaintext highlighter-rouge">post-merge</code> debe ser puesto manualmente dentro del directorio <code class="language-plaintext highlighter-rouge">{PROJECT_NAME}/.git/hooks</code>, ya que los hooks no se guardan dentro del repositorio remoto. Por lo tanto es aconsejable crear otro script que simplemente haga un enlace al directorio correspondiente.</p>
 
-<p>Por ejemplo, un fichero <code class="highlighter-rouge">link-hook.sh</code>:</p>
+<p>Por ejemplo, un fichero <code class="language-plaintext highlighter-rouge">link-hook.sh</code>:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/bash</span>
 
@@ -348,7 +348,7 @@ git-hooks/2-add-env-var.sh
 <span class="nb">ln</span> <span class="nt">-sf</span> ../../git-hooks/post-merge <span class="nv">$HOOK_DIR</span>/
 </code></pre></div></div>
 
-<p>Como ya comenté anteriormente, asumimos que el archivo <code class="highlighter-rouge">post-merge</code> se encuentra en un directorio llamado <code class="highlighter-rouge">git-hooks</code> dentro de tu repositorio. Es decir, este sería un supuesto árbol de directorios luego de ejecutar el script anterior:</p>
+<p>Como ya comenté anteriormente, asumimos que el archivo <code class="language-plaintext highlighter-rouge">post-merge</code> se encuentra en un directorio llamado <code class="language-plaintext highlighter-rouge">git-hooks</code> dentro de tu repositorio. Es decir, este sería un supuesto árbol de directorios luego de ejecutar el script anterior:</p>
 
 <div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/my-project/
             .git/
@@ -370,7 +370,7 @@ git-hooks/2-add-env-var.sh
             ...
 </code></pre></div></div>
 
-<p>El script habría creado un enlace dentro de <code class="highlighter-rouge">.git/hooks/post-merge</code> al script definido en <code class="highlighter-rouge">git-hooks/post-merge</code>. De esta forma, si en algún momento se modifica el archivo del repositorio, automáticamente el hook podrá ejecutar el cambio sin ninguna otra acción requerida. Esto solo sería necesario ejecutarlo la primera vez que se clona el repositorio, para crear el enlace. Posteriormente, la magia la hará git automaticamente con cada <code class="highlighter-rouge">git pull</code> que detecte cambios en el repo.</p>
+<p>El script habría creado un enlace dentro de <code class="language-plaintext highlighter-rouge">.git/hooks/post-merge</code> al script definido en <code class="language-plaintext highlighter-rouge">git-hooks/post-merge</code>. De esta forma, si en algún momento se modifica el archivo del repositorio, automáticamente el hook podrá ejecutar el cambio sin ninguna otra acción requerida. Esto solo sería necesario ejecutarlo la primera vez que se clona el repositorio, para crear el enlace. Posteriormente, la magia la hará git automaticamente con cada <code class="language-plaintext highlighter-rouge">git pull</code> que detecte cambios en el repo.</p>
 
       </article>
 
@@ -459,6 +459,14 @@ git-hooks/2-add-env-var.sh
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
       <ul class="list-inline text-center footer-links"><li class="list-inline-item">
+    <a href="/feed.xml" title="RSS">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">RSS</span>
+    </a>
+  </li><li class="list-inline-item">
     <a href="mailto:duartejosemy@gmail.com" title="Email me">
       <span class="fa-stack fa-lg" aria-hidden="true">
         <i class="fas fa-circle fa-stack-2x"></i>
@@ -466,6 +474,14 @@ git-hooks/2-add-env-var.sh
       </span>
       <span class="sr-only">Email me</span>
    </a>
+  </li><li class="list-inline-item">
+    <a href="https://t.me/josemyd" title="Telegram">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-telegram-plane fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Telegram</span>
+    </a>
   </li><li class="list-inline-item">
     <a href="https://github.com/josemyduarte" title="GitHub">
       <span class="fa-stack fa-lg" aria-hidden="true">
