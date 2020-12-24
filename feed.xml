@@ -12,6 +12,17 @@
 	
     
       <item>
+        <title>Automating webhook tests</title>
+        <description>
+          Testcontainers + Ngrok + Docker - 
+          Has it happened to you that you are coding a test that requires you to wait for a webhook notification? It is a problem because normally the third-party service is outside your network and your machine will not hear their notification unless you provide them with your public IP, and...
+        </description>
+        <pubDate>Thu, 24 Dec 2020 00:00:00 +0100</pubDate>
+        <link>/2020-12-24-testing-webhooks/</link>
+        <guid isPermaLink="true">/2020-12-24-testing-webhooks/</guid>
+      </item>
+    
+      <item>
         <title>Earthly + Quarkus Funqy</title>
         <description>
           Simplifying building automation - 
