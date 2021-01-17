@@ -12,6 +12,17 @@
     
     
       <item>
+        <title>My path to AWS Solutions Architect - Associate certification</title>
+        <description>
+          Passing AWS SAA-C02 - January 2021 - 
+          I finally got the AWS certification 🤓! I read many stories about how people prepare to pass this exam. Everyone has their own way of learning so I wanted to build my own strategy out of all the things that I felt could help me from the experiences of others....
+        </description>
+        <pubDate>Sun, 17 Jan 2021 00:00:00 +0100</pubDate>
+        <link>/2021-01-17-my-path-to-aws-certification/</link>
+        <guid isPermaLink="true">/2021-01-17-my-path-to-aws-certification/</guid>
+      </item>
+    
+      <item>
         <title>Automating webhook tests</title>
         <description>
           Testcontainers + Ngrok + Docker - 
