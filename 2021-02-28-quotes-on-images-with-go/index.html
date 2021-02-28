@@ -11,13 +11,13 @@
 
   
 
-  <title>My path to AWS Solutions Architect - Associate certification</title>
+  <title>Putting Text on an Image with Golang</title>
 
   
   <meta name="author" content="Josemy Duarte">
   
 
-  <meta name="description" content="Passing AWS SAA-C02 - January 2021">
+  <meta name="description" content="Running it locally, on GCP or Heroku easily">
 
   
 
@@ -83,19 +83,19 @@
 
   
   <meta property="og:site_name" content="Josemy says...">
-  <meta property="og:title" content="My path to AWS Solutions Architect - Associate certification">
-  <meta property="og:description" content="Passing AWS SAA-C02 - January 2021">
+  <meta property="og:title" content="Putting Text on an Image with Golang">
+  <meta property="og:description" content="Running it locally, on GCP or Heroku easily">
 
   
-  <meta property="og:image" content="/assets/img/aws-certification-logo.png">
+  <meta property="og:image" content="/assets/img/devs-quotes-logo-black.png">
   
 
   
   <meta property="og:type" content="article">
   <meta property="og:article:author" content="Josemy Duarte">
-  <meta property="og:article:published_time" content="2021-01-17T00:00:00+01:00">
-  <meta property="og:url" content="/2021-01-17-my-path-to-aws-certification/">
-  <link rel="canonical" href="/2021-01-17-my-path-to-aws-certification/">
+  <meta property="og:article:published_time" content="2021-02-28T00:00:00+01:00">
+  <meta property="og:url" content="/2021-02-28-quotes-on-images-with-go/">
+  <link rel="canonical" href="/2021-02-28-quotes-on-images-with-go/">
   
 
   
@@ -104,11 +104,11 @@
   <meta name="twitter:site" content="@JosemyD">
   <meta name="twitter:creator" content="@JosemyD">
 
-  <meta property="twitter:title" content="My path to AWS Solutions Architect - Associate certification">
-  <meta property="twitter:description" content="Passing AWS SAA-C02 - January 2021">
+  <meta property="twitter:title" content="Putting Text on an Image with Golang">
+  <meta property="twitter:description" content="Running it locally, on GCP or Heroku easily">
 
   
-  <meta name="twitter:image" content="/assets/img/aws-certification-logo.png">
+  <meta name="twitter:image" content="/assets/img/devs-quotes-logo-black.png">
   
 
   
@@ -170,15 +170,15 @@
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
         <div class="post-heading">
-          <h1>My path to AWS Solutions Architect - Associate certification</h1>
+          <h1>Putting Text on an Image with Golang</h1>
           
             
-              <h2 class="post-subheading">Passing AWS SAA-C02 - January 2021</h2>
+              <h2 class="post-subheading">Running it locally, on GCP or Heroku easily</h2>
             
           
 
           
-            <span class="post-meta">Posted on January 17, 2021</span>
+            <span class="post-meta">Posted on February 28, 2021</span>
             
             
               <!--- "ReadTime on GitHub Jekyll" (c) 2020 Ruby Griffith Ramirez, MIT License -->
@@ -189,7 +189,7 @@
 
 
   
-  <span class="post-meta"><span class="d-none d-md-inline middot">&middot;</span> 3 minute read</span>
+  <span class="post-meta"><span class="d-none d-md-inline middot">&middot;</span> 2 minute read</span>
 
 
             
@@ -214,31 +214,96 @@
       
 
       <article role="main" class="blog-post">
-        <p>I finally got the AWS certification 🤓! I read many stories about how people prepare to pass this exam. Everyone has their own way of learning so I wanted to build my own strategy out of all the things that I felt could help me from the experiences of others. Now I want to share how I did it, hoping I can help someone.</p>
+        <p>Since the beginning of my career, I have been focused on Java as my main programming language, but recently I switched to a company that uses Golang, and to help me to learn more about the language I decided to build something.</p>
 
-<h3 id="some-background">Some background</h3>
+<p>The service that I build in summary just puts some text on a given image. Its main purpose is to help me create the posts that I publish on my Instagram account <a href="https://www.instagram.com/devsquotes/">DevsQuotes</a>.</p>
 
-<p>For me, scheduling the exam was difficult because I always felt that I was not ready for it, that I could study more. But in January 2020, I found the strength to schedule my exam; I didn’t feel like I was 100% ready, but I didn’t want to put it off. How did I convince myself to do it? I thought that even if I didn’t pass the exam, I would get the experience of doing it and know how difficult it was (maybe it was easier than I was imagining) and what knowledge required a little more of work on my side. In the worst case, I could use that experience to pass it on a second try, right? So I scheduled it for the end of March. Unfortunately, COVID had other plans. Due to the lockdown, my exam was canceled. I forgot about certification for a few months until I noticed that the year was ending and I hadn’t rescheduled the exam, so again I had to convince myself to schedule an exam. Now it was for the 7th of January 2021, and this is what I did to prepare myself…</p>
+<p>I used to create my posts with Photoshop but it was taking me too much time to get a simple image ready, then I discovered <a href="https://www.adobe.com/es/products/spark.html">Adobe Spark</a> which simplified the flow a little, but with this service now is super simple since I integrated it with a Telegram Bot and now I just need to send a message and I have my image ready to be published. Yes, there is room for improvement, but keep in mind that this was just a PoC which mission was to help me get comfortable with GoLang and simplify the process to create images for my Instagram.</p>
 
-<h3 id="a-cloud-guru">A Cloud Guru</h3>
+<h2 id="tldr-show-me-the-code">TL;DR Show me the code!</h2>
 
-<p>I found that <a href="https://acloudguru.com/">A Cloud Guru</a> offered a specific course that prepares you to pass the AWS Solutions Architect exam, so I decided to give it a try. It has some “Exam Tips”, some quizzes to test your knowledge, a certification-like exam, and some labs that you can follow with a demo account that they provide you so you can try everything they teach you, without using your own AWS account and no unwanted charges. I found those labs helpful for hands-on experience with products that I never had a chance to test. In addition, there is a public forum where people can ask the instructors questions. Sometimes you find your doubts already answered.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>type Request struct {
+	BgImgPath string
+	FontPath  string
+	FontSize  float64
+	Text      string
+}
 
-<h3 id="freecodecamp">FreeCodeCamp</h3>
+func TextOnImg(request Request) (image.Image, error) {
+	bgImage, err := gg.LoadImage(request.BgImgPath)
+	if err != nil {
+		return nil, err
+	}
+	imgWidth := bgImage.Bounds().Dx()
+	imgHeight := bgImage.Bounds().Dy()
 
-<p>The last two weeks before my exam, I watched the <a href="https://www.youtube.com/watch?v=Ia-UEYYR44s">FreeCodeCamp video</a>. It is an 11-hour video that describes and shows all AWS services related to Solutions Architect certification. It has a nice cheat sheet at the end of each section (pay special attention to those).</p>
+	dc := gg.NewContext(imgWidth, imgHeight)
+	dc.DrawImage(bgImage, 0, 0)
 
-<h3 id="jon-bonsos-practice-exams">Jon Bonso’s Practice Exams</h3>
+	if err := dc.LoadFontFace(request.FontPath, request.FontSize); err != nil {
+		return nil, err
+	}
 
-<p>Reading about people’s recommendations on preparing for certification, I came across many recommendations for the <a href="https://www.udemy.com/course/aws-certified-solutions-architect-associate-amazon-practice-exams-saa-c02/">Jon Bonso Practice Exams</a>. In the end, you don’t know how good your progress is if you don’t measure it. The Udemy course gave me 6 practice exams with the same number of questions you face for certification. The best part is that once the exam is over, it not only tells you whether or not you passed but shows you all your wrong answers with a detailed reason of why your choice was wrong and why the other option was better. I found that explaining why my reasoning was wrong gave me a better understanding of AWS services.</p>
+	x := float64(imgWidth / 2)
+	y := float64((imgHeight / 2) - 80)
+	maxWidth := float64(imgWidth) - 60.0
+	dc.SetColor(color.White)
+	dc.DrawStringWrapped(request.Text, x, y, 0.5, 0.5, maxWidth, 1.5, gg.AlignCenter)
 
-<p>So the day before my exam I took all the practice tests again to see if I could pass them on the first try and feel comfortable with the type of questions and the time constraints.</p>
+	return dc.Image(), nil
+}
+</code></pre></div></div>
 
-<h3 id="advise">Advise</h3>
+<p>That piece of code makes all the magic. With the help of <a href="https://github.com/fogleman/gg">Fogleman library</a> manipulating images in Go is a breeze. Let’s check what this is doing:</p>
 
-<p>I would recommend people to read the FAQs of the services tested in this certification. I didn’t, and I think that had some repercussions on my final score. I was too focused on taking practice tests and watching the videos that I didn’t read the FAQs. Don’t miss out on those points and take a few minutes to read those pages.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bgImage, err := gg.LoadImage(request.BgImgPath)
+</code></pre></div></div>
 
-<p>And that was all, with those 3 things I was able to pass my certification. I wish you all the best if you are preparing for it! Also, keep in mind that A Cloud Guru subscription may not be suitable for everyone; I mean, it costs more than AWS certification alone. I’d say it’s useful if you want to learn other things too (it has courses for other certifications and for other cloud providers). Alternatively, you can follow the FreeCodeCamp labs with your AWS free tier account and just remember to clean up all resources to avoid unplanned charges.</p>
+<p>It loads the image in which the text will be printed.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>imgWidth := bgImage.Bounds().Dx()
+imgHeight := bgImage.Bounds().Dy()
+</code></pre></div></div>
+
+<p>Records the <code class="language-plaintext highlighter-rouge">Width</code> and <code class="language-plaintext highlighter-rouge">Height</code> of the image.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dc := gg.NewContext(imgWidth, imgHeight)
+dc.DrawImage(bgImage, 0, 0)
+</code></pre></div></div>
+
+<p>Creates something like a canvas (or context) in which we are going to start working.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dc.LoadFontFace(request.FontPath, request.FontSize)
+</code></pre></div></div>
+
+<p>It loads the font to use on the message to be printed.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>x := float64(imgWidth / 2)
+y := float64((imgHeight / 2) - 80)
+</code></pre></div></div>
+
+<p>Records the middle of the image on X and in Y it also subtracts 80 because I want the text to be a little bit above the middle.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>maxWidth := float64(imgWidth) - 60.0
+</code></pre></div></div>
+
+<p>We define the maximum width that your text can occupy. Subtracting 60 from the total width of the image is like generating a margin, so our text does not reach the edge of our image.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dc.SetColor(color.White)
+</code></pre></div></div>
+
+<p>We are defining the color in which we are going to <em>paint/print</em></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dc.DrawStringWrapped(request.Text, x, y, 0.5, 0.5, maxWidth, 1.5, gg.AlignCenter)
+</code></pre></div></div>
+
+<p>It prints the content of <code class="language-plaintext highlighter-rouge">request.Text</code> on our canvas in the middle of the image with an alignment centered.</p>
+
+<p>The result will look like this:</p>
+
+<p><img src="/assets/img/accurate_measurement.jpeg" alt="PrinterExample" /></p>
+
+<p>For more context on how all this works and even try it by yourself if you want visit <a href="https://github.com/JosemyDuarte/DevsQuotesPrinter">the DevsQuotesPrinter repository</a>. It has instructions for you to be able to deploy it on GCP, Heroku or to try it locally, so feel free to play with it.</p>
 
       </article>
 
@@ -246,9 +311,11 @@
         <div class="blog-tags">
           <span>Tags:</span>
           
-            <a href="/tags#aws">aws</a>
+            <a href="/tags#golang">golang</a>
           
-            <a href="/tags#certification">certification</a>
+            <a href="/tags#heroku">heroku</a>
+          
+            <a href="/tags#gcp">gcp</a>
           
         </div>
       
@@ -265,7 +332,7 @@
   <span class="sr-only">Share: </span>
 
   
-    <a href="https://twitter.com/intent/tweet?text=My+path+to+AWS+Solutions+Architect+-+Associate+certification&url=%2F2021-01-17-my-path-to-aws-certification%2F"
+    <a href="https://twitter.com/intent/tweet?text=Putting+Text+on+an+Image+with+Golang&url=%2F2021-02-28-quotes-on-images-with-go%2F"
       class="btn btn-social-icon btn-twitter" target="_blank" title="Share on Twitter">
       <span class="fab fa-fw fa-twitter" aria-hidden="true"></span>
       <span class="sr-only">Twitter</span>
@@ -273,7 +340,7 @@
   
 
   
-    <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2021-01-17-my-path-to-aws-certification%2F"
+    <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2021-02-28-quotes-on-images-with-go%2F"
       class="btn btn-social-icon btn-facebook" title="Share on Facebook">
       <span class="fab fa-fw fa-facebook" aria-hidden="true"></span>
       <span class="sr-only">Facebook</span>
@@ -281,7 +348,7 @@
   
 
   
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2021-01-17-my-path-to-aws-certification%2F"
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2021-02-28-quotes-on-images-with-go%2F"
       class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
       <span class="fab fa-fw fa-linkedin" aria-hidden="true"></span>
       <span class="sr-only">LinkedIn</span>
@@ -299,13 +366,9 @@
       <ul class="pagination blog-pager">
         
         <li class="page-item previous">
-          <a class="page-link" href="/2020-12-24-testing-webhooks/" data-toggle="tooltip" data-placement="top" title="Automating webhook tests">&larr; Previous Post</a>
+          <a class="page-link" href="/2021-01-17-my-path-to-aws-certification/" data-toggle="tooltip" data-placement="top" title="My path to AWS Solutions Architect - Associate certification">&larr; Previous Post</a>
         </li>
         
-        
-        <li class="page-item next">
-          <a class="page-link" href="/2021-02-28-quotes-on-images-with-go/" data-toggle="tooltip" data-placement="top" title="Putting Text on an Image with Golang">Next Post &rarr;</a>
-        </li>
         
       </ul>
       

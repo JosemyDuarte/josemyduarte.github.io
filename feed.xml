@@ -12,6 +12,17 @@
     
     
       <item>
+        <title>Putting Text on an Image with Golang</title>
+        <description>
+          Running it locally, on GCP or Heroku easily - 
+          Since the beginning of my career, I have been focused on Java as my main programming language, but recently I switched to a company that uses Golang, and to help me to learn more about the language I decided to build something. The service that I build in summary just...
+        </description>
+        <pubDate>Sun, 28 Feb 2021 00:00:00 +0100</pubDate>
+        <link>/2021-02-28-quotes-on-images-with-go/</link>
+        <guid isPermaLink="true">/2021-02-28-quotes-on-images-with-go/</guid>
+      </item>
+    
+      <item>
         <title>My path to AWS Solutions Architect - Associate certification</title>
         <description>
           Passing AWS SAA-C02 - January 2021 - 
@@ -70,7 +81,7 @@
         <title>Do I Need to test my code?</title>
         <description>
           What should I test? - 
-          It is difficult to find any developer who does not agree with the title of this publication, even more, if asked in a job interview. Although, some developers took what Kent Beck once said “I get paid for code that works, not for tests” as a license to not test...
+          It is difficult to find any developer who does not agree with the title of this publication, even more, if asked in a job interview. Although, some developers took what Kent Beck once said “I get paid for code that works, not for tests” as a license to not create...
         </description>
         <pubDate>Sat, 20 Jul 2019 00:00:00 +0200</pubDate>
         <link>/2019-07-20-do-i-need-to-test-my-code/</link>
