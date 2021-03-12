@@ -11,13 +11,13 @@
 
   
 
-  <title>Josemy Duarte</title>
+  <title>Creating a Twitter Bot with Go</title>
 
   
   <meta name="author" content="Josemy Duarte">
   
 
-  <meta name="description" content="Programación, DevOps, Tecnología...">
+  <meta name="description" content="Automatically say hi to mentions on Twitter">
 
   
 
@@ -83,30 +83,32 @@
 
   
   <meta property="og:site_name" content="Josemy says...">
-  <meta property="og:title" content="Josemy Duarte">
-  <meta property="og:description" content="Programación, DevOps, Tecnología...">
+  <meta property="og:title" content="Creating a Twitter Bot with Go">
+  <meta property="og:description" content="Automatically say hi to mentions on Twitter">
 
   
-  <meta property="og:image" content="/assets/img/selfieself.jpg">
-  
-
-  
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="/page4/">
-  <link rel="canonical" href="/page4/">
+  <meta property="og:image" content="/assets/img/twitter-logo.png">
   
 
   
-  <meta name="twitter:card" content="summary">
+  <meta property="og:type" content="article">
+  <meta property="og:article:author" content="Josemy Duarte">
+  <meta property="og:article:published_time" content="2021-03-12T00:00:00+01:00">
+  <meta property="og:url" content="/2021-03-12-twitter-bot-with-go/">
+  <link rel="canonical" href="/2021-03-12-twitter-bot-with-go/">
+  
+
+  
+  <meta name="twitter:card" content="summary_large_image">
   
   <meta name="twitter:site" content="@JosemyD">
   <meta name="twitter:creator" content="@JosemyD">
 
-  <meta property="twitter:title" content="Josemy Duarte">
-  <meta property="twitter:description" content="Programación, DevOps, Tecnología...">
+  <meta property="twitter:title" content="Creating a Twitter Bot with Go">
+  <meta property="twitter:description" content="Automatically say hi to mentions on Twitter">
 
   
-  <meta name="twitter:image" content="/assets/img/selfieself.jpg">
+  <meta name="twitter:image" content="/assets/img/twitter-logo.png">
   
 
   
@@ -170,15 +172,30 @@
   <div class="container-md">
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
-        <div class="page-heading">
-          <h1>Josemy Duarte</h1>
+        <div class="post-heading">
+          <h1>Creating a Twitter Bot with Go</h1>
           
             
-              <hr class="small">
-              <span class="page-subheading">Programación, DevOps, Tecnología...</span>
+              <h2 class="post-subheading">Automatically say hi to mentions on Twitter</h2>
             
           
 
+          
+            <span class="post-meta">Posted on March 12, 2021</span>
+            
+            
+              <!--- "ReadTime on GitHub Jekyll" (c) 2020 Ruby Griffith Ramirez, MIT License -->
+
+
+
+
+
+
+  
+  <span class="post-meta"><span class="d-none d-md-inline middot">&middot;</span> 1 minute read</span>
+
+
+            
           
         </div>
       </div>
@@ -191,108 +208,106 @@
 
 
 
-<div class=" container-md " role="main">
+<div class=" container-md ">
   <div class="row">
     <div class=" col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 ">
+
       
 
-      <div class="posts-list">
-  
-  <article class="post-preview">
-    <a href="/2017-06-26-the-art-of-simplicity/">
-	  <h2 class="post-title">El arte de la simplicidad</h2>
+      
 
-	  
-	  <h3 class="post-subtitle">
-	    Código simple == Código de calidad
-	  </h3>
-	  
+      <article role="main" class="blog-post">
+        <p>I keep experimenting with go and bots, so this week I decided to create a Twitter bot. It’s not the typical bot that just publishes things or does some scraping, this one will react to mentions; each time someone mentions the bot, it will reply with a “hello”. This is possible through the <a href="https://developer.twitter.com/en/docs/twitter-api/enterprise/account-activity-api/overview">Account Activity API</a> of Twitter, which will call our service for every new event related to our bot.</p>
+
+<h2 id="brief-explanation">Brief explanation</h2>
+
+<p>The code is pretty simple and straightforward, so I will not get into too many details; there are 3 endpoints on our server:</p>
+
+<h3 id="post-webhooktwitter">POST <code class="language-plaintext highlighter-rouge">/webhook/twitter</code></h3>
+
+<p>This is where the behavior of our bot lives. So, in my case is only replying with “hello”, but here is where you would make any customization in case you clone/fork it.</p>
+
+<h3 id="get-webhooktwitter">GET <code class="language-plaintext highlighter-rouge">/webhook/twitter</code></h3>
+
+<p>For security reasons, Twitter requires us to have an endpoint that will solve a CRC request. So we follow <a href="https://developer.twitter.com/en/docs/twitter-api/enterprise/account-activity-api/guides/securing-webhooks">Twitter guidelines</a> and that’s what this endpoint is doing.</p>
+
+<h3 id="postget-">POST/GET… <code class="language-plaintext highlighter-rouge">/</code></h3>
+
+<p>Nothing fancy. Just returning “Server is up and running” for you to make sure that the <em>server is up and running</em>.</p>
+
+<h2 id="fork-it-clone-it-use-it">Fork it, clone it, use it!</h2>
+
+<p>Feel free to <a href="https://github.com/JosemyDuarte/TwitterGoBot">clone/fork the repo</a> and customize it to your need. You will find instructions to deploy it on <a href="https://heroku.com/">Heroku</a> or even try it on your machine if you want.</p>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          <span>Tags:</span>
+          
+            <a href="/tags#golang">golang</a>
+          
+            <a href="/tags#heroku">heroku</a>
+          
+            <a href="/tags#twitter">twitter</a>
+          
+            <a href="/tags#bot">bot</a>
+          
+        </div>
+      
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id = "social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+    <a href="https://twitter.com/intent/tweet?text=Creating+a+Twitter+Bot+with+Go&url=%2F2021-03-12-twitter-bot-with-go%2F"
+      class="btn btn-social-icon btn-twitter" target="_blank" title="Share on Twitter">
+      <span class="fab fa-fw fa-twitter" aria-hidden="true"></span>
+      <span class="sr-only">Twitter</span>
     </a>
-
-    <p class="post-meta">
-      Posted on June 26, 2017
-    </p>
-
-    <div class="post-entry-container">
-      
-      <div class="post-entry">
-        En la empresa en la que trabajo actualmente (RocketROI) como premio a una especie de competencia interna, me han regalado una entrada a la Java Barcelona Conference. Esta conferencia tuvo una duración de 3 días, siendo los primeros 2 días exclusivos para las charlas y el último día dedicado a los...
-        
-        
-          <a href="/2017-06-26-the-art-of-simplicity/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
-
-    
-    <div class="blog-tags">
-      Tags:
-      
-        java, conference, tips
-      
-    </div>
-    
-
-   </article>
   
-  <article class="post-preview">
-    <a href="/2017-06-25-first-post/">
-	  <h2 class="post-title">First post!</h2>
 
-	  
-	  <h3 class="post-subtitle">
-	    Yohooo!
-	  </h3>
-	  
+  
+    <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2021-03-12-twitter-bot-with-go%2F"
+      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+      <span class="fab fa-fw fa-facebook" aria-hidden="true"></span>
+      <span class="sr-only">Facebook</span>
     </a>
+  
 
-    <p class="post-meta">
-      Posted on June 25, 2017
-    </p>
+  
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2021-03-12-twitter-bot-with-go%2F"
+      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+      <span class="fab fa-fw fa-linkedin" aria-hidden="true"></span>
+      <span class="sr-only">LinkedIn</span>
+    </a>
+  
 
-    <div class="post-entry-container">
+  
+
+</section>
+
+
+
       
-      <div class="post-image">
-        <a href="/2017-06-25-first-post/">
-          <img src="/assets/img/hello_world.jpeg">
-        </a>
-      </div>
-      
-      <div class="post-entry">
-        Este post marca el inicio de algo importante, algo impresionante: mi blog!
 
+      <ul class="pagination blog-pager">
+        
+        <li class="page-item previous">
+          <a class="page-link" href="/2021-02-28-quotes-on-images-with-go/" data-toggle="tooltip" data-placement="top" title="Putting Text on an Image with Golang">&larr; Previous Post</a>
+        </li>
         
         
-      </div>
-    </div>
-
-    
-    <div class="blog-tags">
-      Tags:
-      
-        random
-      
-    </div>
-    
-
-   </article>
-  
-</div>
-
-
-<ul class="pager main-pager">
-  
-  <li class="previous">
-    <a href="/page3">&larr; Newer Posts</a>
-  </li>
-  
-  
-</ul>
-
-
-
-      
-
+      </ul>
       
 
     </div>

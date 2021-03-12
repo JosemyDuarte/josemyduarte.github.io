@@ -12,6 +12,17 @@
     
     
       <item>
+        <title>Creating a Twitter Bot with Go</title>
+        <description>
+          Automatically say hi to mentions on Twitter - 
+          I keep experimenting with go and bots, so this week I decided to create a Twitter bot. It’s not the typical bot that just publishes things or does some scraping, this one will react to mentions; each time someone mentions the bot, it will reply with a “hello”. This is...
+        </description>
+        <pubDate>Fri, 12 Mar 2021 00:00:00 +0100</pubDate>
+        <link>/2021-03-12-twitter-bot-with-go/</link>
+        <guid isPermaLink="true">/2021-03-12-twitter-bot-with-go/</guid>
+      </item>
+    
+      <item>
         <title>Putting Text on an Image with Golang</title>
         <description>
           Running it locally, on GCP or Heroku easily - 
