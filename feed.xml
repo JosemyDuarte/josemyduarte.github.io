@@ -12,6 +12,17 @@
     
     
       <item>
+        <title>Production Experimentation</title>
+        <description>
+          Making data-driven decision matters - 
+          “If we have data, let’s look at data. If all we have are opinions, let’s go with mine.”  ― Jim Barksdale Businesses often make decisions based on opinion rather than facts. Why? I think it is mainly due to 3 main reasons: Bias - If I think A, most certainly my...
+        </description>
+        <pubDate>Fri, 18 Jun 2021 00:00:00 +0200</pubDate>
+        <link>/2021-06-18-production-experimentation/</link>
+        <guid isPermaLink="true">/2021-06-18-production-experimentation/</guid>
+      </item>
+    
+      <item>
         <title>Creating a Twitter Bot with Go</title>
         <description>
           Automatically say hi to mentions on Twitter - 
