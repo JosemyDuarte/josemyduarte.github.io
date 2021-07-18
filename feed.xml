@@ -12,6 +12,17 @@
     
     
       <item>
+        <title>Improved SRE using runbooks</title>
+        <description>
+          Incident Management - 
+          There are systems that can’t afford downtime and Site Reliability Engineering (SRE) is that set of practices and techniques that contribute to build and maintain reliable systems. Runbooks can be one of those practices that allow you to keep your systems reliable. But why are they necessary? Let me get...
+        </description>
+        <pubDate>Sun, 18 Jul 2021 00:00:00 +0200</pubDate>
+        <link>/2021-07-18-improved-sre-using-runbooks/</link>
+        <guid isPermaLink="true">/2021-07-18-improved-sre-using-runbooks/</guid>
+      </item>
+    
+      <item>
         <title>Production Experimentation</title>
         <description>
           Making data-driven decision matters - 
