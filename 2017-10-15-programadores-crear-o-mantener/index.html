@@ -23,7 +23,9 @@
 
   
 
+  
   <link rel="alternate" type="application/rss+xml" title="Josemy says..." href="/feed.xml">
+  
 
   
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -35,6 +37,8 @@
   gtag('config', 'UA-67420525-2');
 </script>
 
+
+  
 
   
 
@@ -140,7 +144,13 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/aboutme">About Me</a>
-          </li></ul>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" id="nav-search-link" href="#" title="Search">
+            <span id="nav-search-icon" class="fa fa-search"></span>
+            <span id="nav-search-text">Search</span>
+          </a>
+        </li></ul>
   </div>
 
   
@@ -156,6 +166,215 @@
   
 
 </nav>
+
+
+
+<div id="beautifuljekyll-search-overlay">
+
+  <div id="nav-search-exit" title="Exit search">✕</div>
+  <input type="text" id="nav-search-input" placeholder="Search">
+  <ul id="search-results-container"></ul>
+  
+  <script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
+  <script>
+    var searchjson = '[ \
+       \
+        { \
+          "title"    : "Improved SRE using runbooks", \
+          "category" : "tipssreproduction", \
+          "url"      : "/2021-07-18-improved-sre-using-runbooks/", \
+          "date"     : "July 18, 2021" \
+        }, \
+       \
+        { \
+          "title"    : "Production Experimentation", \
+          "category" : "Thoughtsexperimentsengineering", \
+          "url"      : "/2021-06-18-production-experimentation/", \
+          "date"     : "June 18, 2021" \
+        }, \
+       \
+        { \
+          "title"    : "Creating a Twitter Bot with Go", \
+          "category" : "golangherokutwitterbot", \
+          "url"      : "/2021-03-12-twitter-bot-with-go/", \
+          "date"     : "March 12, 2021" \
+        }, \
+       \
+        { \
+          "title"    : "Putting Text on an Image with Golang", \
+          "category" : "golangherokugcp", \
+          "url"      : "/2021-02-28-quotes-on-images-with-go/", \
+          "date"     : "February 28, 2021" \
+        }, \
+       \
+        { \
+          "title"    : "My path to AWS Solutions Architect - Associate certification", \
+          "category" : "awscertification", \
+          "url"      : "/2021-01-17-my-path-to-aws-certification/", \
+          "date"     : "January 17, 2021" \
+        }, \
+       \
+        { \
+          "title"    : "Automating webhook tests", \
+          "category" : "javatestautomationdocker", \
+          "url"      : "/2020-12-24-testing-webhooks/", \
+          "date"     : "December 24, 2020" \
+        }, \
+       \
+        { \
+          "title"    : "Earthly + Quarkus Funqy", \
+          "category" : "cloudserverlessquarkusearthly", \
+          "url"      : "/2020-07-12-building-with-earthly/", \
+          "date"     : "July 12, 2020" \
+        }, \
+       \
+        { \
+          "title"    : "AWS Lambda: Quarkus vs Plain Java", \
+          "category" : "serverlesscodeawsbenchmark", \
+          "url"      : "/2020-06-28-quarkus-vs-plain-java/", \
+          "date"     : "June 28, 2020" \
+        }, \
+       \
+        { \
+          "title"    : "First steps with Serverless Framework", \
+          "category" : "serverlesscode", \
+          "url"      : "/2019-12-29-trying-serverless-framework/", \
+          "date"     : "December 29, 2019" \
+        }, \
+       \
+        { \
+          "title"    : "Do I Need to test my code?", \
+          "category" : "testsnotes", \
+          "url"      : "/2019-07-20-do-i-need-to-test-my-code/", \
+          "date"     : "July 20, 2019" \
+        }, \
+       \
+        { \
+          "title"    : "Responsabilities of a Software Architect", \
+          "category" : "booksnotes", \
+          "url"      : "/2019-07-05-responsabilities-of-a-software-architect/", \
+          "date"     : "July  5, 2019" \
+        }, \
+       \
+        { \
+          "title"    : "TDD Estilo Londres", \
+          "category" : "programmingtddjava", \
+          "url"      : "/2018-12-09-tdd-outside-in/", \
+          "date"     : "December  9, 2018" \
+        }, \
+       \
+        { \
+          "title"    : "¿Como mantener actualizado el entorno de múltiples desarrolladores?", \
+          "category" : "devopsgit", \
+          "url"      : "/2018-09-02-mantener-actializado-el-entorno/", \
+          "date"     : "September  2, 2018" \
+        }, \
+       \
+        { \
+          "title"    : "Superando la entrevista", \
+          "category" : "interviewtips", \
+          "url"      : "/2018-08-04-superando-la-entrevista/", \
+          "date"     : "August  4, 2018" \
+        }, \
+       \
+        { \
+          "title"    : "Errores de novato", \
+          "category" : "programmingjavatips", \
+          "url"      : "/2018-02-15-evitando-nulls/", \
+          "date"     : "February 15, 2018" \
+        }, \
+       \
+        { \
+          "title"    : "Programadores: ¿Crear o Mantener?", \
+          "category" : "tips", \
+          "url"      : "/2017-10-15-programadores-crear-o-mantener/", \
+          "date"     : "October 15, 2017" \
+        }, \
+       \
+        { \
+          "title"    : "Software que cuesta mantener", \
+          "category" : "tipsconference", \
+          "url"      : "/2017-06-27-software-que-cuesta-mantener/", \
+          "date"     : "June 27, 2017" \
+        }, \
+       \
+        { \
+          "title"    : "El arte de la simplicidad", \
+          "category" : "javaconferencetips", \
+          "url"      : "/2017-06-26-the-art-of-simplicity/", \
+          "date"     : "June 26, 2017" \
+        }, \
+       \
+        { \
+          "title"    : "First post!", \
+          "category" : "random", \
+          "url"      : "/2017-06-25-first-post/", \
+          "date"     : "June 25, 2017" \
+        }, \
+       \
+       \
+        { \
+          "title"    : "About me", \
+          "category" : "page", \
+          "url"      : "/aboutme/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Read later", \
+          "category" : "page", \
+          "url"      : "/articles/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Josemy Duarte", \
+          "category" : "page", \
+          "url"      : "/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Tag Index", \
+          "category" : "page", \
+          "url"      : "/tags/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Josemy Duarte", \
+          "category" : "page", \
+          "url"      : "/page2/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Josemy Duarte", \
+          "category" : "page", \
+          "url"      : "/page3/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Josemy Duarte", \
+          "category" : "page", \
+          "url"      : "/page4/", \
+          "date"     : "January 1, 1970" \
+        } \
+       \
+    ]';
+    searchjson = JSON.parse(searchjson);
+
+    var sjs = SimpleJekyllSearch({
+      searchInput: document.getElementById('nav-search-input'),
+      resultsContainer: document.getElementById('search-results-container'),
+      json: searchjson
+    });
+  </script>
+</div>
+
+
+
 
 
   <!-- TODO this file has become a mess, refactor it -->
@@ -265,37 +484,38 @@
 
 
 
-<section id = "social-share-section">
+<section id="social-share-section">
   <span class="sr-only">Share: </span>
 
   
-    <a href="https://twitter.com/intent/tweet?text=Programadores%3A+%C2%BFCrear+o+Mantener%3F&url=%2F2017-10-15-programadores-crear-o-mantener%2F"
-      class="btn btn-social-icon btn-twitter" target="_blank" title="Share on Twitter">
-      <span class="fab fa-fw fa-twitter" aria-hidden="true"></span>
-      <span class="sr-only">Twitter</span>
-    </a>
+  <a href="https://twitter.com/intent/tweet?text=Programadores%3A+%C2%BFCrear+o+Mantener%3F&url=%2F2017-10-15-programadores-crear-o-mantener%2F"
+    class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+    <span class="fab fa-fw fa-twitter" aria-hidden="true"></span>
+    <span class="sr-only">Twitter</span>
+  </a>
   
 
   
-    <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2017-10-15-programadores-crear-o-mantener%2F"
-      class="btn btn-social-icon btn-facebook" title="Share on Facebook">
-      <span class="fab fa-fw fa-facebook" aria-hidden="true"></span>
-      <span class="sr-only">Facebook</span>
-    </a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2017-10-15-programadores-crear-o-mantener%2F"
+    class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+    <span class="fab fa-fw fa-facebook" aria-hidden="true"></span>
+    <span class="sr-only">Facebook</span>
+  </a>
   
 
   
-    <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2017-10-15-programadores-crear-o-mantener%2F"
-      class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
-      <span class="fab fa-fw fa-linkedin" aria-hidden="true"></span>
-      <span class="sr-only">LinkedIn</span>
-    </a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2017-10-15-programadores-crear-o-mantener%2F"
+    class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+    <span class="fab fa-fw fa-linkedin" aria-hidden="true"></span>
+    <span class="sr-only">LinkedIn</span>
+  </a>
+  
+
   
 
   
 
 </section>
-
 
 
       
@@ -387,11 +607,14 @@
         Josemy Duarte
         &nbsp;&bull;&nbsp;
       
-      2021
+      2022
 
       
 
       
+
+      
+
       </p>
       <p class="theme-by text-muted">
         Powered by
