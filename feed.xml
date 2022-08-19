@@ -12,6 +12,17 @@
     
     
       <item>
+        <title>Can AI be inclusive?</title>
+        <description>
+          Exploring bias on AI image generation - 
+          If AI painted a “beautiful warrior” would it paint a man or a woman? Would it be Caucasian or Asian? Let’s figure it out. But first, can AI be racist? Can AI be racist? Maybe? I would say not necessarily. It all depends on the data fed to train the...
+        </description>
+        <pubDate>Fri, 19 Aug 2022 00:00:00 +0200</pubDate>
+        <link>/2022-08-19-can-ai-be-inclusive/</link>
+        <guid isPermaLink="true">/2022-08-19-can-ai-be-inclusive/</guid>
+      </item>
+    
+      <item>
         <title>Improved SRE using runbooks</title>
         <description>
           Incident Management - 
