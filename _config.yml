@@ -24,7 +24,6 @@ author: Josemy Duarte
 
 navbar-links:
   Home: "https://josemyduarte.github.io/"
-  Read later: "articles"
   About Me: "aboutme"
 
 ################
@@ -288,11 +287,6 @@ exclude:
   - docs/
 
 plugins_dir: ./_plugins
-
-jekyll_get:
-  - data: articles
-    json: 'http://gsx2json.com/api?id=1Fu1FNyVpz92iLJlWYeIngWEVcesZwMJ_F1WQmbefh0s&sheet=1'
-    cache: false
 
 plugins:
   - jekyll-paginate
