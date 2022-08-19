@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Josemy Duarte
-subtitle: Programación, DevOps, Tecnología...
+subtitle: Tech, Programming and others...
 use-site-title: true
 published: true
 ---
@@ -10,13 +10,13 @@ published: true
   {% for post in paginator.posts %}
   <article class="post-preview">
     <a href="{{ post.url | relative_url }}">
-	  <h2 class="post-title">{{ post.title }}</h2>
+      <h2 class="post-title">{{ post.title }}</h2>
 
-	  {% if post.subtitle %}
-	  <h3 class="post-subtitle">
-	    {{ post.subtitle }}
-	  </h3>
-	  {% endif %}
+      {% if post.subtitle %}
+      <h3 class="post-subtitle">
+        {{ post.subtitle }}
+      </h3>
+      {% endif %}
     </a>
 
     <p class="post-meta">
@@ -35,7 +35,7 @@ published: true
         {{ post.excerpt | strip_html | xml_escape | truncatewords: site.excerpt_length }}
         {% assign excerpt_word_count = post.excerpt | number_of_words %}
         {% if post.content != post.excerpt or excerpt_word_count > site.excerpt_length %}
-          <a href="{{ post.url | relative_url }}" class="post-read-more">[Read&nbsp;More]</a>
+        <a href="{{ post.url | relative_url }}" class="post-read-more">[Read&nbsp;More]</a>
         {% endif %}
       </div>
     </div>
@@ -48,12 +48,12 @@ published: true
       <a href="{{ '/tags' | relative_url }}#{{- tag -}}">{{- tag -}}</a>
       {% endfor %}
       {% else %}
-        {{ post.tags | join: ", " }}
+      {{ post.tags | join: ", " }}
       {% endif %}
     </div>
     {% endif %}
 
-   </article>
+  </article>
   {% endfor %}
 </div>
 
