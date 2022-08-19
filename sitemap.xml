@@ -80,9 +80,6 @@
 <loc>/aboutme/</loc>
 </url>
 <url>
-<loc>/articles/</loc>
-</url>
-<url>
 <loc>/</loc>
 </url>
 <url>
@@ -99,6 +96,6 @@
 </url>
 <url>
 <loc>/admin/</loc>
-<lastmod>2022-08-19T11:43:35+02:00</lastmod>
+<lastmod>2022-08-19T11:53:20+02:00</lastmod>
 </url>
 </urlset>
