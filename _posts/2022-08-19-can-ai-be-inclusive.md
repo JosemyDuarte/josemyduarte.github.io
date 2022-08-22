@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Can AI be inclusive?
+title: Can AI be racist?
 subtitle: Exploring bias on AI image generation
 date: 2022-08-19
 image: /assets/img/midjourney_logo.png
