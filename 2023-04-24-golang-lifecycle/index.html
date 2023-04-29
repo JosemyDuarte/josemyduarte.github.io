@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- Beautiful Jekyll 5.0.0 | Copyright Dean Attali 2020 -->
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="monetization" content="$ilp.uphold.com/REUB7QPjnr6z">
+  <meta http-equiv="Expires" content="600" />
+
+  
+
+  
+
+  <title>How to shutdown a Go application gracefully</title>
+
+  
+  <meta name="author" content="Josemy Duarte">
+  
+
+  <meta name="description" content="An approach to manage the lifecycle of a Go application">
+
+  
+
+  
+
+  
+  <link rel="alternate" type="application/rss+xml" title="Josemy's blog" href="/feed.xml">
+  
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-67420525-2"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-67420525-2');
+</script>
+
+
+  
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TD8FCBH');
+  </script>
+  <!-- End Google Tag Manager -->
+
+
+  
+<!-- Google Analytics -->
+<script>
+  (function (i, s, o, g, r, a, m) {
+    i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+      (i[r].q = i[r].q || []).push(arguments)
+    }, i[r].l = 1 * new Date(); a = s.createElement(o),
+      m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+  })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+  ga('create', 'G-BLZRESCEFP', 'auto');
+  ga('send', 'pageview');
+</script>
+<!-- End Google Analytics -->
+
+
+  
+
+
+  
+  
+  
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
+
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic">
+
+
+  
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800">
+
+
+  
+  
+
+  
+  
+  <link rel="stylesheet" href="/assets/css/bootstrap-social.css">
+  
+  <link rel="stylesheet" href="/assets/css/beautifuljekyll.css">
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <meta property="og:site_name" content="Josemy's blog">
+  <meta property="og:title" content="How to shutdown a Go application gracefully">
+  <meta property="og:description" content="An approach to manage the lifecycle of a Go application">
+
+  
+  <meta property="og:image" content="/assets/img/golang-logo.jpg">
+  
+
+  
+  <meta property="og:type" content="article">
+  <meta property="og:article:author" content="Josemy Duarte">
+  <meta property="og:article:published_time" content="2023-04-24T00:00:00+02:00">
+  <meta property="og:url" content="/2023-04-24-golang-lifecycle/">
+  <link rel="canonical" href="/2023-04-24-golang-lifecycle/">
+  
+
+  
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <meta name="twitter:site" content="@JosemyD">
+  <meta name="twitter:creator" content="@JosemyD">
+
+  <meta property="twitter:title" content="How to shutdown a Go application gracefully">
+  <meta property="twitter:description" content="An approach to manage the lifecycle of a Go application">
+
+  
+  <meta name="twitter:image" content="/assets/img/golang-logo.jpg">
+  
+
+  
+
+
+  
+
+  
+
+</head>
+
+
+<body>
+
+  
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TD8FCBH" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
+
+
+  <nav class="navbar navbar-expand-xl navbar-light fixed-top navbar-custom top-nav-regular"><a class="navbar-brand" href="">Josemy's blog</a><button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="main-navbar">
+    <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="https://josemyduarte.github.io/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/aboutme">About Me</a>
+          </li>
+        <li class="nav-item">
+          <a class="nav-link" id="nav-search-link" href="#" title="Search">
+            <span id="nav-search-icon" class="fa fa-search"></span>
+            <span id="nav-search-text">Search</span>
+          </a>
+        </li></ul>
+  </div>
+
+  
+
+  
+    <div class="avatar-container">
+      <div class="avatar-img-border">
+        <a href="">
+          <img alt="Navigation bar avatar" class="avatar-img" src="/assets/img/jd-logo.png" />
+        </a>
+      </div>
+    </div>
+  
+
+</nav>
+
+
+
+<div id="beautifuljekyll-search-overlay">
+
+  <div id="nav-search-exit" title="Exit search">✕</div>
+  <input type="text" id="nav-search-input" placeholder="Search">
+  <ul id="search-results-container"></ul>
+  
+  <script src="https://unpkg.com/simple-jekyll-search@latest/dest/simple-jekyll-search.min.js"></script>
+  <script>
+    var searchjson = '[ \
+       \
+        { \
+          "title"    : "How to shutdown a Go application gracefully", \
+          "category" : "golangexamples", \
+          "url"      : "/2023-04-24-golang-lifecycle/", \
+          "date"     : "April 24, 2023" \
+        }, \
+       \
+        { \
+          "title"    : "Can AI be racist?", \
+          "category" : "aimidjourneyimage-generation", \
+          "url"      : "/2022-08-19-can-ai-be-inclusive/", \
+          "date"     : "August 19, 2022" \
+        }, \
+       \
+        { \
+          "title"    : "Improved SRE using runbooks", \
+          "category" : "tipssreproduction", \
+          "url"      : "/2021-07-18-improved-sre-using-runbooks/", \
+          "date"     : "July 18, 2021" \
+        }, \
+       \
+        { \
+          "title"    : "Production Experimentation", \
+          "category" : "Thoughtsexperimentsengineering", \
+          "url"      : "/2021-06-18-production-experimentation/", \
+          "date"     : "June 18, 2021" \
+        }, \
+       \
+        { \
+          "title"    : "Creating a Twitter Bot with Go", \
+          "category" : "golangherokutwitterbot", \
+          "url"      : "/2021-03-12-twitter-bot-with-go/", \
+          "date"     : "March 12, 2021" \
+        }, \
+       \
+        { \
+          "title"    : "Putting Text on an Image with Golang", \
+          "category" : "golangherokugcp", \
+          "url"      : "/2021-02-28-quotes-on-images-with-go/", \
+          "date"     : "February 28, 2021" \
+        }, \
+       \
+        { \
+          "title"    : "My path to AWS Solutions Architect - Associate certification", \
+          "category" : "awscertification", \
+          "url"      : "/2021-01-17-my-path-to-aws-certification/", \
+          "date"     : "January 17, 2021" \
+        }, \
+       \
+        { \
+          "title"    : "Automating webhook tests", \
+          "category" : "javatestautomationdocker", \
+          "url"      : "/2020-12-24-testing-webhooks/", \
+          "date"     : "December 24, 2020" \
+        }, \
+       \
+        { \
+          "title"    : "Earthly + Quarkus Funqy", \
+          "category" : "cloudserverlessquarkusearthly", \
+          "url"      : "/2020-07-12-building-with-earthly/", \
+          "date"     : "July 12, 2020" \
+        }, \
+       \
+        { \
+          "title"    : "AWS Lambda: Quarkus vs Plain Java", \
+          "category" : "serverlesscodeawsbenchmark", \
+          "url"      : "/2020-06-28-quarkus-vs-plain-java/", \
+          "date"     : "June 28, 2020" \
+        }, \
+       \
+        { \
+          "title"    : "First steps with Serverless Framework", \
+          "category" : "serverlesscode", \
+          "url"      : "/2019-12-29-trying-serverless-framework/", \
+          "date"     : "December 29, 2019" \
+        }, \
+       \
+        { \
+          "title"    : "Do I Need to test my code?", \
+          "category" : "testsnotes", \
+          "url"      : "/2019-07-20-do-i-need-to-test-my-code/", \
+          "date"     : "July 20, 2019" \
+        }, \
+       \
+        { \
+          "title"    : "Responsabilities of a Software Architect", \
+          "category" : "booksnotes", \
+          "url"      : "/2019-07-05-responsabilities-of-a-software-architect/", \
+          "date"     : "July  5, 2019" \
+        }, \
+       \
+        { \
+          "title"    : "TDD Estilo Londres", \
+          "category" : "programmingtddjava", \
+          "url"      : "/2018-12-09-tdd-outside-in/", \
+          "date"     : "December  9, 2018" \
+        }, \
+       \
+        { \
+          "title"    : "¿Como mantener actualizado el entorno de múltiples desarrolladores?", \
+          "category" : "devopsgit", \
+          "url"      : "/2018-09-02-mantener-actializado-el-entorno/", \
+          "date"     : "September  2, 2018" \
+        }, \
+       \
+        { \
+          "title"    : "Superando la entrevista", \
+          "category" : "interviewtips", \
+          "url"      : "/2018-08-04-superando-la-entrevista/", \
+          "date"     : "August  4, 2018" \
+        }, \
+       \
+        { \
+          "title"    : "Errores de novato", \
+          "category" : "programmingjavatips", \
+          "url"      : "/2018-02-15-evitando-nulls/", \
+          "date"     : "February 15, 2018" \
+        }, \
+       \
+        { \
+          "title"    : "Programadores: ¿Crear o Mantener?", \
+          "category" : "tips", \
+          "url"      : "/2017-10-15-programadores-crear-o-mantener/", \
+          "date"     : "October 15, 2017" \
+        }, \
+       \
+        { \
+          "title"    : "Software que cuesta mantener", \
+          "category" : "tipsconference", \
+          "url"      : "/2017-06-27-software-que-cuesta-mantener/", \
+          "date"     : "June 27, 2017" \
+        }, \
+       \
+        { \
+          "title"    : "El arte de la simplicidad", \
+          "category" : "javaconferencetips", \
+          "url"      : "/2017-06-26-the-art-of-simplicity/", \
+          "date"     : "June 26, 2017" \
+        }, \
+       \
+        { \
+          "title"    : "First post!", \
+          "category" : "random", \
+          "url"      : "/2017-06-25-first-post/", \
+          "date"     : "June 25, 2017" \
+        }, \
+       \
+       \
+        { \
+          "title"    : "About me", \
+          "category" : "page", \
+          "url"      : "/aboutme/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Josemy Duarte", \
+          "category" : "page", \
+          "url"      : "/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Tag Index", \
+          "category" : "page", \
+          "url"      : "/tags/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Josemy Duarte", \
+          "category" : "page", \
+          "url"      : "/page2/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Josemy Duarte", \
+          "category" : "page", \
+          "url"      : "/page3/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Josemy Duarte", \
+          "category" : "page", \
+          "url"      : "/page4/", \
+          "date"     : "January 1, 1970" \
+        }, \
+       \
+        { \
+          "title"    : "Josemy Duarte", \
+          "category" : "page", \
+          "url"      : "/page5/", \
+          "date"     : "January 1, 1970" \
+        } \
+       \
+    ]';
+    searchjson = JSON.parse(searchjson);
+
+    var sjs = SimpleJekyllSearch({
+      searchInput: document.getElementById('nav-search-input'),
+      resultsContainer: document.getElementById('search-results-container'),
+      json: searchjson
+    });
+  </script>
+</div>
+
+
+
+
+
+  <!-- TODO this file has become a mess, refactor it -->
+
+
+
+
+
+
+
+<header class="header-section ">
+
+<div class="intro-header no-img">
+  <div class="container-md">
+    <div class="row">
+      <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+        <div class="post-heading">
+          <h1>How to shutdown a Go application gracefully</h1>
+          
+            
+              <h2 class="post-subheading">An approach to manage the lifecycle of a Go application</h2>
+            
+          
+
+          
+            <span class="post-meta">Posted on April 24, 2023</span>
+            
+            
+              <!--- "ReadTime on GitHub Jekyll" (c) 2020 Ruby Griffith Ramirez, MIT License -->
+
+
+
+
+
+
+  
+  <span class="post-meta"><span class="d-none d-md-inline middot">&middot;</span> 5 minute read</span>
+
+
+            
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</header>
+
+
+
+
+
+<div class=" container-md ">
+  <div class="row">
+    <div class=" col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 ">
+
+      
+
+      
+
+      <article role="main" class="blog-post">
+        <h1 id="how-to-shutdown-a-go-application-gracefully">How to shutdown a Go application gracefully</h1>
+
+<p>All this started by noticing that my Go applications showed an increased number of errors when I was shutting them down. 
+After some investigation I found out that the problem was related to the lifecycle of the components of my application.
+Why was this happening? Because I was not shutting down my application gracefully. Meaning that I was not giving the
+opportunity to the components to finish their work before shutting down all of them.</p>
+
+<p>Let me explain this with an example.</p>
+
+<h2 id="the-problem">The problem</h2>
+
+<p>Let’s say that we have a web server that is using a database. When we receive a request we need to query the database to get
+the information that we need to return to the client. If we are not shutting down the application gracefully, we might
+receive an error when we try to query the database because the database connection might be closed before we can use it.
+Also, we might still have some requests inflight and all of them will fail if the database connection is closed.</p>
+
+<h2 id="the-solution">The solution</h2>
+
+<p>Easy, we need to give the opportunity to the components to finish their work before shutting down the application.
+In the case of the web server, we need to stop receiving new requests and wait for the inflight requests to finish.
+In the case of the database, we need to close the connection only after all the requests that are using it have finished.</p>
+
+<p>I noticed a pattern here. I had to shutdown the components in the reverse order that I started them. Meaning, that I had
+to shutdown the web server first and then the database. This way, I could make sure that the web server was not receiving
+new requests and that all the inflight requests had finished before closing the database connection. So, I decided to create
+a <code class="language-plaintext highlighter-rouge">Manager</code> struct that will manage the lifecycle of my application. This struct will have a <code class="language-plaintext highlighter-rouge">Start</code> method that will start
+all the components of my application and a <code class="language-plaintext highlighter-rouge">Shutdown</code> method that will stop all the components of my application.</p>
+
+<h2 id="the-code">The code</h2>
+
+<p>Let’s see how this looks like in code. First, I defined a common interface for all the components of my application.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">type</span> <span class="n">Component</span> <span class="k">interface</span> <span class="p">{</span>
+	<span class="c">// Name returns the identifier of the component (mainly for logging purposes)</span>
+	<span class="n">Name</span><span class="p">()</span> <span class="kt">string</span>
+
+	<span class="c">// Start is called in order to start the component.</span>
+	<span class="c">// The initReady channel should be closed when the component's initialisation has finished. </span>
+	<span class="c">// Some starts are blocking so by closing the channel we signal the manager that it can move on to the next component.</span>
+	<span class="n">Start</span><span class="p">(</span><span class="n">initReady</span> <span class="k">chan</span> <span class="k">struct</span><span class="p">{})</span> <span class="kt">error</span>
+
+	<span class="c">// Shutdown is called to stop and cleanup the component.</span>
+	<span class="c">// There is a limited time to do so which is controlled by the ctx.</span>
+	<span class="n">Shutdown</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">)</span> <span class="kt">error</span>
+
+	<span class="c">// StartTimeout returns timeout within which the component is expected to be start</span>
+	<span class="n">StartTimeout</span><span class="p">()</span> <span class="n">time</span><span class="o">.</span><span class="n">Duration</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Then, I defined the <code class="language-plaintext highlighter-rouge">Manager</code> struct that will manage the lifecycle of my application. It allows to <code class="language-plaintext highlighter-rouge">Register</code> new components
+and since it is important to shutdown the components in the reverse order that they were started, I decided to store them
+in a slice.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">// Manager is responsible for managing all the component's lifecycle.</span>
+<span class="k">type</span> <span class="n">Manager</span> <span class="k">struct</span> <span class="p">{</span>
+	<span class="n">components</span> <span class="p">[]</span><span class="n">Component</span>
+<span class="p">}</span>
+
+<span class="c">// Register registers a new component.</span>
+<span class="k">func</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span><span class="n">Manager</span><span class="p">)</span> <span class="n">Register</span><span class="p">(</span><span class="n">component</span> <span class="n">Component</span><span class="p">)</span> <span class="p">{</span>
+	<span class="n">m</span><span class="o">.</span><span class="n">components</span> <span class="o">=</span> <span class="nb">append</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="p">,</span> <span class="n">component</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">Start</code> method will start all the registered components of the application. It will iterate over the slice of components and call
+the <code class="language-plaintext highlighter-rouge">Start</code> method of each one of them. It will also wait for the <code class="language-plaintext highlighter-rouge">initReady</code> channel to be closed before moving on to the
+next component. This way, we can make sure that the components are started in the correct order. If the <code class="language-plaintext highlighter-rouge">Start</code> method of a
+component returns an error, the <code class="language-plaintext highlighter-rouge">Start</code> method of the <code class="language-plaintext highlighter-rouge">Manager</code> will publish the error in the <code class="language-plaintext highlighter-rouge">errCh</code> channel and return it.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span><span class="n">Manager</span><span class="p">)</span> <span class="n">Start</span><span class="p">()</span> <span class="k">chan</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Starting %d components...</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="p">))</span>
+	<span class="n">errCh</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="kt">error</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="p">))</span>
+
+	<span class="n">start</span> <span class="o">:=</span> <span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span>
+
+	<span class="c">// Start all the components in order.</span>
+	<span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">c</span> <span class="o">:=</span> <span class="k">range</span> <span class="n">m</span><span class="o">.</span><span class="n">components</span> <span class="p">{</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Starting component %s...</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">Name</span><span class="p">())</span>
+
+		<span class="c">// Create a channel to signal that the component's initialization is done.</span>
+		<span class="n">initReady</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="k">struct</span><span class="p">{})</span>
+
+		<span class="c">// Start the component.</span>
+		<span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+			<span class="n">errCh</span> <span class="o">&lt;-</span> <span class="n">c</span><span class="o">.</span><span class="n">Start</span><span class="p">(</span><span class="n">initReady</span><span class="p">)</span>
+		<span class="p">}()</span>
+
+		<span class="c">// Wait for the component's initialization to complete.</span>
+		<span class="k">select</span> <span class="p">{</span>
+		<span class="k">case</span> <span class="o">&lt;-</span><span class="n">initReady</span><span class="o">:</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Component %s initialization completed</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">Name</span><span class="p">())</span>
+		<span class="k">case</span> <span class="o">&lt;-</span><span class="n">time</span><span class="o">.</span><span class="n">After</span><span class="p">(</span><span class="n">c</span><span class="o">.</span><span class="n">StartTimeout</span><span class="p">())</span><span class="o">:</span>
+			<span class="n">errCh</span> <span class="o">&lt;-</span> <span class="n">StartTimeoutError</span><span class="p">{</span><span class="n">ComponentName</span><span class="o">:</span> <span class="n">c</span><span class="o">.</span><span class="n">Name</span><span class="p">()}</span>
+
+			<span class="k">return</span> <span class="n">errCh</span>
+		<span class="p">}</span>
+
+		<span class="c">// Check for errors during startup.</span>
+		<span class="k">select</span> <span class="p">{</span>
+		<span class="k">case</span> <span class="n">err</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="n">errCh</span><span class="o">:</span>
+			<span class="k">if</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+				<span class="n">errCh</span> <span class="o">&lt;-</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"failed to start component %s: %w"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">Name</span><span class="p">(),</span> <span class="n">err</span><span class="p">)</span>
+
+				<span class="k">return</span> <span class="n">errCh</span>
+			<span class="p">}</span>
+		<span class="k">default</span><span class="o">:</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Component %s started successfully</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">Name</span><span class="p">())</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"All components started in %v"</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">Since</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
+
+	<span class="k">return</span> <span class="n">errCh</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>The <code class="language-plaintext highlighter-rouge">Shutdown</code> method will stop all the registered components of the application. It will iterate over the slice of components in reverse order and call
+the <code class="language-plaintext highlighter-rouge">Shutdown</code> method of each one of them and wait for it to finish before moving on to the next component. 
+This way, we can make sure that the components are stopped in the correct order, and we can give them the
+opportunity to finish their work. If the <code class="language-plaintext highlighter-rouge">Shutdown</code> method of a component returns an error, it will be added to 
+the <code class="language-plaintext highlighter-rouge">errs</code> slice, and it will continue with the next component. All the errors will be returned at the end of the method in a single error.</p>
+
+<div class="language-go highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">func</span> <span class="p">(</span><span class="n">m</span> <span class="o">*</span><span class="n">Manager</span><span class="p">)</span> <span class="n">Shutdown</span><span class="p">(</span><span class="n">ctx</span> <span class="n">context</span><span class="o">.</span><span class="n">Context</span><span class="p">,</span> <span class="n">gracePeriod</span> <span class="n">time</span><span class="o">.</span><span class="n">Duration</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+	<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Shutting down %d components...</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="p">))</span>
+
+	<span class="n">start</span> <span class="o">:=</span> <span class="n">time</span><span class="o">.</span><span class="n">Now</span><span class="p">()</span>
+
+	<span class="k">var</span> <span class="n">errs</span> <span class="p">[]</span><span class="kt">error</span>
+
+	<span class="n">shutdownDone</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="k">chan</span> <span class="k">struct</span><span class="p">{})</span>
+	<span class="k">go</span> <span class="k">func</span><span class="p">()</span> <span class="p">{</span>
+		<span class="c">// Start shutting down all the components in reverse order.</span>
+		<span class="k">for</span> <span class="n">i</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="p">)</span> <span class="o">-</span> <span class="m">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="m">0</span><span class="p">;</span> <span class="n">i</span><span class="o">--</span> <span class="p">{</span>
+			<span class="n">c</span> <span class="o">:=</span> <span class="n">m</span><span class="o">.</span><span class="n">components</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+			<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Shutting down component %s...</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">Name</span><span class="p">())</span>
+
+			<span class="c">// Check for errors during shutdown.</span>
+			<span class="k">if</span> <span class="n">err</span> <span class="o">:=</span> <span class="n">c</span><span class="o">.</span><span class="n">Shutdown</span><span class="p">(</span><span class="n">ctx</span><span class="p">);</span> <span class="n">err</span> <span class="o">!=</span> <span class="no">nil</span> <span class="p">{</span>
+				<span class="n">errs</span> <span class="o">=</span> <span class="nb">append</span><span class="p">(</span><span class="n">errs</span><span class="p">,</span> <span class="n">fmt</span><span class="o">.</span><span class="n">Errorf</span><span class="p">(</span><span class="s">"failed to shutdown component %s: %w"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">Name</span><span class="p">(),</span> <span class="n">err</span><span class="p">))</span>
+			<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+				<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Component %s shutdown successfully</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">c</span><span class="o">.</span><span class="n">Name</span><span class="p">())</span>
+			<span class="p">}</span>
+		<span class="p">}</span>
+
+		<span class="nb">close</span><span class="p">(</span><span class="n">shutdownDone</span><span class="p">)</span>
+	<span class="p">}()</span>
+
+	<span class="c">// Wait for the components shutdown to complete or timeout.</span>
+	<span class="k">select</span> <span class="p">{</span>
+	<span class="k">case</span> <span class="o">&lt;-</span><span class="n">shutdownDone</span><span class="o">:</span>
+		<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Shutdown finished in %v</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">time</span><span class="o">.</span><span class="n">Since</span><span class="p">(</span><span class="n">start</span><span class="p">))</span>
+	<span class="k">case</span> <span class="o">&lt;-</span><span class="n">time</span><span class="o">.</span><span class="n">After</span><span class="p">(</span><span class="n">gracePeriod</span><span class="p">)</span><span class="o">:</span>
+		<span class="k">return</span> <span class="n">ShutdownTimeoutError</span><span class="p">{</span><span class="n">TimeOut</span><span class="o">:</span> <span class="n">gracePeriod</span><span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="c">// Check if there were any errors during shutdown.</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">errs</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">0</span> <span class="p">{</span>
+		<span class="k">return</span> <span class="n">ShutdownError</span><span class="p">{</span><span class="n">Errors</span><span class="o">:</span> <span class="n">errs</span><span class="p">}</span>
+	<span class="p">}</span>
+
+	<span class="n">log</span><span class="o">.</span><span class="n">Printf</span><span class="p">(</span><span class="s">"Shutdown completed successfully</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+	<span class="k">return</span> <span class="no">nil</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="the-result">The result</h2>
+
+<p>We end up with a simple way to control the lifecycle of the components of our application. No component should be 
+stopped without finishing its work, and no component should be started before all the components that it depends on
+have been started. We have complete control over the order in which the components are started and stopped.</p>
+
+<p>Feel free to check out the full code on <a href="https://github.com/JosemyDuarte/ComponentManager">GitHub</a>. There are some tests and 
+a simple example of how to use the <code class="language-plaintext highlighter-rouge">Manager</code> struct.</p>
+
+<p>Being honest, I don’t know if this is the best way to manage the lifecycle of the components of a Golang application, or if I 
+just reinvented the wheel. I would love to hear your thoughts on this. If you have any suggestions or improvements, you 
+are more than welcome to open a pull request on the repository.</p>
+
+
+      </article>
+
+      
+        <div class="blog-tags">
+          <span>Tags:</span>
+          
+            <a href="/tags#golang">golang</a>
+          
+            <a href="/tags#examples">examples</a>
+          
+        </div>
+      
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <span class="sr-only">Share: </span>
+
+  
+  <a href="https://twitter.com/intent/tweet?text=How+to+shutdown+a+Go+application+gracefully&url=%2F2023-04-24-golang-lifecycle%2F"
+    class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+    <span class="fab fa-fw fa-twitter" aria-hidden="true"></span>
+    <span class="sr-only">Twitter</span>
+  </a>
+  
+
+  
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2023-04-24-golang-lifecycle%2F"
+    class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+    <span class="fab fa-fw fa-facebook" aria-hidden="true"></span>
+    <span class="sr-only">Facebook</span>
+  </a>
+  
+
+  
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2023-04-24-golang-lifecycle%2F"
+    class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+    <span class="fab fa-fw fa-linkedin" aria-hidden="true"></span>
+    <span class="sr-only">LinkedIn</span>
+  </a>
+  
+
+  
+
+  
+
+</section>
+
+
+      
+
+      <ul class="pagination blog-pager">
+        
+        <li class="page-item previous">
+          <a class="page-link" href="/2022-08-19-can-ai-be-inclusive/" data-toggle="tooltip" data-placement="top" title="Can AI be racist?">&larr; Previous Post</a>
+        </li>
+        
+        
+      </ul>
+      
+
+    </div>
+  </div>
+</div>
+
+
+  <footer>
+  <div class="container-md beautiful-jekyll-footer">
+    <div class="row">
+      <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
+      <ul class="list-inline text-center footer-links"><li class="list-inline-item">
+    <a href="/feed.xml" title="RSS">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-rss fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">RSS</span>
+    </a>
+  </li><li class="list-inline-item">
+    <a href="mailto:duartejosemy@gmail.com" title="Email me">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fas fa-envelope fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Email me</span>
+   </a>
+  </li><li class="list-inline-item">
+    <a href="https://t.me/josemyd" title="Telegram">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-telegram-plane fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Telegram</span>
+    </a>
+  </li><li class="list-inline-item">
+    <a href="https://github.com/josemyduarte" title="GitHub">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">GitHub</span>
+   </a>
+  </li><li class="list-inline-item">
+    <a href="https://twitter.com/JosemyD" title="Twitter">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Twitter</span>
+   </a>
+  </li><li class="list-inline-item">
+    <a href="https://linkedin.com/in/josemyduarte" title="LinkedIn">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">LinkedIn</span>
+   </a>
+  </li><li class="list-inline-item">
+    <a href="https://www.instagram.com/josemy.duarte" title="Instagram">
+      <span class="fa-stack fa-lg" aria-hidden="true">
+        <i class="fas fa-circle fa-stack-2x"></i>
+        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+      </span>
+      <span class="sr-only">Instagram</span>
+   </a>
+  </li></ul>
+
+      
+      <p class="copyright text-muted">
+      
+        Josemy Duarte
+        &nbsp;&bull;&nbsp;
+      
+      2023
+
+      
+
+      
+
+      
+
+      </p>
+      <p class="theme-by text-muted">
+        Powered by
+        <a href="https://beautifuljekyll.com">Beautiful Jekyll</a>
+      </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  
+  
+    
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+
+
+  
+    
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+
+  
+    
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+
+  
+
+
+
+  
+    <!-- doing something a bit funky here because I want to be careful not to include JQuery twice! -->
+    
+      <script src="/assets/js/beautifuljekyll.js"></script>
+    
+  
+
+
+
+
+
+
+
+
+<script>
+  if (window.netlifyIdentity) {
+    window.netlifyIdentity.on("init", user => {
+      if (!user) {
+        window.netlifyIdentity.on("login", () => {
+          document.location.href = "/admin/";
+        });
+      }
+    });
+  }
+</script>
+
+
+
+</body>
+</html>

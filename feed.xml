@@ -12,6 +12,17 @@
     
     
       <item>
+        <title>How to shutdown a Go application gracefully</title>
+        <description>
+          An approach to manage the lifecycle of a Go application - 
+          How to shutdown a Go application gracefully All this started by noticing that my Go applications showed an increased number of errors when I was shutting them down. After some investigation I found out that the problem was related to the lifecycle of the components of my application. Why was...
+        </description>
+        <pubDate>Mon, 24 Apr 2023 00:00:00 +0200</pubDate>
+        <link>/2023-04-24-golang-lifecycle/</link>
+        <guid isPermaLink="true">/2023-04-24-golang-lifecycle/</guid>
+      </item>
+    
+      <item>
         <title>Can AI be racist?</title>
         <description>
           Exploring bias on AI image generation - 
@@ -218,18 +229,6 @@
         <pubDate>Mon, 26 Jun 2017 00:00:00 +0200</pubDate>
         <link>/2017-06-26-the-art-of-simplicity/</link>
         <guid isPermaLink="true">/2017-06-26-the-art-of-simplicity/</guid>
-      </item>
-    
-      <item>
-        <title>First post!</title>
-        <description>
-          Yohooo! - 
-          Este post marca el inicio de algo importante, algo impresionante: mi blog!
-
-        </description>
-        <pubDate>Sun, 25 Jun 2017 00:00:00 +0200</pubDate>
-        <link>/2017-06-25-first-post/</link>
-        <guid isPermaLink="true">/2017-06-25-first-post/</guid>
       </item>
     
   </channel>

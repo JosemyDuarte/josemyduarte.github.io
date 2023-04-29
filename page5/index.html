@@ -11,13 +11,13 @@
 
   
 
-  <title>El arte de la simplicidad</title>
+  <title>Josemy Duarte</title>
 
   
   <meta name="author" content="Josemy Duarte">
   
 
-  <meta name="description" content="Código simple == Código de calidad">
+  <meta name="description" content="Tech, Programming and others...">
 
   
 
@@ -110,32 +110,30 @@
 
   
   <meta property="og:site_name" content="Josemy's blog">
-  <meta property="og:title" content="El arte de la simplicidad">
-  <meta property="og:description" content="Código simple == Código de calidad">
+  <meta property="og:title" content="Josemy Duarte">
+  <meta property="og:description" content="Tech, Programming and others...">
 
   
-  <meta property="og:image" content="/assets/img/simple-art.jpg">
-  
-
-  
-  <meta property="og:type" content="article">
-  <meta property="og:article:author" content="Josemy Duarte">
-  <meta property="og:article:published_time" content="2017-06-26T00:00:00+02:00">
-  <meta property="og:url" content="/2017-06-26-the-art-of-simplicity/">
-  <link rel="canonical" href="/2017-06-26-the-art-of-simplicity/">
+  <meta property="og:image" content="/assets/img/jd-logo.png">
   
 
   
-  <meta name="twitter:card" content="summary_large_image">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="/page5/">
+  <link rel="canonical" href="/page5/">
+  
+
+  
+  <meta name="twitter:card" content="summary">
   
   <meta name="twitter:site" content="@JosemyD">
   <meta name="twitter:creator" content="@JosemyD">
 
-  <meta property="twitter:title" content="El arte de la simplicidad">
-  <meta property="twitter:description" content="Código simple == Código de calidad">
+  <meta property="twitter:title" content="Josemy Duarte">
+  <meta property="twitter:description" content="Tech, Programming and others...">
 
   
-  <meta name="twitter:image" content="/assets/img/simple-art.jpg">
+  <meta name="twitter:image" content="/assets/img/jd-logo.png">
   
 
   
@@ -429,30 +427,15 @@
   <div class="container-md">
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
-        <div class="post-heading">
-          <h1>El arte de la simplicidad</h1>
+        <div class="page-heading">
+          <h1>Josemy Duarte</h1>
           
             
-              <h2 class="post-subheading">Código simple == Código de calidad</h2>
+              <hr class="small">
+              <span class="page-subheading">Tech, Programming and others...</span>
             
           
 
-          
-            <span class="post-meta">Posted on June 26, 2017</span>
-            
-            
-              <!--- "ReadTime on GitHub Jekyll" (c) 2020 Ruby Griffith Ramirez, MIT License -->
-
-
-
-
-
-
-  
-  <span class="post-meta"><span class="d-none d-md-inline middot">&middot;</span> 2 minute read</span>
-
-
-            
           
         </div>
       </div>
@@ -465,106 +448,70 @@
 
 
 
-<div class=" container-md ">
+<div class=" container-md " role="main">
   <div class="row">
     <div class=" col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 ">
-
       
 
-      
-
-      <article role="main" class="blog-post">
-        <p>En la empresa en la que trabajo actualmente (<a href="https://www.rocketroi.com/es/">RocketROI</a>) como premio a una especie de competencia interna, me han regalado una entrada a la <a href="http://www.jbcnconf.com/2017/">Java Barcelona Conference</a>. Esta conferencia tuvo una duración de 3 días, siendo los primeros 2 días exclusivos para las <a href="http://www.jbcnconf.com/2017/talks.html">charlas</a> y el último día dedicado a los <a href="http://www.jbcnconf.com/2017/workshops.html">workshops</a>. Debido a que todas las charlas se ejecutaban de forma simultanea, era necesario elegir con antelación “el camino” que querías seguir. A continuación, quiero contarles <em>brevemente</em> lo que aprendí de la primera de ellas, <em>The Art of Simplicity</em>.</p>
-
-<h2 id="lo-que-aprendí">Lo que aprendí</h2>
-
-<p>Speaker: <a href="https://twitter.com/venkat_s">Venkat Subramaniam</a></p>
-
-<p>Venkat comenzó esta charla explicándonos <strong>que NO es la simplicidad</strong>. Además de ofrecernos variadas recomendaciones, de esas que muchos sabemos pero igualmente pocos aplicamos. Recomendaciones como: usar nombres de variables que tengan sentido, documentar nuestro código, evitar la mutabilidad, entre otras.</p>
-
-<p><strong>Imperative Code &lt; Declarative Code.</strong> El código es menos complejo y mantenible si en lugar de especificar <em>qué hacer</em> y <em>cómo hacerlo</em>, solo tenemos que definir <em>qué hacer</em>.</p>
-
-<p><strong>Simple code it is not clever.</strong> El código debe ser claro, entendible. El buscar una solución “ingeniosa” dificulta el desarrollo para otro programador, ya que primero deberá entender lo que está hecho. Además, el código <em>ingenioso</em> suele ser más propenso a bugs que el código <em>simple</em>.</p>
-
-<p><strong>Simple code it is not necessarily familiar.</strong> La forma en la que explica este punto me parece genial aunque debatible. Muestra en la presentación un par de letras chinas y pregunta si alguien sabe que significan, nadie responde. Son las letras en chino para “Simple”, y nos demuestra que el hecho de que no estemos familiarizados con el idioma no quiere decir que no sea simple. El punto a destacar acá es que en muchas ocasiones hay formas más simples de solucionar ciertos problemas, pero al no ser <em>familiares</em> para nosotros, pensamos que es complejo. El hecho es que una vez entendemos el código, que aunque no nos sea familiar en un principio, sí que es simple y nos facilita su futuro mantenimiento o mejora.</p>
-
-<p><strong>Simple code it is not overengineer.</strong> Venkat nos comenta que es una mala practica desarrollar pensando en solucionar la “madre de los problemas” cuando podemos solucionar <em>simplemente</em> el problema que tenemos. Nos cuenta una anécdota en la que habla en persona con un desarrollador que buscaba solucionar la “madre de los problemas” y quería convencerlo de que era una buena idea. Entonces Venkat le pide que lo disculpe un minuto y se retira para llamar al mismo desarrollador con el que hablaba a su teléfono móvil y éste le pregunta “¿Porque me llamas? Si estamos a pasos de distancia.” y Venkat le responde “Aunque estemos cerca, si quisiéramos estar lejos, pudiéramos seguir hablando.”. Demostrando que no hay que <em>buscarle la quinta pata al gato</em>, cuando queremos solucionar un problema que de por sí es simple.</p>
-
-<p><strong>Simple code it is not terse.</strong> Existe una diferencia entre código conciso y código breve o corto. El código breve, en la búsqueda de ser corto puede dar espacio a bugs o comportamientos no esperados, además de ser difícil de comprender. En cambio, el código conciso hace lo que debe hacer sin <em>boilerplate</em> y buscando mantener la simplicidad, lo que facilita su comprensión.</p>
-
-<p>Para finalizar, les comento de una de las frases que dijo que me gustó mucho: “Existen 2 formas de hacer software, la primera es hacerlo tan simple que sea obvio que no tiene deficiencias. La segunda es hacerlo tan complejo que no sea obvio que tiene deficiencias.”</p>
-
-      </article>
+      <div class="posts-list">
+  
+  <article class="post-preview">
+    <a href="/2017-06-25-first-post/">
+      <h2 class="post-title">First post!</h2>
 
       
-        <div class="blog-tags">
-          <span>Tags:</span>
-          
-            <a href="/tags#java">java</a>
-          
-            <a href="/tags#conference">conference</a>
-          
-            <a href="/tags#tips">tips</a>
-          
-        </div>
+      <h3 class="post-subtitle">
+        Yohooo!
+      </h3>
       
+    </a>
 
+    <p class="post-meta">
+      Posted on June 25, 2017
+    </p>
+
+    <div class="post-entry-container">
       
-
+      <div class="post-image">
+        <a href="/2017-06-25-first-post/">
+          <img src="/assets/img/hello_world.jpeg">
+        </a>
+      </div>
       
-        <!-- Check if any share-links are active -->
+      <div class="post-entry">
+        Este post marca el inicio de algo importante, algo impresionante: mi blog!
 
-
-
-
-<section id="social-share-section">
-  <span class="sr-only">Share: </span>
-
-  
-  <a href="https://twitter.com/intent/tweet?text=El+arte+de+la+simplicidad&url=%2F2017-06-26-the-art-of-simplicity%2F"
-    class="btn btn-social-icon btn-twitter" title="Share on Twitter">
-    <span class="fab fa-fw fa-twitter" aria-hidden="true"></span>
-    <span class="sr-only">Twitter</span>
-  </a>
-  
-
-  
-  <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2017-06-26-the-art-of-simplicity%2F"
-    class="btn btn-social-icon btn-facebook" title="Share on Facebook">
-    <span class="fab fa-fw fa-facebook" aria-hidden="true"></span>
-    <span class="sr-only">Facebook</span>
-  </a>
-  
-
-  
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2017-06-26-the-art-of-simplicity%2F"
-    class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
-    <span class="fab fa-fw fa-linkedin" aria-hidden="true"></span>
-    <span class="sr-only">LinkedIn</span>
-  </a>
-  
-
-  
-
-  
-
-</section>
-
-
-      
-
-      <ul class="pagination blog-pager">
-        
-        <li class="page-item previous">
-          <a class="page-link" href="/2017-06-25-first-post/" data-toggle="tooltip" data-placement="top" title="First post!">&larr; Previous Post</a>
-        </li>
         
         
-        <li class="page-item next">
-          <a class="page-link" href="/2017-06-27-software-que-cuesta-mantener/" data-toggle="tooltip" data-placement="top" title="Software que cuesta mantener">Next Post &rarr;</a>
-        </li>
-        
-      </ul>
+      </div>
+    </div>
+
+    
+    <div class="blog-tags">
+      Tags:
+      
+      random
+      
+    </div>
+    
+
+  </article>
+  
+</div>
+
+
+<ul class="pager main-pager">
+  
+  <li class="previous">
+    <a href="/page4">&larr; Newer Posts</a>
+  </li>
+  
+  
+</ul>
+
+
+      
+
       
 
     </div>
