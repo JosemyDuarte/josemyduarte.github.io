@@ -11,8 +11,6 @@ tags:
 published: true
 ---
 
-# How to shutdown a Go application gracefully
-
 All this started by noticing that my Go applications showed an increased number of errors when I was shutting them down. 
 After some investigation I found out that the problem was related to the lifecycle of the components of my application.
 Why was this happening? Because I was not shutting down my application gracefully. Meaning that I was not giving the
