@@ -11,13 +11,13 @@
 
   
 
-  <title>Josemy Duarte</title>
+  <title>Lessons from My Journey with Flutter Development</title>
 
   
   <meta name="author" content="Josemy Duarte">
   
 
-  <meta name="description" content="Tech, Programming and others...">
+  <meta name="description" content="Metrics, Errors, and State Management">
 
   
 
@@ -110,30 +110,32 @@
 
   
   <meta property="og:site_name" content="Josemy's blog">
-  <meta property="og:title" content="Josemy Duarte">
-  <meta property="og:description" content="Tech, Programming and others...">
+  <meta property="og:title" content="Lessons from My Journey with Flutter Development">
+  <meta property="og:description" content="Metrics, Errors, and State Management">
 
   
-  <meta property="og:image" content="/assets/img/jd-logo.png">
-  
-
-  
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="/page5/">
-  <link rel="canonical" href="/page5/">
+  <meta property="og:image" content="/assets/img/flutter-logo.jpg">
   
 
   
-  <meta name="twitter:card" content="summary">
+  <meta property="og:type" content="article">
+  <meta property="og:article:author" content="Josemy Duarte">
+  <meta property="og:article:published_time" content="2024-03-18T00:00:00+01:00">
+  <meta property="og:url" content="/2024-03-18-first-mobile-app/">
+  <link rel="canonical" href="/2024-03-18-first-mobile-app/">
+  
+
+  
+  <meta name="twitter:card" content="summary_large_image">
   
   <meta name="twitter:site" content="@JosemyD">
   <meta name="twitter:creator" content="@JosemyD">
 
-  <meta property="twitter:title" content="Josemy Duarte">
-  <meta property="twitter:description" content="Tech, Programming and others...">
+  <meta property="twitter:title" content="Lessons from My Journey with Flutter Development">
+  <meta property="twitter:description" content="Metrics, Errors, and State Management">
 
   
-  <meta name="twitter:image" content="/assets/img/jd-logo.png">
+  <meta name="twitter:image" content="/assets/img/flutter-logo.jpg">
   
 
   
@@ -434,15 +436,30 @@
   <div class="container-md">
     <div class="row">
       <div class="col-xl-8 offset-xl-2 col-lg-10 offset-lg-1">
-        <div class="page-heading">
-          <h1>Josemy Duarte</h1>
+        <div class="post-heading">
+          <h1>Lessons from My Journey with Flutter Development</h1>
           
             
-              <hr class="small">
-              <span class="page-subheading">Tech, Programming and others...</span>
+              <h2 class="post-subheading">Metrics, Errors, and State Management</h2>
             
           
 
+          
+            <span class="post-meta">Posted on March 18, 2024</span>
+            
+            
+              <!--- "ReadTime on GitHub Jekyll" (c) 2020 Ruby Griffith Ramirez, MIT License -->
+
+
+
+
+
+
+  
+  <span class="post-meta"><span class="d-none d-md-inline middot">&middot;</span> 4 minute read</span>
+
+
+            
           
         </div>
       </div>
@@ -455,107 +472,107 @@
 
 
 
-<div class=" container-md " role="main">
+<div class=" container-md ">
   <div class="row">
     <div class=" col-xl-8 offset-xl-2 col-lg-10 offset-lg-1 ">
+
       
 
-      <div class="posts-list">
+      
+
+      <article role="main" class="blog-post">
+        <p>I wanted to build something that I could proudly show to friends and say, “I built this 😎”. So, I decided to try <a href="https://flutter.dev">Flutter</a>, a Dart framework that makes it easy to build apps for both iOS and Android. Instead of making a complicated app with lots of fancy features, I wanted to keep it simple. I made an app that uses your device’s screen as a flashlight and allows you to change the colors and make it blink in patterns you record with simple taps on your screen.</p>
+
+<p>At first, I was super excited! Flutter made it easy to make pretty buttons and all kinds of common UI components following established design principles. But then, I had to figure out how to organize the app. I’m not a design expert, so it was tricky deciding where to put things. I just did my best to keep it simple and easy to use, but it made me realize that even though I use all kinds of apps every day, it wasn’t straightforward deciding how to design my app.</p>
+
+<p>In a broad level, I know that intuitive UX is important, but what does that mean? It is a sum of different small decisions, like the type, color, and size of the different fonts used on your app together with the size, position, and color of your app’s buttons, among other million things. Definitely, I learnt that UX isn’t a trivial thing, but that wasn’t the only problem I faced with this project…</p>
+
+<p>Then came another challenge — keeping track of the settings changed by the user across different screens and updating the UI components accordingly so that the user can see their changes reflected across the app. This is called “state management”. Luckily, Flutter has multiple ways to handle it and after a quick modification, I was able to “move” the state across the screens and the UI got updated out of the box by using the <a href="https://docs.flutter.dev/data-and-backend/state-mgmt/simple">Provider approach</a>, which was a nice surprise. I was expecting more struggle to make this work 😅.</p>
+
+<p>Up to this point, I have learnt a couple of things:</p>
+
+<ol>
+  <li>Crafting beautiful UIs is an art and an important aspect to keep your app intuitive.</li>
+  <li>Flutter provides tools that simplify state management and synchronization of your UI components.</li>
+</ol>
+
+<p>But then after multiple crashes while running the app on the simulator, I wondered how I would know if the app crashed on people’s devices once I released it on the app store? I wouldn’t be able to add breakpoints to debug or do any other type of deep investigation besides reading their review on the app store which wouldn’t be a good one if the app just brings frustration to them.</p>
+
+<p>I figured it would be nice to have a way for my app to report crashes together with the context in which they happened so that I could reproduce the situation and fix it as soon as it started happening.</p>
+
+<p>A quick search on the topic and <a href="https://firebase.google.com/docs/crashlytics">Firebase Crashlytics</a> popped up. It can be used for both iOS and Android and it has an SDK for Flutter so I didn’t look further. It allows you to report all crashes and also add context to it, like custom fields from your app or information from the device itself, which proved to be very useful to understand the context in which your app crashed.</p>
+
+<p>That led me to think on how I could iterate and improve my app. The more you know your audience and their needs, the better you can customize your product to better serve them, right? People usually use <a href="https://analytics.google.com/">Google Analytics</a> on their websites with this motive. So I was pleased to know that you can use <a href="https://firebase.google.com/docs/analytics">Google Analytics with Firebase</a> with Flutter really easily. Allowing me to add custom events with all the context I wanted to record. In my case for example, I wanted to know how frequently people would actually use different colors than the default one for their flashlight. That was just adding a custom event for that particular screen and adding the color picked as a custom field.</p>
+
+<p>You might be wondering where the app is? Well, right in the middle of the development of this app, <a href="https://techcrunch.com/2023/11/09/google-play-tightens-up-rules-for-android-app-developers-to-require-testing-increased-app-review/">Google changed the rules of their app store</a>. Now, releasing your app on the store required not only paying <a href="https://support.google.com/googleplay/android-developer/answer/6112435?hl=en#zippy=%2Cstep-pay-registration-fee">the developer’s fee</a> but also getting 20 testers for your app before it can be officially released.</p>
+
+<p>I understand Google’s intention is to increase the quality of the apps published on their store, which is great, but since I already had the app on my phone, I felt I had already gotten what I wanted from this journey — being able to show my friends “I built this 😎”. Not only that, but I also learned a lot while doing it, so I didn’t feel the need to go through that process.</p>
+
+      </article>
+
+      
+        <div class="blog-tags">
+          <span>Tags:</span>
+          
+            <a href="/tags#flutter">flutter</a>
+          
+            <a href="/tags#learning">learning</a>
+          
+        </div>
+      
+
+      
+
+      
+        <!-- Check if any share-links are active -->
+
+
+
+
+<section id="social-share-section">
+  <span class="sr-only">Share: </span>
+
   
-  <article class="post-preview">
-    <a href="/2017-06-26-the-art-of-simplicity/">
-      <h2 class="post-title">El arte de la simplicidad</h2>
+  <a href="https://twitter.com/intent/tweet?text=Lessons+from+My+Journey+with+Flutter+Development&url=%2F2024-03-18-first-mobile-app%2F"
+    class="btn btn-social-icon btn-twitter" title="Share on Twitter">
+    <span class="fab fa-fw fa-twitter" aria-hidden="true"></span>
+    <span class="sr-only">Twitter</span>
+  </a>
+  
+
+  
+  <a href="https://www.facebook.com/sharer/sharer.php?u=%2F2024-03-18-first-mobile-app%2F"
+    class="btn btn-social-icon btn-facebook" title="Share on Facebook">
+    <span class="fab fa-fw fa-facebook" aria-hidden="true"></span>
+    <span class="sr-only">Facebook</span>
+  </a>
+  
+
+  
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=%2F2024-03-18-first-mobile-app%2F"
+    class="btn btn-social-icon btn-linkedin" title="Share on LinkedIn">
+    <span class="fab fa-fw fa-linkedin" aria-hidden="true"></span>
+    <span class="sr-only">LinkedIn</span>
+  </a>
+  
+
+  
+
+  
+
+</section>
+
 
       
-      <h3 class="post-subtitle">
-        Código simple == Código de calidad
-      </h3>
-      
-    </a>
 
-    <p class="post-meta">
-      Posted on June 26, 2017
-    </p>
-
-    <div class="post-entry-container">
-      
-      <div class="post-entry">
-        En la empresa en la que trabajo actualmente (RocketROI) como premio a una especie de competencia interna, me han regalado una entrada a la Java Barcelona Conference. Esta conferencia tuvo una duración de 3 días, siendo los primeros 2 días exclusivos para las charlas y el último día dedicado a los...
+      <ul class="pagination blog-pager">
+        
+        <li class="page-item previous">
+          <a class="page-link" href="/2023-04-24-golang-lifecycle/" data-toggle="tooltip" data-placement="top" title="How to shutdown a Go application gracefully">&larr; Previous Post</a>
+        </li>
         
         
-        <a href="/2017-06-26-the-art-of-simplicity/" class="post-read-more">[Read&nbsp;More]</a>
-        
-      </div>
-    </div>
-
-    
-    <div class="blog-tags">
-      Tags:
-      
-      java, conference, tips
-      
-    </div>
-    
-
-  </article>
-  
-  <article class="post-preview">
-    <a href="/2017-06-25-first-post/">
-      <h2 class="post-title">First post!</h2>
-
-      
-      <h3 class="post-subtitle">
-        Yohooo!
-      </h3>
-      
-    </a>
-
-    <p class="post-meta">
-      Posted on June 25, 2017
-    </p>
-
-    <div class="post-entry-container">
-      
-      <div class="post-image">
-        <a href="/2017-06-25-first-post/">
-          <img src="/assets/img/hello_world.jpeg">
-        </a>
-      </div>
-      
-      <div class="post-entry">
-        Este post marca el inicio de algo importante, algo impresionante: mi blog!
-
-        
-        
-      </div>
-    </div>
-
-    
-    <div class="blog-tags">
-      Tags:
-      
-      random
-      
-    </div>
-    
-
-  </article>
-  
-</div>
-
-
-<ul class="pager main-pager">
-  
-  <li class="previous">
-    <a href="/page4">&larr; Newer Posts</a>
-  </li>
-  
-  
-</ul>
-
-
-      
-
+      </ul>
       
 
     </div>
