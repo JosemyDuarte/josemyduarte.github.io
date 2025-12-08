@@ -1,11 +1,17 @@
-version: "3.3"
-
 services:
   jekyll:
-    image: jekyll/jekyll:3.8
+    image: ruby:3.1            # IMPORTANT: no "-alpine" suffix
+    working_dir: /srv/jekyll
+    volumes:
+      - .:/srv/jekyll
     ports:
       - "4000:4000"
-    volumes:
-      - "./:/srv/jekyll"
-      - "./vendor/bundle:/usr/local/bundle"
-    command: jekyll serve --watch --force_polling
+    command: >
+      bash -lc "
+        apt-get update &&
+        apt-get install -y --no-install-recommends git build-essential &&
+        gem update --system 3.3.22 &&
+        git config --global --add safe.directory /srv/jekyll &&
+        bundle install &&
+        bundle exec jekyll serve --host 0.0.0.0
+      "
