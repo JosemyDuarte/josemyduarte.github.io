@@ -24,10 +24,3 @@ jobs:
         run: bundle exec appraisal jekyll build --future --config _config_ci.yml,_config.yml
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
-      - name: Deploy to master
-        uses: s0/git-publish-subdir-action@develop
-        env:
-          REPO: self
-          BRANCH: master
-          FOLDER: site
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
