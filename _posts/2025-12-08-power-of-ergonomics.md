@@ -10,6 +10,7 @@ tags:
   - ergonomic
 published: true
 ---
+_Disclaimer: First attempt to write AI assisted._
 
 For years, I treated my workstation like an afterthought. If it worked and didn’t look terrible, that was good enough. I sat for hours every day, told myself discomfort was normal, and assumed serious pain was something that happened to other people.
 
