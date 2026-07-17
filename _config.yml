@@ -10,10 +10,10 @@
 ############################
 
 # Name of website
-title: "Josemy's blog"
+title: "Josemy Duarte | Backend, Cloud & Software Engineering"
 
 # Short description of your site
-description: Tech, Programming and others...
+description: "Practical articles on Go, AWS, DevOps, testing, AI, and building reliable software—written from hands-on engineering experience."
 
 # Your name to show in the footer
 author: Josemy Duarte
@@ -309,4 +309,3 @@ plugins:
 
 # Beautiful Jekyll / Dean Attali
 # 2fc73a3a967e97599c9763d05e564189
-
