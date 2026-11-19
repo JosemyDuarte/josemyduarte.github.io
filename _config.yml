@@ -18,12 +18,16 @@ description: "Practical articles on Go, AWS, DevOps, testing, AI, and building r
 # Your name to show in the footer
 author: Josemy Duarte
 
+# Canonical address of the site. Used to build absolute URLs for canonical tags,
+# Open Graph tags, the sitemap and the RSS feed.
+url: "https://blog.dute.dev"
+
 ###############################################
 # --- List of links in the navigation bar --- #
 ###############################################
 
 navbar-links:
-  Home: "https://josemyduarte.github.io/"
+  Home: "https://blog.dute.dev/"
   About Me: "aboutme"
 
 ################
